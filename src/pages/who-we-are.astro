@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/ui/Button.astro';
+import SectionHeadline from '../components/ui/SectionHeadline.astro';
+
+const values = [
+  {
+    title: 'Be Cool',
+    description: 'No Assholes. Ask, don\'t tell. Please and thank you go a long way.',
+    number: '01',
+  },
+  {
+    title: 'Be Different',
+    description: 'KUT | THRŪ the noise. Command attention. We\'re not here for quick wins—we\'re building brands that last.',
+    number: '02',
+  },
+  {
+    title: 'Be the Buffalo',
+    description: 'Cattle run from storms, resulting in a longer struggle. The buffalo charges into the storm to get through it faster. Be the buffalo.',
+    number: '03',
+  },
+  {
+    title: 'FIO Then Own It',
+    description: 'Figure it out. Do the research, make the call, watch the video, ask the question. Own your actions and outcomes. Take accountability. Decisions create your reality.',
+    number: '04',
+  },
+  {
+    title: 'Lead with Fear',
+    description: 'Yea, no. Just keep it real with open, honest communication. Say the hard things, talk it out, and stay connected. The best creative work doesn\'t come from intimidation—it comes from inspiration.',
+    number: '05',
+  },
+];
+---
+
+<Layout
+  title="About Us | KUT | THRŪ Media"
+  description="Blue-collar industries built this country. We build brands that match. Learn about our mission, vision, and the values that drive everything we do."
+>
+  <Header />
+
+  <main class="flex-1 pt-20">
+    <!-- Hero Section -->
+    <section class="section bg-gradient-to-b from-gray-900 to-charcoal">
+      <div class="container">
+        <div class="max-w-3xl">
+          <h1 class="headline-xl mb-6">Who We Are</h1>
+          <p class="body-lg text-muted">
+            The marketing team blue-collar businesses actually deserve.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section bg-charcoal">
+      <div class="container">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <span class="eyebrow block mb-4">Our Mission</span>
+            <h2 class="headline-lg mb-6">
+              Clean Marketing for<br />
+              <span class="text-power-red">Dirty Jobs.</span>
+            </h2>
+            <p class="body-md text-muted mb-6">
+              Blue-collar industries built this country with grit and grind. They don't do fluff, and neither do we.
+            </p>
+            <p class="body-md text-muted">
+              We take word-of-mouth, handshake-deal businesses and turn them into powerhouse names. We weaponize content and branding. No gimmicks. No wasted budget. Just real marketing that gets shit done.
+            </p>
+          </div>
+          <div class="relative">
+            <!-- Placeholder for image -->
+            <div class="aspect-square bg-gray-800 border border-white/10 flex items-center justify-center">
+              <span class="text-text-subtle">Mission image placeholder</span>
+            </div>
+            <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-power-red -z-10"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="section bg-gray-900">
+      <div class="container">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div class="order-2 lg:order-1 relative">
+            <!-- Placeholder for image -->
+            <div class="aspect-square bg-gray-800 border border-white/10 flex items-center justify-center">
+              <span class="text-text-subtle">Vision image placeholder</span>
+            </div>
+            <div class="absolute -top-4 -right-4 w-32 h-32 bg-power-red -z-10"></div>
+          </div>
+          <div class="order-1 lg:order-2">
+            <span class="eyebrow block mb-4">Our Vision</span>
+            <h2 class="headline-lg mb-6">
+              Building Brands As Strong As<br />
+              <span class="text-power-red">The Industries We Serve</span>
+            </h2>
+            <p class="body-md text-muted">
+              We will bring the blue-collar backbone of this country front and center—to make damn sure the people who build, power, and fuel this country aren't in the shadows anymore.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Values Section -->
+    <section class="section bg-charcoal">
+      <div class="container">
+        <SectionHeadline
+          title="How We Operate"
+          subtitle="Our core values drive everything we do."
+          align="center"
+        />
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {values.map((value, index) => (
+            <div class={`card card-highlight ${index === 4 ? 'md:col-span-2 lg:col-span-1' : ''}`}>
+              <span class="text-5xl font-black text-power-red/20 mb-4 block">{value.number}</span>
+              <h3 class="text-xl font-bold mb-3">{value.title}</h3>
+              <p class="text-muted">{value.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section bg-power-red">
+      <div class="container text-center">
+        <h2 class="headline-lg mb-6 text-impact-white">Like What You See?</h2>
+        <p class="body-lg text-impact-white/90 mb-10">
+          Let's find out if we're a fit.
+        </p>
+        <Button href="/contact" variant="secondary" size="lg">
+          Let's Talk
+        </Button>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

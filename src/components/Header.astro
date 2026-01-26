@@ -1,0 +1,117 @@
+---
+const navLinks = [
+  { href: '/who-we-are', label: 'Who We Are' },
+  { href: '/who-we-work-with', label: 'Who We Work With' },
+  { href: '/what-we-do', label: 'What We Do' },
+  { href: '/process', label: 'Process' },
+  { href: '/work', label: 'Work' },
+  { href: '/podcast', label: 'Podcast' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-white/10">
+  <div class="container">
+    <nav class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 group">
+        <span class="text-2xl font-black tracking-tight text-impact-white">
+          KUT<span class="text-power-red mx-1">|</span>THRŪ
+        </span>
+        <span class="text-sm font-semibold text-text-muted hidden sm:block">Media</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center gap-8">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={`text-sm font-semibold tracking-wide transition-colors duration-200 ${
+              currentPath === link.href
+                ? 'text-power-red'
+                : 'text-text-muted hover:text-impact-white'
+            }`}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+
+      <!-- CTA Button -->
+      <div class="hidden lg:block">
+        <a href="/contact" class="btn btn-primary text-sm py-3 px-6">
+          Let's Talk
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-button"
+        class="lg:hidden p-2 text-impact-white"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            id="menu-icon-open"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+          <path
+            id="menu-icon-close"
+            class="hidden"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden bg-gray-900 border-t border-white/10"
+  >
+    <div class="container py-6">
+      <div class="flex flex-col gap-4">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={`text-lg font-semibold py-2 transition-colors duration-200 ${
+              currentPath === link.href
+                ? 'text-power-red'
+                : 'text-text-muted hover:text-impact-white'
+            }`}
+          >
+            {link.label}
+          </a>
+        ))}
+        <a href="/contact" class="btn btn-primary mt-4 text-center">
+          Let's Talk
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const menuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIconOpen = document.getElementById('menu-icon-open');
+  const menuIconClose = document.getElementById('menu-icon-close');
+
+  menuButton?.addEventListener('click', () => {
+    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+    menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+    mobileMenu?.classList.toggle('hidden');
+    menuIconOpen?.classList.toggle('hidden');
+    menuIconClose?.classList.toggle('hidden');
+  });
+</script>

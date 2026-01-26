@@ -1,0 +1,31 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  align = 'left',
+  class: className = '',
+} = Astro.props;
+
+const alignmentClasses = align === 'center' ? 'text-center' : 'text-left';
+---
+
+<div class={`mb-12 ${alignmentClasses} ${className}`}>
+  {eyebrow && (
+    <span class="eyebrow block mb-4">{eyebrow}</span>
+  )}
+  <h2 class="headline-lg mb-4" set:html={title} />
+  {subtitle && (
+    <p class="body-lg text-muted max-w-3xl" class:list={[{ 'mx-auto': align === 'center' }]}>
+      {subtitle}
+    </p>
+  )}
+</div>

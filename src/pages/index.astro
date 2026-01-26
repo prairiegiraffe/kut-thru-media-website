@@ -1,0 +1,200 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/ui/Button.astro';
+import SectionHeadline from '../components/ui/SectionHeadline.astro';
+
+const services = [
+  { title: 'Marketing Strategy', icon: 'strategy' },
+  { title: 'Full Company Rebrands', icon: 'rebrand' },
+  { title: 'Website Design & Development', icon: 'website' },
+  { title: 'Professional Photography', icon: 'camera' },
+  { title: 'Professional Videography', icon: 'video' },
+  { title: 'Social Media Management', icon: 'social' },
+];
+---
+
+<Layout title="KUT | THRŪ Media | Clean Marketing for Dirty Jobs">
+  <Header />
+
+  <main class="flex-1">
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20">
+      <!-- Background placeholder for video -->
+      <div class="absolute inset-0 bg-gradient-to-b from-gray-900 via-charcoal to-steel-black">
+        <!-- Video will be swapped in here later -->
+        <div class="absolute inset-0 bg-black/60"></div>
+      </div>
+
+      <div class="container relative z-10">
+        <div class="max-w-4xl">
+          <h1 class="headline-xl mb-6 animate-fade-in-up">
+            Most Marketing <span class="text-power-red">Sucks.</span><br />
+            Yours Doesn't Have To.
+          </h1>
+          <p class="body-lg text-muted mb-10 max-w-2xl animate-fade-in-up animation-delay-200">
+            Clean marketing for dirty jobs. We build brands as strong as the industries we serve.
+          </p>
+          <div class="flex flex-wrap gap-4 animate-fade-in-up animation-delay-300">
+            <Button href="/contact" variant="primary" size="lg">
+              Let's Talk
+            </Button>
+            <Button href="/work" variant="secondary" size="lg">
+              See Our Work
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+        <svg class="w-6 h-6 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="section bg-charcoal">
+      <div class="container">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 class="headline-lg mb-6">
+              We're Not Your Average Marketing Agency
+            </h2>
+            <p class="body-md text-muted mb-6">
+              Blue-collar industries built this country with grit and grind. They don't do fluff—and neither do we.
+            </p>
+            <p class="body-md text-muted mb-8">
+              We take word-of-mouth, handshake-deal businesses and turn them into powerhouse names. No gimmicks. No wasted budget. Just real marketing that gets shit done.
+            </p>
+            <Button href="/who-we-are" variant="ghost" arrow>
+              See How We Work
+            </Button>
+          </div>
+          <div class="relative">
+            <!-- Placeholder for image -->
+            <div class="aspect-[4/3] bg-gray-800 rounded-lg border border-white/10 flex items-center justify-center">
+              <span class="text-text-subtle">Image placeholder</span>
+            </div>
+            <!-- Red accent bar -->
+            <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-power-red -z-10"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who We Work With Section -->
+    <section class="section bg-gray-900">
+      <div class="container">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="headline-lg mb-6">
+            If Your Employees Don't Wear Hard Hats,<br />
+            <span class="text-power-red">We Ain't For You.</span>
+          </h2>
+          <p class="body-lg text-muted mb-10">
+            We work with Oil & Gas, Construction, Mining, and Heavy Industrial companies doing $10M–$50M+ in revenue.
+          </p>
+          <Button href="/who-we-work-with" variant="secondary" arrow>
+            See If We're A Fit
+          </Button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Snapshot Section -->
+    <section class="section bg-charcoal">
+      <div class="container">
+        <SectionHeadline
+          title="What We Do"
+          subtitle="Built around you. Powered by us."
+          align="center"
+        />
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {services.map((service) => (
+            <div class="card group hover:border-power-red/50 text-center">
+              <!-- Icon placeholder -->
+              <div class="w-16 h-16 mx-auto mb-6 bg-power-red/20 rounded-lg flex items-center justify-center group-hover:bg-power-red/30 transition-colors">
+                <svg class="w-8 h-8 text-power-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {service.icon === 'strategy' && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  )}
+                  {service.icon === 'rebrand' && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                  )}
+                  {service.icon === 'website' && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  )}
+                  {service.icon === 'camera' && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  )}
+                  {service.icon === 'video' && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  )}
+                  {service.icon === 'social' && (
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                  )}
+                </svg>
+              </div>
+              <h3 class="text-xl font-bold mb-2">{service.title}</h3>
+            </div>
+          ))}
+        </div>
+
+        <div class="text-center">
+          <Button href="/what-we-do" variant="secondary" arrow>
+            Explore Our Services
+          </Button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="section bg-gray-900">
+      <div class="container">
+        <SectionHeadline
+          title="Trusted By Companies Who Build, Power, and Fuel This Country"
+          align="center"
+        />
+
+        <!-- Client logos placeholder -->
+        <div class="flex flex-wrap justify-center items-center gap-12 mb-12">
+          <div class="w-40 h-20 bg-gray-800 rounded flex items-center justify-center text-text-subtle text-sm">
+            Walker Inspection
+          </div>
+          <div class="w-40 h-20 bg-gray-800 rounded flex items-center justify-center text-text-subtle text-sm">
+            PRC
+          </div>
+          <div class="w-40 h-20 bg-gray-800 rounded flex items-center justify-center text-text-subtle text-sm">
+            MTN Mud
+          </div>
+        </div>
+
+        <div class="text-center">
+          <Button href="/work" variant="ghost" arrow>
+            See Our Work
+          </Button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section bg-power-red">
+      <div class="container text-center">
+        <h2 class="headline-lg mb-6 text-impact-white">
+          Ready to KUT | THRŪ the Noise?
+        </h2>
+        <p class="body-lg text-impact-white/90 mb-10 max-w-2xl mx-auto">
+          Let's build a brand that commands attention. No BS. Just results.
+        </p>
+        <Button href="/contact" variant="secondary" size="lg">
+          Start the Conversation
+        </Button>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

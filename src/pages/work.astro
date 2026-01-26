@@ -1,0 +1,187 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/ui/Button.astro';
+import SectionHeadline from '../components/ui/SectionHeadline.astro';
+
+const caseStudies = [
+  {
+    client: 'Walker Inspection',
+    services: [
+      'Full brand refresh (logo retained)',
+      'Complete website redesign',
+      'Professional photography on-site',
+      'Company "hero" video production',
+      'Ongoing social media management',
+    ],
+    testimonial: '[Placeholder for client testimonial]',
+    hasBeforeAfter: true,
+  },
+  {
+    client: 'PRC - Powder River Construction',
+    tagline: 'WE BUILD.',
+    services: [
+      'Complete rebrand from "Powder River Construction" to "PRC"',
+      'New logo and brand identity',
+      'Website design (in progress)',
+      'Professional photography',
+      'Hero video (in progress)',
+    ],
+    hasBeforeAfter: true,
+  },
+  {
+    client: 'MTN Mud',
+    services: [
+      'Complete rebrand from "Mountain Mud Service & Supply" to "MTN MUD"',
+      'Modern logo with derrick icon',
+      'Website design (in progress)',
+      'Professional photography',
+      'Hero video (in progress)',
+    ],
+    hasBeforeAfter: true,
+  },
+];
+---
+
+<Layout
+  title="Our Work | KUT | THRŪ Media"
+  description="See what we've built for companies like Walker Inspection, PRC, and MTN Mud. Rebrands, websites, photography, and video that commands attention."
+>
+  <Header />
+
+  <main class="flex-1 pt-20">
+    <!-- Hero Section -->
+    <section class="section bg-gradient-to-b from-gray-900 to-charcoal">
+      <div class="container">
+        <div class="max-w-3xl">
+          <h1 class="headline-xl mb-6">Our Work</h1>
+          <p class="body-lg text-muted">
+            Real results for real businesses.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Studies -->
+    {caseStudies.map((study, index) => (
+      <section class={`section ${index % 2 === 0 ? 'bg-gray-900' : 'bg-charcoal'}`}>
+        <div class="container">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class={index % 2 === 1 ? 'lg:order-2' : ''}>
+              <span class="eyebrow block mb-4">Case Study</span>
+              <h2 class="headline-md mb-2">{study.client}</h2>
+              {study.tagline && (
+                <p class="text-power-red font-bold text-xl mb-6">{study.tagline}</p>
+              )}
+
+              <div class="mb-8">
+                <h3 class="text-lg font-bold mb-4">What We Did:</h3>
+                <ul class="space-y-2">
+                  {study.services.map((service) => (
+                    <li class="flex items-start gap-3">
+                      <svg class="w-5 h-5 text-power-red flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span class="text-muted">{service}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {study.testimonial && (
+                <blockquote class="border-l-4 border-power-red pl-6 py-2 italic text-muted">
+                  {study.testimonial}
+                </blockquote>
+              )}
+            </div>
+
+            <div class={index % 2 === 1 ? 'lg:order-1' : ''}>
+              {study.hasBeforeAfter && (
+                <div class="space-y-4">
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <span class="text-sm text-text-subtle block mb-2">Before</span>
+                      <div class="aspect-square bg-gray-800 border border-white/10 flex items-center justify-center">
+                        <span class="text-text-subtle text-sm">Before logo</span>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="text-sm text-text-subtle block mb-2">After</span>
+                      <div class="aspect-square bg-gray-800 border border-white/10 flex items-center justify-center">
+                        <span class="text-text-subtle text-sm">After logo</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="aspect-video bg-gray-800 border border-white/10 flex items-center justify-center">
+                    <span class="text-text-subtle">Website/project screenshot placeholder</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <!-- Photography Gallery Section -->
+    <section class="section bg-gray-900">
+      <div class="container">
+        <SectionHeadline
+          title="On-Site Photography"
+          subtitle="We go where the work happens. Rigs, job sites, facilities—real images of real work."
+          align="center"
+        />
+
+        <!-- Photo Grid Placeholder -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div class="aspect-square bg-gray-800 border border-white/10 flex items-center justify-center hover:border-power-red/50 transition-colors cursor-pointer">
+              <span class="text-text-subtle text-sm">Photo {i + 1}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="section bg-charcoal">
+      <div class="container">
+        <SectionHeadline
+          title="Video Production"
+          subtitle="From hero videos to social media clips—we tell your story in motion."
+          align="center"
+        />
+
+        <!-- Video Placeholder -->
+        <div class="max-w-4xl mx-auto">
+          <div class="aspect-video bg-gray-800 border border-white/10 flex items-center justify-center relative">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-20 h-20 bg-power-red rounded-full flex items-center justify-center cursor-pointer hover:bg-power-red-dark transition-colors">
+                <svg class="w-8 h-8 text-impact-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+            <span class="text-text-subtle">Walker Inspection Hero Video</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section bg-power-red">
+      <div class="container text-center">
+        <h2 class="headline-lg mb-6 text-impact-white">Want Results Like This?</h2>
+        <p class="body-lg text-impact-white/90 mb-10">
+          Let's talk about what we can build for you.
+        </p>
+        <Button href="/contact" variant="secondary" size="lg">
+          Start the Conversation
+        </Button>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

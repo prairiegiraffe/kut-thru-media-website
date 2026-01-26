@@ -1,0 +1,138 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/ui/Button.astro';
+import SectionHeadline from '../components/ui/SectionHeadline.astro';
+
+const industries = [
+  {
+    title: 'Oil & Gas',
+    description: 'From drilling operations to oilfield services—we understand your world. We\'ve been on location, in the mud, capturing the real work that makes this industry run.',
+    icon: 'oil',
+  },
+  {
+    title: 'Construction',
+    description: 'Roads, buildings, infrastructure—you build what everyone else takes for granted. We build brands that match the scale of your projects.',
+    icon: 'construction',
+  },
+  {
+    title: 'Mining',
+    description: 'Below the surface is where the real work happens. We bring that story above ground and make sure the right people see it.',
+    icon: 'mining',
+  },
+  {
+    title: 'Heavy Industrial',
+    description: 'Manufacturing, fabrication, heavy equipment—the backbone of American industry. Your brand should hit as hard as your work.',
+    icon: 'industrial',
+  },
+];
+
+const qualifiers = [
+  'Revenue between $10M–$50M+',
+  'Most employees wear hard hats',
+  'Built on word-of-mouth and handshake deals',
+  'Ready to become a recognized name',
+  'Tired of marketing that doesn\'t understand your industry',
+];
+---
+
+<Layout
+  title="Industries We Serve | KUT | THRŪ Media"
+  description="We work with Oil & Gas, Construction, Mining, and Heavy Industrial companies doing $10M–$50M+ in revenue. If your employees wear hard hats, we're for you."
+>
+  <Header />
+
+  <main class="flex-1 pt-20">
+    <!-- Hero Section -->
+    <section class="section bg-gradient-to-b from-gray-900 to-charcoal">
+      <div class="container">
+        <div class="max-w-4xl">
+          <h1 class="headline-xl mb-6">Who We Work With</h1>
+          <p class="body-lg text-muted">
+            If most of your employees don't have to wear a hard hat from time to time, we ain't for you.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Industries Overview -->
+    <section class="section-sm bg-charcoal">
+      <div class="container">
+        <div class="max-w-3xl mx-auto text-center mb-16">
+          <span class="eyebrow block mb-4">Our People</span>
+          <p class="body-lg">
+            We work with <span class="text-power-red font-bold">Oil & Gas</span>, <span class="text-power-red font-bold">Construction</span>, <span class="text-power-red font-bold">Mining</span>, and <span class="text-power-red font-bold">Heavy Industrial</span> companies with yearly revenue between <span class="text-power-red font-bold">$10M–$50M+</span>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Industry Cards -->
+    <section class="section bg-gray-900">
+      <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {industries.map((industry) => (
+            <div class="card group hover:border-power-red/50">
+              <div class="flex items-start gap-6">
+                <div class="w-16 h-16 flex-shrink-0 bg-power-red/20 rounded-lg flex items-center justify-center group-hover:bg-power-red/30 transition-colors">
+                  <svg class="w-8 h-8 text-power-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    {industry.icon === 'oil' && (
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    )}
+                    {industry.icon === 'construction' && (
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    )}
+                    {industry.icon === 'mining' && (
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    )}
+                    {industry.icon === 'industrial' && (
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    )}
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-bold mb-3">{industry.title}</h3>
+                  <p class="text-muted">{industry.description}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Qualifier Section -->
+    <section class="section bg-charcoal">
+      <div class="container">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="headline-lg text-center mb-12">Is This You?</h2>
+
+          <div class="space-y-4 mb-12">
+            {qualifiers.map((item) => (
+              <div class="flex items-center gap-4 p-4 bg-gray-800 border border-white/10">
+                <div class="w-8 h-8 flex-shrink-0 bg-power-red rounded flex items-center justify-center">
+                  <svg class="w-5 h-5 text-impact-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span class="text-lg font-medium">{item}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="text-center">
+            <p class="body-lg text-muted mb-8">
+              If you checked most of these boxes, we should talk.
+            </p>
+            <Button href="/contact" variant="primary" size="lg">
+              Let's See If We're A Fit
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

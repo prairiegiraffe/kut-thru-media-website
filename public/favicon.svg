@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" fill="#121212"/>
+  <text x="50" y="55" text-anchor="middle" dominant-baseline="middle" font-family="Arial Black, sans-serif" font-size="24" font-weight="900" fill="#FFFFFF">KTM</text>
+  <rect x="20" y="72" width="60" height="4" fill="#EC1D23"/>
+</svg>
