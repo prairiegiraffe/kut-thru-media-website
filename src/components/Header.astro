@@ -1,11 +1,19 @@
 ---
 const navLinks = [
-  { href: '/who-we-are', label: 'Who We Are' },
-  { href: '/who-we-work-with', label: 'Who We Work With' },
-  { href: '/what-we-do', label: 'What We Do' },
-  { href: '/process', label: 'Process' },
-  { href: '/work', label: 'Work' },
-  { href: '/podcast', label: 'Podcast' },
+  { href: '/who-we-are', label: 'Who We Are', number: '01' },
+  { href: '/who-we-work-with', label: 'Who We Work With', number: '02' },
+  { href: '/what-we-do', label: 'What We Do', number: '03' },
+  { href: '/process', label: 'Process', number: '04' },
+  { href: '/work', label: 'Work', number: '05' },
+  { href: '/podcast', label: 'Podcast', number: '06' },
+];
+
+const socialLinks = [
+  { href: 'https://linkedin.com/company/kutthru', label: 'LinkedIn' },
+  { href: 'https://facebook.com/kutthru', label: 'Facebook' },
+  { href: 'https://instagram.com/kutthru', label: 'Instagram' },
+  { href: 'https://youtube.com/@kutthru', label: 'YouTube' },
+  { href: 'https://tiktok.com/@kutthru', label: 'TikTok' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -17,123 +25,256 @@ const currentPath = Astro.url.pathname;
   <div class="container relative">
     <nav class="flex items-center justify-between h-24">
       <!-- Logo -->
-      <a href="/" class="logo-link relative z-10 group" data-cursor>
+      <a href="/" class="logo-link relative z-[60] group" data-cursor>
         <span class="text-2xl font-black tracking-tighter">
           <span class="inline-block transition-transform duration-300 group-hover:-translate-y-1">K</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[25ms]">U</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[50ms]">T</span><span class="text-power-red mx-1 inline-block transition-transform duration-300 group-hover:scale-110">|</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[75ms]">T</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[100ms]">H</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[125ms]">R</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[150ms]">Ū</span>
         </span>
       </a>
 
-      <!-- Desktop Navigation -->
-      <div class="hidden lg:flex items-center gap-10">
-        {navLinks.map((link) => (
-          <a
-            href={link.href}
-            class:list={[
-              'nav-link relative text-sm font-medium tracking-wide transition-colors duration-300',
-              currentPath === link.href
-                ? 'text-power-red'
-                : 'text-text-muted hover:text-impact-white'
-            ]}
-          >
-            <span class="relative z-10">{link.label}</span>
-            <span class="nav-link-line absolute bottom-0 left-0 w-full h-px bg-power-red transform scale-x-0 origin-right transition-transform duration-300"></span>
-          </a>
-        ))}
-      </div>
-
-      <!-- CTA Button -->
-      <div class="hidden lg:block relative z-10">
-        <a href="/contact" class="btn btn-primary text-sm py-3 px-8">
+      <!-- Right Side: CTA + Menu Button -->
+      <div class="flex items-center gap-6 relative z-[60]">
+        <!-- CTA Button - Always visible -->
+        <a href="/contact" class="btn btn-primary text-sm py-3 px-8 hidden sm:inline-flex">
           <span>Let's Talk</span>
         </a>
-      </div>
 
-      <!-- Mobile Menu Button -->
-      <button
-        id="mobile-menu-button"
-        class="lg:hidden relative z-10 w-12 h-12 flex items-center justify-center"
-        aria-label="Toggle menu"
-        aria-expanded="false"
-      >
-        <div class="menu-icon w-6 h-4 relative">
-          <span class="absolute left-0 top-0 w-full h-0.5 bg-impact-white transition-all duration-300 origin-center"></span>
-          <span class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-impact-white transition-all duration-300"></span>
-          <span class="absolute left-0 bottom-0 w-full h-0.5 bg-impact-white transition-all duration-300 origin-center"></span>
-        </div>
-      </button>
+        <!-- Menu Button - Always visible -->
+        <button
+          id="menu-button"
+          class="menu-button relative w-14 h-14 flex items-center justify-center group"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <!-- Circular background -->
+          <div class="absolute inset-0 rounded-full border border-white/20 group-hover:border-power-red transition-colors duration-300"></div>
+          <div class="absolute inset-0 rounded-full bg-power-red scale-0 group-hover:scale-100 transition-transform duration-500 ease-out"></div>
+
+          <!-- Menu icon -->
+          <div class="menu-icon relative w-6 h-4 z-10">
+            <span class="menu-line absolute left-0 top-0 w-full h-0.5 bg-impact-white transition-all duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]"></span>
+            <span class="menu-line absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-impact-white transition-all duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]"></span>
+            <span class="menu-line absolute left-0 bottom-0 w-full h-0.5 bg-impact-white transition-all duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]"></span>
+          </div>
+
+          <!-- Menu text -->
+          <span class="menu-text absolute -left-16 text-xs font-bold uppercase tracking-widest text-text-muted opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden lg:block">Menu</span>
+        </button>
+      </div>
     </nav>
   </div>
 
-  <!-- Mobile Menu - Full Screen -->
-  <div
-    id="mobile-menu"
-    class="mobile-menu fixed inset-0 bg-charcoal z-40 flex items-center justify-center opacity-0 invisible transition-all duration-500"
-  >
-    <div class="container">
-      <nav class="flex flex-col items-center gap-8">
-        {navLinks.map((link, index) => (
-          <a
-            href={link.href}
-            class:list={[
-              'mobile-nav-link text-4xl md:text-5xl font-black uppercase tracking-tight transition-all duration-300',
-              currentPath === link.href
-                ? 'text-power-red'
-                : 'text-impact-white hover:text-power-red'
-            ]}
-            style={`--index: ${index}`}
-          >
-            {link.label}
+  <!-- Mega Menu Overlay -->
+  <div id="mega-menu" class="mega-menu fixed inset-0 z-50 pointer-events-none">
+    <!-- Background panels that slide in -->
+    <div class="mega-bg-1 absolute inset-0 bg-steel-black transform -translate-x-full"></div>
+    <div class="mega-bg-2 absolute inset-0 bg-charcoal transform -translate-x-full"></div>
+
+    <!-- Content -->
+    <div class="mega-content absolute inset-0 opacity-0 flex">
+      <!-- Main Navigation - Left Side -->
+      <div class="w-full lg:w-2/3 h-full flex flex-col justify-center px-8 lg:px-24 py-32">
+        <nav class="space-y-2 lg:space-y-4">
+          {navLinks.map((link, index) => (
+            <a
+              href={link.href}
+              class:list={[
+                'mega-nav-link group flex items-baseline gap-4 lg:gap-8',
+                currentPath === link.href ? 'is-active' : ''
+              ]}
+              style={`--index: ${index}`}
+            >
+              <span class="nav-number text-xs lg:text-sm font-mono text-power-red opacity-50 group-hover:opacity-100 transition-opacity duration-300">{link.number}</span>
+              <span class="nav-label relative overflow-hidden">
+                <span class="nav-text block text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-black uppercase tracking-tight transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover:translate-y-[-100%]">
+                  {link.label}
+                </span>
+                <span class="nav-text-hover absolute top-full left-0 text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-black uppercase tracking-tight text-power-red transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover:translate-y-[-100%]">
+                  {link.label}
+                </span>
+              </span>
+              <!-- Animated arrow -->
+              <svg class="nav-arrow w-8 h-8 lg:w-12 lg:h-12 text-power-red opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          ))}
+        </nav>
+
+        <!-- Mobile CTA -->
+        <div class="mega-cta mt-12 sm:hidden">
+          <a href="/contact" class="btn btn-primary text-lg py-4 px-10">
+            <span>Let's Talk</span>
           </a>
-        ))}
-        <a
-          href="/contact"
-          class="mobile-nav-link mt-8 btn btn-primary text-lg py-4 px-12"
-          style="--index: 7"
-        >
-          <span>Let's Talk</span>
-        </a>
-      </nav>
+        </div>
+      </div>
+
+      <!-- Side Panel - Right Side (Desktop only) -->
+      <div class="mega-side hidden lg:flex w-1/3 h-full flex-col justify-between py-32 px-12 border-l border-white/5">
+        <!-- Top: Tagline -->
+        <div class="mega-side-item" style="--delay: 0.5s">
+          <p class="text-2xl xl:text-3xl font-bold leading-tight">
+            Clean Marketing<br />
+            <span class="text-text-muted">for Dirty Jobs.</span>
+          </p>
+        </div>
+
+        <!-- Middle: Contact Info -->
+        <div class="space-y-8">
+          <div class="mega-side-item" style="--delay: 0.6s">
+            <span class="block text-xs font-bold uppercase tracking-widest text-text-subtle mb-3">Email</span>
+            <a href="mailto:info@kutthru.com" class="text-xl hover:text-power-red transition-colors duration-300">
+              info@kutthru.com
+            </a>
+          </div>
+          <div class="mega-side-item" style="--delay: 0.7s">
+            <span class="block text-xs font-bold uppercase tracking-widest text-text-subtle mb-3">Phone</span>
+            <a href="tel:307-228-0352" class="text-xl hover:text-power-red transition-colors duration-300">
+              307-228-0352
+            </a>
+          </div>
+        </div>
+
+        <!-- Bottom: Social Links -->
+        <div class="mega-side-item" style="--delay: 0.8s">
+          <span class="block text-xs font-bold uppercase tracking-widest text-text-subtle mb-6">Follow Us</span>
+          <div class="flex flex-wrap gap-3">
+            {socialLinks.map((social, i) => (
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link text-sm font-semibold uppercase tracking-wider text-text-muted hover:text-power-red transition-colors duration-300"
+                style={`--social-delay: ${0.8 + i * 0.05}s`}
+              >
+                {social.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decorative Elements -->
+    <div class="mega-decor absolute bottom-8 left-8 lg:left-24 text-[15vw] font-black text-white/[0.02] leading-none pointer-events-none select-none opacity-0">
+      KUT|THRŪ
     </div>
   </div>
 </header>
 
 <style>
-  /* Navigation link hover effect */
-  .nav-link:hover .nav-link-line {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
-
-  /* Mobile menu open state */
-  .mobile-menu.open {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .mobile-menu.open .mobile-nav-link {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .mobile-nav-link {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.4s ease, transform 0.4s ease, color 0.3s ease;
-    transition-delay: calc(var(--index) * 0.05s);
-  }
-
-  /* Menu icon animation */
-  .menu-icon.open span:nth-child(1) {
+  /* Menu button open state */
+  .menu-button.open .menu-line:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
 
-  .menu-icon.open span:nth-child(2) {
+  .menu-button.open .menu-line:nth-child(2) {
     opacity: 0;
-    transform: translateX(-10px);
+    transform: scaleX(0);
   }
 
-  .menu-icon.open span:nth-child(3) {
+  .menu-button.open .menu-line:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .menu-button.open .menu-text {
+    opacity: 0 !important;
+  }
+
+  /* Mega menu states */
+  .mega-menu.open {
+    pointer-events: auto;
+  }
+
+  .mega-menu.open .mega-bg-1 {
+    transform: translateX(0);
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .mega-menu.open .mega-bg-2 {
+    transform: translateX(0);
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1) 0.1s;
+  }
+
+  .mega-menu.open .mega-content {
+    opacity: 1;
+    transition: opacity 0.5s ease 0.4s;
+  }
+
+  .mega-menu.open .mega-decor {
+    opacity: 1;
+    transition: opacity 1s ease 0.6s;
+  }
+
+  /* Close animations */
+  .mega-menu:not(.open) .mega-bg-1 {
+    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1) 0.2s;
+  }
+
+  .mega-menu:not(.open) .mega-bg-2 {
+    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1) 0.1s;
+  }
+
+  .mega-menu:not(.open) .mega-content {
+    transition: opacity 0.3s ease;
+  }
+
+  /* Nav link animations */
+  .mega-nav-link {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .mega-menu.open .mega-nav-link {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    transition-delay: calc(0.3s + var(--index) * 0.08s);
+  }
+
+  .mega-menu:not(.open) .mega-nav-link {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition-delay: calc(var(--index) * 0.02s);
+  }
+
+  /* Active link state */
+  .mega-nav-link.is-active .nav-text {
+    color: var(--color-power-red);
+  }
+
+  /* Side panel animations */
+  .mega-side-item {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  .mega-menu.open .mega-side-item {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    transition-delay: var(--delay, 0.5s);
+  }
+
+  /* Social link stagger */
+  .social-link {
+    opacity: 0;
+  }
+
+  .mega-menu.open .social-link {
+    opacity: 1;
+    transition: opacity 0.4s ease;
+    transition-delay: var(--social-delay, 0.8s);
+  }
+
+  /* CTA animation */
+  .mega-cta {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .mega-menu.open .mega-cta {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease 0.7s, transform 0.5s ease 0.7s;
   }
 
   /* Header scroll state */
@@ -146,6 +287,11 @@ const currentPath = Astro.url.pathname;
   #header.scrolled nav {
     height: 5rem;
   }
+
+  /* Hide header when menu is open */
+  #header.menu-open .header-bg {
+    opacity: 0;
+  }
 </style>
 
 <script>
@@ -155,16 +301,18 @@ const currentPath = Astro.url.pathname;
   gsap.registerPlugin(ScrollTrigger);
 
   const header = document.getElementById('header');
-  const menuButton = document.getElementById('mobile-menu-button');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const menuIcon = menuButton?.querySelector('.menu-icon');
+  const menuButton = document.getElementById('menu-button');
+  const megaMenu = document.getElementById('mega-menu');
 
   // Scroll behavior
   let lastScroll = 0;
+  let menuOpen = false;
 
   ScrollTrigger.create({
     start: 'top -100',
     onUpdate: (self) => {
+      if (menuOpen) return; // Don't hide header when menu is open
+
       if (self.scroll() > 100) {
         header?.classList.add('scrolled');
       } else {
@@ -182,38 +330,45 @@ const currentPath = Astro.url.pathname;
     },
   });
 
-  // Mobile menu toggle
+  // Menu toggle
   menuButton?.addEventListener('click', () => {
-    const isOpen = mobileMenu?.classList.contains('open');
+    menuOpen = !menuOpen;
 
-    if (isOpen) {
-      mobileMenu?.classList.remove('open');
-      menuIcon?.classList.remove('open');
-      menuButton.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-
-      // Stop lenis when menu is open
-      if ((window as any).lenis) {
-        (window as any).lenis.start();
-      }
-    } else {
-      mobileMenu?.classList.add('open');
-      menuIcon?.classList.add('open');
+    if (menuOpen) {
+      megaMenu?.classList.add('open');
+      menuButton.classList.add('open');
+      header?.classList.add('menu-open');
       menuButton.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
 
-      // Stop lenis when menu is open
+      // Ensure header is visible
+      gsap.to(header, { y: 0, duration: 0.3, ease: 'power2.out' });
+
+      // Stop lenis
       if ((window as any).lenis) {
         (window as any).lenis.stop();
+      }
+    } else {
+      megaMenu?.classList.remove('open');
+      menuButton.classList.remove('open');
+      header?.classList.remove('menu-open');
+      menuButton.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+
+      // Resume lenis
+      if ((window as any).lenis) {
+        (window as any).lenis.start();
       }
     }
   });
 
   // Close menu on link click
-  document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+  document.querySelectorAll('.mega-nav-link, .mega-cta a').forEach((link) => {
     link.addEventListener('click', () => {
-      mobileMenu?.classList.remove('open');
-      menuIcon?.classList.remove('open');
+      menuOpen = false;
+      megaMenu?.classList.remove('open');
+      menuButton?.classList.remove('open');
+      header?.classList.remove('menu-open');
       document.body.style.overflow = '';
 
       if ((window as any).lenis) {
@@ -224,14 +379,62 @@ const currentPath = Astro.url.pathname;
 
   // Close menu on escape key
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && mobileMenu?.classList.contains('open')) {
-      mobileMenu?.classList.remove('open');
-      menuIcon?.classList.remove('open');
+    if (e.key === 'Escape' && menuOpen) {
+      menuOpen = false;
+      megaMenu?.classList.remove('open');
+      menuButton?.classList.remove('open');
+      header?.classList.remove('menu-open');
       document.body.style.overflow = '';
 
       if ((window as any).lenis) {
         (window as any).lenis.start();
       }
     }
+  });
+
+  // Magnetic effect on menu button
+  const menuButtonWrap = menuButton;
+  if (menuButtonWrap) {
+    menuButtonWrap.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = menuButtonWrap.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+
+      gsap.to(menuButtonWrap, {
+        x: x * 0.3,
+        y: y * 0.3,
+        duration: 0.3,
+        ease: 'power2.out',
+      });
+    });
+
+    menuButtonWrap.addEventListener('mouseleave', () => {
+      gsap.to(menuButtonWrap, {
+        x: 0,
+        y: 0,
+        duration: 0.5,
+        ease: 'elastic.out(1, 0.3)',
+      });
+    });
+  }
+
+  // Hover effect on nav links - image preview could go here
+  document.querySelectorAll('.mega-nav-link').forEach((link) => {
+    link.addEventListener('mouseenter', () => {
+      // Add any hover effects here
+      gsap.to(link, {
+        x: 20,
+        duration: 0.3,
+        ease: 'power2.out',
+      });
+    });
+
+    link.addEventListener('mouseleave', () => {
+      gsap.to(link, {
+        x: 0,
+        duration: 0.3,
+        ease: 'power2.out',
+      });
+    });
   });
 </script>
