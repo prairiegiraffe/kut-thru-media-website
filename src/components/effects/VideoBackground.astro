@@ -1,0 +1,92 @@
+---
+// Full-screen video background with overlay
+interface Props {
+  src: string;
+  poster?: string;
+  overlay?: boolean;
+  overlayOpacity?: number;
+  class?: string;
+}
+
+const {
+  src,
+  poster,
+  overlay = true,
+  overlayOpacity = 0.6,
+  class: className = '',
+} = Astro.props;
+---
+
+<div class:list={['video-bg-container', className]}>
+  <video
+    class="video-bg"
+    autoplay
+    muted
+    loop
+    playsinline
+    poster={poster}
+  >
+    <source src={src} type="video/mp4" />
+  </video>
+  {overlay && (
+    <div
+      class="video-bg-overlay"
+      style={`--overlay-opacity: ${overlayOpacity}`}
+    />
+  )}
+  <div class="video-bg-grain"></div>
+</div>
+
+<style>
+  .video-bg-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  .video-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .video-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, var(--overlay-opacity)) 0%,
+      rgba(0, 0, 0, calc(var(--overlay-opacity) + 0.2)) 100%
+    );
+  }
+
+  .video-bg-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+</style>
+
+<script>
+  // Pause video when not in viewport for performance
+  const videos = document.querySelectorAll('.video-bg') as NodeListOf<HTMLVideoElement>;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  videos.forEach((video) => observer.observe(video));
+</script>

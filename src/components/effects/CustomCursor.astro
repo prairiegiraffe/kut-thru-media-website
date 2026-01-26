@@ -1,0 +1,176 @@
+---
+// Custom cursor that follows mouse with magnetic effect on links
+---
+
+<div id="cursor" class="cursor">
+  <div class="cursor-dot"></div>
+  <div class="cursor-outline"></div>
+  <div class="cursor-text">VIEW</div>
+</div>
+
+<style>
+  .cursor {
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    mix-blend-mode: difference;
+  }
+
+  .cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: var(--color-impact-white);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background 0.3s;
+    pointer-events: none;
+  }
+
+  .cursor-outline {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--color-impact-white);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease-out, height 0.3s ease-out, border-color 0.3s;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .cursor-text {
+    position: fixed;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-impact-white);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .cursor.hover .cursor-dot {
+    width: 0;
+    height: 0;
+  }
+
+  .cursor.hover .cursor-outline {
+    width: 80px;
+    height: 80px;
+    border-color: var(--color-power-red);
+    opacity: 1;
+  }
+
+  .cursor.hover-view .cursor-text {
+    opacity: 1;
+  }
+
+  .cursor.hover-view .cursor-outline {
+    width: 100px;
+    height: 100px;
+    background: var(--color-power-red);
+    border-color: var(--color-power-red);
+  }
+
+  .cursor.clicked .cursor-outline {
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  @media (max-width: 1024px) {
+    .cursor {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  const cursor = document.getElementById('cursor');
+  const cursorDot = cursor?.querySelector('.cursor-dot') as HTMLElement;
+  const cursorOutline = cursor?.querySelector('.cursor-outline') as HTMLElement;
+  const cursorText = cursor?.querySelector('.cursor-text') as HTMLElement;
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let dotX = 0;
+  let dotY = 0;
+  let outlineX = 0;
+  let outlineY = 0;
+
+  // Track mouse position
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Animate cursor
+  function animate() {
+    // Smooth follow for dot
+    dotX += (mouseX - dotX) * 0.2;
+    dotY += (mouseY - dotY) * 0.2;
+
+    // Even smoother follow for outline
+    outlineX += (mouseX - outlineX) * 0.1;
+    outlineY += (mouseY - outlineY) * 0.1;
+
+    if (cursorDot) {
+      cursorDot.style.left = `${dotX}px`;
+      cursorDot.style.top = `${dotY}px`;
+    }
+
+    if (cursorOutline) {
+      cursorOutline.style.left = `${outlineX}px`;
+      cursorOutline.style.top = `${outlineY}px`;
+    }
+
+    if (cursorText) {
+      cursorText.style.left = `${outlineX}px`;
+      cursorText.style.top = `${outlineY}px`;
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  // Hover effects on interactive elements
+  const interactiveElements = document.querySelectorAll('a, button, [data-cursor]');
+
+  interactiveElements.forEach((el) => {
+    el.addEventListener('mouseenter', () => {
+      cursor?.classList.add('hover');
+
+      const cursorType = el.getAttribute('data-cursor');
+      if (cursorType === 'view') {
+        cursor?.classList.add('hover-view');
+      }
+    });
+
+    el.addEventListener('mouseleave', () => {
+      cursor?.classList.remove('hover', 'hover-view');
+    });
+  });
+
+  // Click effect
+  document.addEventListener('mousedown', () => {
+    cursor?.classList.add('clicked');
+  });
+
+  document.addEventListener('mouseup', () => {
+    cursor?.classList.remove('clicked');
+  });
+
+  // Hide cursor when leaving window
+  document.addEventListener('mouseleave', () => {
+    gsap.to(cursor, { opacity: 0, duration: 0.3 });
+  });
+
+  document.addEventListener('mouseenter', () => {
+    gsap.to(cursor, { opacity: 1, duration: 0.3 });
+  });
+</script>

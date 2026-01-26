@@ -1,0 +1,91 @@
+---
+// Text reveal animation component using SplitType
+interface Props {
+  text: string;
+  element?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
+  class?: string;
+  delay?: number;
+  stagger?: number;
+  threshold?: number;
+}
+
+const {
+  text,
+  element: Element = 'h1',
+  class: className = '',
+  delay = 0,
+  stagger = 0.03,
+  threshold = 0.5,
+} = Astro.props;
+---
+
+<Element
+  class:list={['text-reveal', className]}
+  data-delay={delay}
+  data-stagger={stagger}
+  data-threshold={threshold}
+>
+  {text}
+</Element>
+
+<style is:global>
+  .text-reveal {
+    overflow: hidden;
+  }
+
+  .text-reveal .line {
+    overflow: hidden;
+    display: block;
+  }
+
+  .text-reveal .word {
+    display: inline-block;
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  .text-reveal.revealed .word {
+    transform: translateY(0);
+    opacity: 1;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import SplitType from 'split-type';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Initialize all text reveal elements
+  document.querySelectorAll('.text-reveal').forEach((el) => {
+    const delay = parseFloat(el.getAttribute('data-delay') || '0');
+    const stagger = parseFloat(el.getAttribute('data-stagger') || '0.03');
+    const threshold = parseFloat(el.getAttribute('data-threshold') || '0.5');
+
+    // Split text into lines and words
+    const split = new SplitType(el as HTMLElement, {
+      types: 'lines,words',
+      lineClass: 'line',
+      wordClass: 'word',
+    });
+
+    // Animate words on scroll
+    gsap.to(split.words, {
+      scrollTrigger: {
+        trigger: el,
+        start: `top ${100 - threshold * 100}%`,
+        toggleActions: 'play none none none',
+      },
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      stagger: stagger,
+      delay: delay,
+      ease: 'power3.out',
+      onComplete: () => {
+        el.classList.add('revealed');
+      },
+    });
+  });
+</script>

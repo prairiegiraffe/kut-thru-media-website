@@ -2,12 +2,15 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Button from '../components/ui/Button.astro';
-import SectionHeadline from '../components/ui/SectionHeadline.astro';
+import MagneticButton from '../components/effects/MagneticButton.astro';
+import ParallaxImage from '../components/effects/ParallaxImage.astro';
+import MarqueeText from '../components/effects/MarqueeText.astro';
 
 const caseStudies = [
   {
     client: 'Walker Inspection',
+    slug: 'walker-inspection',
+    tagline: 'Inspect. Protect. Perform.',
     services: [
       'Full brand refresh (logo retained)',
       'Complete website redesign',
@@ -15,11 +18,12 @@ const caseStudies = [
       'Company "hero" video production',
       'Ongoing social media management',
     ],
-    testimonial: '[Placeholder for client testimonial]',
-    hasBeforeAfter: true,
+    image: 'https://images.pexels.com/photos/2760243/pexels-photo-2760243.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    testimonial: '"KUT | THRŪ transformed how we present ourselves to clients. The response has been incredible."',
   },
   {
-    client: 'PRC - Powder River Construction',
+    client: 'PRC',
+    slug: 'prc',
     tagline: 'WE BUILD.',
     services: [
       'Complete rebrand from "Powder River Construction" to "PRC"',
@@ -28,10 +32,12 @@ const caseStudies = [
       'Professional photography',
       'Hero video (in progress)',
     ],
-    hasBeforeAfter: true,
+    image: 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
   {
     client: 'MTN Mud',
+    slug: 'mtn-mud',
+    tagline: 'DRILLING SOLUTIONS.',
     services: [
       'Complete rebrand from "Mountain Mud Service & Supply" to "MTN MUD"',
       'Modern logo with derrick icon',
@@ -39,8 +45,19 @@ const caseStudies = [
       'Professional photography',
       'Hero video (in progress)',
     ],
-    hasBeforeAfter: true,
+    image: 'https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=1200',
   },
+];
+
+const galleryImages = [
+  'https://images.pexels.com/photos/2760241/pexels-photo-2760241.jpeg?auto=compress&cs=tinysrgb&w=600',
+  'https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=600',
+  'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=600',
+  'https://images.pexels.com/photos/585419/pexels-photo-585419.jpeg?auto=compress&cs=tinysrgb&w=600',
+  'https://images.pexels.com/photos/2760243/pexels-photo-2760243.jpeg?auto=compress&cs=tinysrgb&w=600',
+  'https://images.pexels.com/photos/1117452/pexels-photo-1117452.jpeg?auto=compress&cs=tinysrgb&w=600',
+  'https://images.pexels.com/photos/2881632/pexels-photo-2881632.jpeg?auto=compress&cs=tinysrgb&w=600',
+  'https://images.pexels.com/photos/416405/pexels-photo-416405.jpeg?auto=compress&cs=tinysrgb&w=600',
 ];
 ---
 
@@ -50,74 +67,91 @@ const caseStudies = [
 >
   <Header />
 
-  <main class="flex-1 pt-20">
+  <main class="flex-1">
     <!-- Hero Section -->
-    <section class="section bg-gradient-to-b from-gray-900 to-charcoal">
-      <div class="container">
-        <div class="max-w-3xl">
-          <h1 class="headline-xl mb-6">Our Work</h1>
-          <p class="body-lg text-muted">
-            Real results for real businesses.
-          </p>
-        </div>
+    <section class="relative min-h-[70vh] flex items-end pb-20 overflow-hidden">
+      <!-- Background Video -->
+      <div class="absolute inset-0">
+        <video
+          class="w-full h-full object-cover"
+          autoplay
+          muted
+          loop
+          playsinline
+        >
+          <source src="https://videos.pexels.com/video-files/5532761/5532761-hd_1920_1080_25fps.mp4" type="video/mp4" />
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/70 to-charcoal/30"></div>
       </div>
+
+      <div class="container relative z-10 pt-40">
+        <span class="eyebrow block mb-6" data-animate="fade-up">Case Studies</span>
+        <h1 class="headline-hero mb-6" data-animate="fade-up">
+          Our Work
+        </h1>
+        <p class="body-lg text-muted max-w-2xl" data-animate="fade-up">
+          Real results for real businesses. Rebrands, websites, photography, and video that commands attention.
+        </p>
+      </div>
+    </section>
+
+    <!-- Marquee -->
+    <section class="py-6 border-y border-white/5 bg-charcoal-light overflow-hidden">
+      <MarqueeText
+        text="WALKER INSPECTION • PRC • MTN MUD • WALKER INSPECTION • PRC • MTN MUD"
+        speed={30}
+        class="text-xl font-bold text-text-subtle/30"
+      />
     </section>
 
     <!-- Case Studies -->
     {caseStudies.map((study, index) => (
-      <section class={`section ${index % 2 === 0 ? 'bg-gray-900' : 'bg-charcoal'}`}>
+      <section class="section bg-charcoal border-b border-white/5">
         <div class="container">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class={index % 2 === 1 ? 'lg:order-2' : ''}>
-              <span class="eyebrow block mb-4">Case Study</span>
-              <h2 class="headline-md mb-2">{study.client}</h2>
+          <div class={`grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
+            <!-- Content -->
+            <div class={index % 2 === 1 ? 'lg:col-start-2' : ''} data-animate="fade-up">
+              <span class="eyebrow block mb-4">Case Study {String(index + 1).padStart(2, '0')}</span>
+              <h2 class="headline-xl mb-4">{study.client}</h2>
               {study.tagline && (
-                <p class="text-power-red font-bold text-xl mb-6">{study.tagline}</p>
+                <p class="text-2xl font-bold text-power-red mb-8">{study.tagline}</p>
               )}
 
-              <div class="mb-8">
-                <h3 class="text-lg font-bold mb-4">What We Did:</h3>
-                <ul class="space-y-2">
+              <div class="mb-10">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-text-subtle mb-6">What We Did</h3>
+                <ul class="space-y-4">
                   {study.services.map((service) => (
-                    <li class="flex items-start gap-3">
-                      <svg class="w-5 h-5 text-power-red flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span class="text-muted">{service}</span>
+                    <li class="flex items-start gap-4">
+                      <span class="w-2 h-2 bg-power-red mt-2.5 flex-shrink-0"></span>
+                      <span class="text-lg text-muted">{service}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
               {study.testimonial && (
-                <blockquote class="border-l-4 border-power-red pl-6 py-2 italic text-muted">
-                  {study.testimonial}
+                <blockquote class="border-l-2 border-power-red pl-6 py-2">
+                  <p class="text-xl italic text-muted">{study.testimonial}</p>
                 </blockquote>
               )}
             </div>
 
-            <div class={index % 2 === 1 ? 'lg:order-1' : ''}>
-              {study.hasBeforeAfter && (
-                <div class="space-y-4">
-                  <div class="grid grid-cols-2 gap-4">
-                    <div>
-                      <span class="text-sm text-text-subtle block mb-2">Before</span>
-                      <div class="aspect-square bg-gray-800 border border-white/10 flex items-center justify-center">
-                        <span class="text-text-subtle text-sm">Before logo</span>
-                      </div>
-                    </div>
-                    <div>
-                      <span class="text-sm text-text-subtle block mb-2">After</span>
-                      <div class="aspect-square bg-gray-800 border border-white/10 flex items-center justify-center">
-                        <span class="text-text-subtle text-sm">After logo</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="aspect-video bg-gray-800 border border-white/10 flex items-center justify-center">
-                    <span class="text-text-subtle">Website/project screenshot placeholder</span>
-                  </div>
+            <!-- Image -->
+            <div class={index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''} data-animate="fade-up">
+              <div class="relative group" data-cursor="view">
+                <ParallaxImage
+                  src={study.image}
+                  alt={`${study.client} project`}
+                  class="aspect-4/5"
+                  speed={0.15}
+                />
+                <!-- Hover overlay -->
+                <div class="absolute inset-0 bg-power-red/0 group-hover:bg-power-red/20 transition-all duration-500 flex items-center justify-center">
+                  <span class="text-2xl font-bold uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    View Project
+                  </span>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
@@ -125,19 +159,28 @@ const caseStudies = [
     ))}
 
     <!-- Photography Gallery Section -->
-    <section class="section bg-gray-900">
-      <div class="container">
-        <SectionHeadline
-          title="On-Site Photography"
-          subtitle="We go where the work happens. Rigs, job sites, facilities—real images of real work."
-          align="center"
-        />
+    <section class="section bg-gray-900 overflow-hidden">
+      <div class="container mb-16">
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+          <div data-animate="fade-up">
+            <span class="eyebrow block mb-6">Photography</span>
+            <h2 class="headline-lg">
+              On-Site.<br />
+              <span class="text-stroke">In The Field.</span>
+            </h2>
+          </div>
+          <p class="body-lg text-muted lg:max-w-md" data-animate="fade-up">
+            We go where the work happens. Rigs, job sites, facilities—real images of real work.
+          </p>
+        </div>
+      </div>
 
-        <!-- Photo Grid Placeholder -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div class="aspect-square bg-gray-800 border border-white/10 flex items-center justify-center hover:border-power-red/50 transition-colors cursor-pointer">
-              <span class="text-text-subtle text-sm">Photo {i + 1}</span>
+      <!-- Infinite Scroll Gallery -->
+      <div class="gallery-scroll" data-animate="fade-in">
+        <div class="gallery-track">
+          {[...galleryImages, ...galleryImages].map((img, i) => (
+            <div class="gallery-item" data-cursor="view">
+              <img src={img} alt={`Gallery image ${(i % galleryImages.length) + 1}`} class="w-full h-full object-cover" loading="lazy" />
             </div>
           ))}
         </div>
@@ -145,43 +188,127 @@ const caseStudies = [
     </section>
 
     <!-- Video Section -->
-    <section class="section bg-charcoal">
-      <div class="container">
-        <SectionHeadline
-          title="Video Production"
-          subtitle="From hero videos to social media clips—we tell your story in motion."
-          align="center"
-        />
+    <section class="relative min-h-screen flex items-center overflow-hidden">
+      <!-- Background -->
+      <div class="absolute inset-0">
+        <video
+          class="w-full h-full object-cover"
+          autoplay
+          muted
+          loop
+          playsinline
+        >
+          <source src="https://videos.pexels.com/video-files/5945711/5945711-hd_1920_1080_30fps.mp4" type="video/mp4" />
+        </video>
+        <div class="absolute inset-0 bg-charcoal/85"></div>
+      </div>
 
-        <!-- Video Placeholder -->
-        <div class="max-w-4xl mx-auto">
-          <div class="aspect-video bg-gray-800 border border-white/10 flex items-center justify-center relative">
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-20 h-20 bg-power-red rounded-full flex items-center justify-center cursor-pointer hover:bg-power-red-dark transition-colors">
-                <svg class="w-8 h-8 text-impact-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
-            <span class="text-text-subtle">Walker Inspection Hero Video</span>
+      <div class="container relative z-10 py-32">
+        <div class="max-w-4xl mx-auto text-center">
+          <span class="eyebrow block mb-6" data-animate="fade-up">Video Production</span>
+          <h2 class="headline-xl mb-8" data-animate="fade-up">
+            Stories That<br />
+            <span class="text-glow text-power-red">Hit Hard.</span>
+          </h2>
+          <p class="body-lg text-muted mb-12 max-w-2xl mx-auto" data-animate="fade-up">
+            From hero videos to social media clips—we tell your story in motion. No fluff. Just impact.
+          </p>
+
+          <!-- Play Button -->
+          <div class="inline-block" data-animate="scale-up">
+            <button class="play-btn group relative w-32 h-32 rounded-full border-2 border-white/30 flex items-center justify-center hover:border-power-red transition-colors duration-300">
+              <div class="absolute inset-0 rounded-full bg-power-red/0 group-hover:bg-power-red/20 transition-colors duration-300"></div>
+              <svg class="w-10 h-10 text-impact-white ml-1 relative z-10" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              <!-- Pulse animation -->
+              <span class="absolute inset-0 rounded-full border border-white/20 animate-ping"></span>
+            </button>
           </div>
         </div>
       </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="section bg-power-red">
-      <div class="container text-center">
-        <h2 class="headline-lg mb-6 text-impact-white">Want Results Like This?</h2>
-        <p class="body-lg text-impact-white/90 mb-10">
-          Let's talk about what we can build for you.
-        </p>
-        <Button href="/contact" variant="secondary" size="lg">
-          Start the Conversation
-        </Button>
+    <section class="relative py-32 lg:py-48 overflow-hidden">
+      <div class="absolute inset-0 bg-power-red"></div>
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 left-0 w-full h-full" style="background-image: repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(0,0,0,0.1) 35px, rgba(0,0,0,0.1) 70px);"></div>
+      </div>
+
+      <div class="container relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="headline-xl text-impact-white mb-8" data-animate="fade-up">
+            Want Results Like This?
+          </h2>
+          <p class="body-lg text-impact-white/80 mb-12 max-w-2xl mx-auto" data-animate="fade-up">
+            Let's talk about what we can build for you.
+          </p>
+          <div data-animate="fade-up">
+            <MagneticButton href="/contact" variant="secondary" size="lg">
+              <span>Start the Conversation</span>
+            </MagneticButton>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
   <Footer />
 </Layout>
+
+<style>
+  /* Gallery horizontal scroll */
+  .gallery-scroll {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .gallery-track {
+    display: flex;
+    gap: 1rem;
+    animation: scroll 40s linear infinite;
+    width: max-content;
+  }
+
+  .gallery-item {
+    width: 400px;
+    height: 500px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .gallery-item img {
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .gallery-scroll:hover .gallery-track {
+    animation-play-state: paused;
+  }
+
+  /* Play button pulse */
+  .play-btn span {
+    animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes ping {
+    75%, 100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+</style>

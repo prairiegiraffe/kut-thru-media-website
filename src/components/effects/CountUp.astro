@@ -1,0 +1,60 @@
+---
+// Animated counter that counts up when in view
+interface Props {
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  duration?: number;
+  class?: string;
+}
+
+const {
+  value,
+  suffix = '',
+  prefix = '',
+  duration = 2,
+  class: className = '',
+} = Astro.props;
+---
+
+<span
+  class:list={['count-up', className]}
+  data-value={value}
+  data-suffix={suffix}
+  data-prefix={prefix}
+  data-duration={duration}
+>
+  {prefix}0{suffix}
+</span>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.querySelectorAll('.count-up').forEach((el) => {
+    const value = parseFloat(el.getAttribute('data-value') || '0');
+    const suffix = el.getAttribute('data-suffix') || '';
+    const prefix = el.getAttribute('data-prefix') || '';
+    const duration = parseFloat(el.getAttribute('data-duration') || '2');
+
+    const counter = { val: 0 };
+
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        gsap.to(counter, {
+          val: value,
+          duration: duration,
+          ease: 'power2.out',
+          onUpdate: () => {
+            el.textContent = prefix + Math.round(counter.val).toLocaleString() + suffix;
+          },
+        });
+      },
+    });
+  });
+</script>

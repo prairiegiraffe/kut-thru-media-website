@@ -1,5 +1,10 @@
 ---
 import '../styles/global.css';
+import CustomCursor from '../components/effects/CustomCursor.astro';
+import SmoothScroll from '../components/effects/SmoothScroll.astro';
+import PageTransition from '../components/effects/PageTransition.astro';
+import GrainOverlay from '../components/effects/GrainOverlay.astro';
+import ScrollProgress from '../components/effects/ScrollProgress.astro';
 
 interface Props {
   title: string;
@@ -35,6 +40,63 @@ const {
     <title>{title}</title>
   </head>
   <body class="min-h-screen flex flex-col">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-logo">
+        KUT<span class="text-power-red">|</span>THRŪ
+      </div>
+    </div>
+
+    <!-- Global Effects -->
+    <CustomCursor />
+    <SmoothScroll />
+    <PageTransition />
+    <GrainOverlay opacity={0.03} />
+    <ScrollProgress />
+
+    <!-- Main Content -->
     <slot />
+
+    <!-- Initialize Animations -->
+    <script>
+      import gsap from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hide loading screen
+      window.addEventListener('load', () => {
+        const loadingScreen = document.getElementById('loading-screen');
+
+        gsap.to(loadingScreen, {
+          opacity: 0,
+          duration: 0.6,
+          delay: 0.5,
+          ease: 'power2.out',
+          onComplete: () => {
+            loadingScreen?.classList.add('hidden');
+          }
+        });
+
+        // Initialize scroll animations
+        document.querySelectorAll('[data-animate]').forEach((el) => {
+          ScrollTrigger.create({
+            trigger: el,
+            start: 'top 85%',
+            onEnter: () => el.classList.add('animated'),
+            once: true,
+          });
+        });
+      });
+
+      // Refresh ScrollTrigger on resize
+      let resizeTimer: ReturnType<typeof setTimeout>;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 250);
+      });
+    </script>
   </body>
 </html>

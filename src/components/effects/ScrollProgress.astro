@@ -1,0 +1,59 @@
+---
+// Scroll progress indicator
+interface Props {
+  position?: 'top' | 'bottom';
+  height?: number;
+}
+
+const { position = 'top', height = 3 } = Astro.props;
+---
+
+<div
+  class:list={['scroll-progress', position]}
+  style={`--progress-height: ${height}px`}
+>
+  <div class="scroll-progress-bar"></div>
+</div>
+
+<style>
+  .scroll-progress {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: var(--progress-height);
+    z-index: 9999;
+    background: transparent;
+  }
+
+  .scroll-progress.top {
+    top: 0;
+  }
+
+  .scroll-progress.bottom {
+    bottom: 0;
+  }
+
+  .scroll-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--color-power-red);
+    transition: width 0.1s linear;
+  }
+</style>
+
+<script>
+  const progressBar = document.querySelector('.scroll-progress-bar') as HTMLElement;
+
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+
+    if (progressBar) {
+      progressBar.style.width = `${progress}%`;
+    }
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>

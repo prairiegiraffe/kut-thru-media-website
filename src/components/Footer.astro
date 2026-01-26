@@ -1,4 +1,7 @@
 ---
+import MarqueeText from './effects/MarqueeText.astro';
+import MagneticButton from './effects/MagneticButton.astro';
+
 const navLinks = [
   { href: '/who-we-are', label: 'Who We Are' },
   { href: '/who-we-work-with', label: 'Who We Work With' },
@@ -18,32 +21,55 @@ const socialLinks = [
 ];
 ---
 
-<footer class="bg-steel-black border-t border-white/10">
-  <div class="container py-16">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+<footer class="bg-steel-black relative overflow-hidden">
+  <!-- Large Background Text -->
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+    <span class="text-[20vw] font-black text-white/[0.02] whitespace-nowrap">
+      KUT|THRŪ
+    </span>
+  </div>
+
+  <!-- Main Footer Content -->
+  <div class="container relative z-10 py-24 lg:py-32">
+    <!-- Top Section - Big CTA -->
+    <div class="mb-24 lg:mb-32" data-animate="fade-up">
+      <p class="eyebrow mb-8">Ready to start?</p>
+      <h2 class="headline-xl max-w-4xl mb-12">
+        Let's Build Something<br />
+        <span class="text-stroke">Worth Talking About.</span>
+      </h2>
+      <MagneticButton href="/contact" variant="primary" size="lg">
+        <span>Get in Touch</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </MagneticButton>
+    </div>
+
+    <!-- Middle Section - Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pb-24 border-b border-white/10">
       <!-- Brand Column -->
       <div class="lg:col-span-2">
-        <a href="/" class="inline-block mb-6">
-          <span class="text-3xl font-black tracking-tight text-impact-white">
-            KUT<span class="text-power-red mx-1">|</span>THRŪ
+        <a href="/" class="inline-block mb-8 group">
+          <span class="text-4xl font-black tracking-tighter">
+            KUT<span class="text-power-red mx-1 group-hover:animate-pulse">|</span>THRŪ
           </span>
-          <span class="text-lg font-semibold text-text-muted ml-2">Media</span>
         </a>
-        <p class="text-xl font-semibold text-impact-white mb-4">
+        <p class="text-2xl font-semibold text-impact-white mb-4">
           Clean Marketing for Dirty Jobs.
         </p>
-        <p class="text-text-muted mb-6 max-w-md">
+        <p class="text-text-muted mb-8 max-w-md">
           Marketing agency for Oil & Gas, Construction, Mining, and Heavy Industrial companies.
         </p>
 
         <!-- Social Links -->
-        <div class="flex gap-4">
+        <div class="flex gap-3">
           {socialLinks.map((social) => (
             <a
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="w-10 h-10 flex items-center justify-center bg-gray-800 text-text-muted hover:bg-power-red hover:text-impact-white transition-all duration-200"
+              class="social-link w-12 h-12 flex items-center justify-center border border-white/10 text-text-muted hover:border-power-red hover:text-power-red transition-all duration-300"
               aria-label={social.label}
             >
               {social.icon === 'linkedin' && (
@@ -78,13 +104,13 @@ const socialLinks = [
 
       <!-- Navigation Column -->
       <div>
-        <h4 class="text-lg font-bold text-impact-white mb-6">Navigation</h4>
-        <ul class="space-y-3">
+        <h4 class="text-xs font-bold text-text-subtle uppercase tracking-widest mb-8">Navigation</h4>
+        <ul class="space-y-4">
           {navLinks.map((link) => (
             <li>
               <a
                 href={link.href}
-                class="text-text-muted hover:text-impact-white transition-colors duration-200"
+                class="link-hover text-lg text-text-muted hover:text-impact-white transition-colors duration-300"
               >
                 {link.label}
               </a>
@@ -95,47 +121,61 @@ const socialLinks = [
 
       <!-- Contact Column -->
       <div>
-        <h4 class="text-lg font-bold text-impact-white mb-6">Contact</h4>
-        <ul class="space-y-4">
+        <h4 class="text-xs font-bold text-text-subtle uppercase tracking-widest mb-8">Contact</h4>
+        <ul class="space-y-6">
           <li>
+            <span class="block text-xs text-text-subtle uppercase tracking-wider mb-1">Email</span>
             <a
               href="mailto:info@kutthru.com"
-              class="text-text-muted hover:text-impact-white transition-colors duration-200"
+              class="text-lg text-text-muted hover:text-power-red transition-colors duration-300"
             >
               info@kutthru.com
             </a>
           </li>
           <li>
+            <span class="block text-xs text-text-subtle uppercase tracking-wider mb-1">Phone</span>
             <a
               href="tel:307-228-0352"
-              class="text-text-muted hover:text-impact-white transition-colors duration-200"
+              class="text-lg text-text-muted hover:text-power-red transition-colors duration-300"
             >
               307-228-0352
             </a>
           </li>
-          <li class="text-text-muted">
-            1701 Phillips Cir. STE 110<br />
-            Gillette, WY 82718
-          </li>
           <li>
-            <a
-              href="https://kutthru.com"
-              class="text-text-muted hover:text-impact-white transition-colors duration-200"
-            >
-              KutThru.com
-            </a>
+            <span class="block text-xs text-text-subtle uppercase tracking-wider mb-1">Location</span>
+            <address class="text-text-muted not-italic">
+              1701 Phillips Cir. STE 110<br />
+              Gillette, WY 82718
+            </address>
           </li>
         </ul>
       </div>
     </div>
-  </div>
 
-  <!-- Bottom Bar -->
-  <div class="border-t border-white/10">
-    <div class="container py-6">
-      <p class="text-text-subtle text-sm text-center">
+    <!-- Bottom Bar -->
+    <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-text-subtle text-sm">
         &copy; {new Date().getFullYear()} KUT | THRŪ Media. All rights reserved.
+      </p>
+      <p class="text-text-subtle text-sm">
+        Designed & Built with <span class="text-power-red">grit</span> in Wyoming.
       </p>
     </div>
   </div>
+
+  <!-- Marquee at bottom -->
+  <div class="border-t border-white/5 py-4 overflow-hidden">
+    <MarqueeText
+      text="KUT | THRŪ MEDIA"
+      speed={60}
+      direction="right"
+      class="text-6xl font-black text-white/[0.03]"
+    />
+  </div>
 </footer>
+
+<style>
+  .social-link:hover {
+    transform: translateY(-4px);
+  }
+</style>

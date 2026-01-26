@@ -1,0 +1,122 @@
+---
+// Magnetic button that follows cursor
+interface Props {
+  href?: string;
+  type?: 'button' | 'submit';
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  strength?: number;
+}
+
+const {
+  href,
+  type = 'button',
+  variant = 'primary',
+  size = 'md',
+  class: className = '',
+  strength = 0.3,
+} = Astro.props;
+
+const Element = href ? 'a' : 'button';
+
+const sizes = {
+  sm: 'py-2 px-4 text-sm',
+  md: 'py-3 px-6 text-base',
+  lg: 'py-4 px-8 text-lg',
+};
+
+const variants = {
+  primary: 'bg-power-red text-impact-white border-2 border-power-red hover:bg-power-red-dark',
+  secondary: 'bg-transparent text-impact-white border-2 border-impact-white hover:bg-impact-white hover:text-steel-black',
+  ghost: 'bg-transparent text-impact-white border-none',
+};
+---
+
+<div class="magnetic-wrap" data-strength={strength}>
+  <Element
+    href={href}
+    type={!href ? type : undefined}
+    class:list={[
+      'magnetic-btn',
+      'inline-flex items-center justify-center gap-2',
+      'font-bold uppercase tracking-wider',
+      'transition-all duration-300',
+      'relative overflow-hidden',
+      sizes[size],
+      variants[variant],
+      className,
+    ]}
+  >
+    <span class="magnetic-btn-text relative z-10">
+      <slot />
+    </span>
+    <span class="magnetic-btn-bg"></span>
+  </Element>
+</div>
+
+<style>
+  .magnetic-wrap {
+    display: inline-block;
+  }
+
+  .magnetic-btn {
+    position: relative;
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+  }
+
+  .magnetic-btn-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--color-impact-white);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 0;
+  }
+
+  .magnetic-btn:hover .magnetic-btn-bg {
+    transform: scaleX(1);
+  }
+
+  .magnetic-btn:hover .magnetic-btn-text {
+    color: var(--color-steel-black);
+  }
+
+  .magnetic-btn-text {
+    transition: color 0.3s;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  document.querySelectorAll('.magnetic-wrap').forEach((wrap) => {
+    const btn = wrap.querySelector('.magnetic-btn') as HTMLElement;
+    const strength = parseFloat(wrap.getAttribute('data-strength') || '0.3');
+
+    wrap.addEventListener('mousemove', (e: Event) => {
+      const mouseEvent = e as MouseEvent;
+      const rect = wrap.getBoundingClientRect();
+      const x = mouseEvent.clientX - rect.left - rect.width / 2;
+      const y = mouseEvent.clientY - rect.top - rect.height / 2;
+
+      gsap.to(btn, {
+        x: x * strength,
+        y: y * strength,
+        duration: 0.3,
+        ease: 'power2.out',
+      });
+    });
+
+    wrap.addEventListener('mouseleave', () => {
+      gsap.to(btn, {
+        x: 0,
+        y: 0,
+        duration: 0.5,
+        ease: 'elastic.out(1, 0.3)',
+      });
+    });
+  });
+</script>

@@ -1,0 +1,140 @@
+---
+// Full-screen page transition overlay
+---
+
+<div id="page-transition" class="page-transition">
+  <div class="transition-layer transition-layer-1"></div>
+  <div class="transition-layer transition-layer-2"></div>
+  <div class="transition-layer transition-layer-3"></div>
+  <div class="transition-logo">
+    <span class="text-4xl font-black tracking-tight">
+      KUT<span class="text-power-red mx-1">|</span>THRŪ
+    </span>
+  </div>
+</div>
+
+<style>
+  .page-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+  }
+
+  .transition-layer {
+    position: absolute;
+    inset: 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+
+  .transition-layer-1 {
+    background: var(--color-power-red);
+    z-index: 3;
+  }
+
+  .transition-layer-2 {
+    background: var(--color-charcoal);
+    z-index: 2;
+  }
+
+  .transition-layer-3 {
+    background: var(--color-gray-900);
+    z-index: 1;
+  }
+
+  .transition-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    opacity: 0;
+  }
+
+  .page-transition.active {
+    pointer-events: all;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+
+  const pageTransition = document.getElementById('page-transition');
+  const layers = pageTransition?.querySelectorAll('.transition-layer');
+  const logo = pageTransition?.querySelector('.transition-logo');
+
+  // Page enter animation (runs on load)
+  function pageEnter() {
+    const tl = gsap.timeline();
+
+    tl.set(layers, { scaleY: 1, transformOrigin: 'top' })
+      .set(logo, { opacity: 1 })
+      .to(logo, {
+        opacity: 0,
+        duration: 0.3,
+        delay: 0.2,
+      })
+      .to(
+        layers,
+        {
+          scaleY: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: 'power4.inOut',
+        },
+        '-=0.2'
+      );
+
+    return tl;
+  }
+
+  // Page leave animation (runs on link click)
+  function pageLeave() {
+    const tl = gsap.timeline();
+
+    pageTransition?.classList.add('active');
+
+    tl.set(layers, { scaleY: 0, transformOrigin: 'bottom' })
+      .to(layers, {
+        scaleY: 1,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power4.inOut',
+      })
+      .to(
+        logo,
+        {
+          opacity: 1,
+          duration: 0.3,
+        },
+        '-=0.4'
+      );
+
+    return tl;
+  }
+
+  // Initialize page enter animation
+  window.addEventListener('load', () => {
+    gsap.set(layers, { scaleY: 1 });
+    pageEnter();
+  });
+
+  // Handle internal link clicks
+  document.querySelectorAll('a[href^="/"]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (!href || href === window.location.pathname) return;
+
+      e.preventDefault();
+
+      pageLeave().then(() => {
+        window.location.href = href;
+      });
+    });
+  });
+
+  // Make functions globally available
+  (window as any).pageEnter = pageEnter;
+  (window as any).pageLeave = pageLeave;
+</script>

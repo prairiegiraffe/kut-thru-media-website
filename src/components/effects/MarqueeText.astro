@@ -1,0 +1,103 @@
+---
+// Infinite scrolling marquee text
+interface Props {
+  text: string;
+  speed?: number;
+  direction?: 'left' | 'right';
+  class?: string;
+  repeat?: number;
+  pauseOnHover?: boolean;
+}
+
+const {
+  text,
+  speed = 30,
+  direction = 'left',
+  class: className = '',
+  repeat = 4,
+  pauseOnHover = true,
+} = Astro.props;
+
+const items = Array(repeat).fill(text);
+---
+
+<div
+  class:list={['marquee', className]}
+  data-speed={speed}
+  data-direction={direction}
+  data-pause-on-hover={pauseOnHover}
+>
+  <div class="marquee-inner">
+    {items.map((item) => (
+      <span class="marquee-item">
+        {item}
+        <span class="marquee-separator">•</span>
+      </span>
+    ))}
+  </div>
+  <div class="marquee-inner" aria-hidden="true">
+    {items.map((item) => (
+      <span class="marquee-item">
+        {item}
+        <span class="marquee-separator">•</span>
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .marquee-inner {
+    display: flex;
+    animation: marquee var(--duration, 30s) linear infinite;
+    will-change: transform;
+  }
+
+  .marquee[data-direction='right'] .marquee-inner {
+    animation-direction: reverse;
+  }
+
+  .marquee[data-pause-on-hover='true']:hover .marquee-inner {
+    animation-play-state: paused;
+  }
+
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  .marquee-separator {
+    margin-left: 1rem;
+    opacity: 0.3;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.marquee').forEach((marquee) => {
+    const speed = parseFloat(marquee.getAttribute('data-speed') || '30');
+    const inner = marquee.querySelector('.marquee-inner') as HTMLElement;
+
+    if (inner) {
+      // Calculate duration based on content width and desired speed
+      const width = inner.offsetWidth;
+      const duration = width / (speed * 10);
+      marquee.style.setProperty('--duration', `${duration}s`);
+    }
+  });
+</script>

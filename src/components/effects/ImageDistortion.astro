@@ -1,0 +1,128 @@
+---
+// Image with hover distortion/glitch effect
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+}
+
+const { src, alt, class: className = '' } = Astro.props;
+---
+
+<div class:list={['image-distortion', className]}>
+  <div class="image-distortion-layer image-distortion-r">
+    <img src={src} alt="" />
+  </div>
+  <div class="image-distortion-layer image-distortion-g">
+    <img src={src} alt="" />
+  </div>
+  <div class="image-distortion-layer image-distortion-b">
+    <img src={src} alt={alt} />
+  </div>
+</div>
+
+<style>
+  .image-distortion {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .image-distortion-layer {
+    position: absolute;
+    inset: 0;
+  }
+
+  .image-distortion-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .image-distortion-r {
+    z-index: 1;
+    mix-blend-mode: lighten;
+  }
+
+  .image-distortion-r img {
+    filter: url('#r-channel');
+  }
+
+  .image-distortion-g {
+    z-index: 2;
+    mix-blend-mode: lighten;
+  }
+
+  .image-distortion-g img {
+    filter: url('#g-channel');
+  }
+
+  .image-distortion-b {
+    z-index: 3;
+    position: relative;
+  }
+
+  .image-distortion-b img {
+    filter: grayscale(0);
+    transition: filter 0.3s;
+  }
+
+  .image-distortion:hover .image-distortion-r {
+    animation: glitch-r 0.3s ease-in-out;
+  }
+
+  .image-distortion:hover .image-distortion-g {
+    animation: glitch-g 0.3s ease-in-out;
+  }
+
+  .image-distortion:hover .image-distortion-b {
+    animation: glitch-b 0.3s ease-in-out;
+  }
+
+  @keyframes glitch-r {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(-5px, 2px); }
+    40% { transform: translate(5px, -2px); }
+    60% { transform: translate(-3px, 1px); }
+    80% { transform: translate(3px, -1px); }
+  }
+
+  @keyframes glitch-g {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(5px, -2px); }
+    40% { transform: translate(-5px, 2px); }
+    60% { transform: translate(3px, -1px); }
+    80% { transform: translate(-3px, 1px); }
+  }
+
+  @keyframes glitch-b {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(2px, 5px); }
+    40% { transform: translate(-2px, -5px); }
+    60% { transform: translate(1px, 3px); }
+    80% { transform: translate(-1px, -3px); }
+  }
+</style>
+
+<!-- SVG Filters for RGB channel separation -->
+<svg style="position: absolute; width: 0; height: 0;">
+  <defs>
+    <filter id="r-channel">
+      <feColorMatrix
+        type="matrix"
+        values="1 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 1 0"
+      />
+    </filter>
+    <filter id="g-channel">
+      <feColorMatrix
+        type="matrix"
+        values="0 0 0 0 0
+                0 1 0 0 0
+                0 0 0 0 0
+                0 0 0 1 0"
+      />
+    </filter>
+  </defs>
+</svg>

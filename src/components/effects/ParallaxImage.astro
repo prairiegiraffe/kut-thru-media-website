@@ -1,0 +1,105 @@
+---
+// Parallax image with reveal mask effect
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  speed?: number;
+  reveal?: boolean;
+}
+
+const {
+  src,
+  alt,
+  class: className = '',
+  speed = 0.3,
+  reveal = true,
+} = Astro.props;
+---
+
+<div class:list={['parallax-image-wrap', className]} data-speed={speed}>
+  {reveal && <div class="parallax-reveal-mask"></div>}
+  <div class="parallax-image-inner">
+    <img src={src} alt={alt} class="parallax-image" loading="lazy" />
+  </div>
+</div>
+
+<style>
+  .parallax-image-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .parallax-reveal-mask {
+    position: absolute;
+    inset: 0;
+    background: var(--color-power-red);
+    z-index: 2;
+    transform-origin: left;
+  }
+
+  .parallax-image-inner {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+  }
+
+  .parallax-image {
+    width: 100%;
+    height: 130%;
+    object-fit: cover;
+    will-change: transform;
+    transform: scale(1.2);
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.querySelectorAll('.parallax-image-wrap').forEach((wrap) => {
+    const mask = wrap.querySelector('.parallax-reveal-mask');
+    const inner = wrap.querySelector('.parallax-image-inner');
+    const image = wrap.querySelector('.parallax-image');
+    const speed = parseFloat(wrap.getAttribute('data-speed') || '0.3');
+
+    // Reveal animation
+    if (mask) {
+      gsap.to(mask, {
+        scaleX: 0,
+        duration: 1.2,
+        ease: 'power4.inOut',
+        scrollTrigger: {
+          trigger: wrap,
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+        },
+      });
+
+      gsap.from(inner, {
+        scale: 1.4,
+        duration: 1.5,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: wrap,
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+        },
+      });
+    }
+
+    // Parallax effect
+    gsap.to(image, {
+      yPercent: -30 * speed,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: wrap,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      },
+    });
+  });
+</script>

@@ -6,112 +6,232 @@ const navLinks = [
   { href: '/process', label: 'Process' },
   { href: '/work', label: 'Work' },
   { href: '/podcast', label: 'Podcast' },
-  { href: '/contact', label: 'Contact' },
 ];
 
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-white/10">
-  <div class="container">
-    <nav class="flex items-center justify-between h-20">
+<header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+  <div class="header-bg absolute inset-0 bg-charcoal/0 backdrop-blur-none border-b border-transparent transition-all duration-500"></div>
+
+  <div class="container relative">
+    <nav class="flex items-center justify-between h-24">
       <!-- Logo -->
-      <a href="/" class="flex items-center gap-2 group">
-        <span class="text-2xl font-black tracking-tight text-impact-white">
-          KUT<span class="text-power-red mx-1">|</span>THRŪ
+      <a href="/" class="logo-link relative z-10 group" data-cursor>
+        <span class="text-2xl font-black tracking-tighter">
+          <span class="inline-block transition-transform duration-300 group-hover:-translate-y-1">K</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[25ms]">U</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[50ms]">T</span><span class="text-power-red mx-1 inline-block transition-transform duration-300 group-hover:scale-110">|</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[75ms]">T</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[100ms]">H</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[125ms]">R</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[150ms]">Ū</span>
         </span>
-        <span class="text-sm font-semibold text-text-muted hidden sm:block">Media</span>
       </a>
 
       <!-- Desktop Navigation -->
-      <div class="hidden lg:flex items-center gap-8">
+      <div class="hidden lg:flex items-center gap-10">
         {navLinks.map((link) => (
           <a
             href={link.href}
-            class={`text-sm font-semibold tracking-wide transition-colors duration-200 ${
+            class:list={[
+              'nav-link relative text-sm font-medium tracking-wide transition-colors duration-300',
               currentPath === link.href
                 ? 'text-power-red'
                 : 'text-text-muted hover:text-impact-white'
-            }`}
+            ]}
           >
-            {link.label}
+            <span class="relative z-10">{link.label}</span>
+            <span class="nav-link-line absolute bottom-0 left-0 w-full h-px bg-power-red transform scale-x-0 origin-right transition-transform duration-300"></span>
           </a>
         ))}
       </div>
 
       <!-- CTA Button -->
-      <div class="hidden lg:block">
-        <a href="/contact" class="btn btn-primary text-sm py-3 px-6">
-          Let's Talk
+      <div class="hidden lg:block relative z-10">
+        <a href="/contact" class="btn btn-primary text-sm py-3 px-8">
+          <span>Let's Talk</span>
         </a>
       </div>
 
       <!-- Mobile Menu Button -->
       <button
         id="mobile-menu-button"
-        class="lg:hidden p-2 text-impact-white"
+        class="lg:hidden relative z-10 w-12 h-12 flex items-center justify-center"
         aria-label="Toggle menu"
         aria-expanded="false"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            id="menu-icon-open"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-          <path
-            id="menu-icon-close"
-            class="hidden"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
+        <div class="menu-icon w-6 h-4 relative">
+          <span class="absolute left-0 top-0 w-full h-0.5 bg-impact-white transition-all duration-300 origin-center"></span>
+          <span class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-impact-white transition-all duration-300"></span>
+          <span class="absolute left-0 bottom-0 w-full h-0.5 bg-impact-white transition-all duration-300 origin-center"></span>
+        </div>
       </button>
     </nav>
   </div>
 
-  <!-- Mobile Menu -->
+  <!-- Mobile Menu - Full Screen -->
   <div
     id="mobile-menu"
-    class="hidden lg:hidden bg-gray-900 border-t border-white/10"
+    class="mobile-menu fixed inset-0 bg-charcoal z-40 flex items-center justify-center opacity-0 invisible transition-all duration-500"
   >
-    <div class="container py-6">
-      <div class="flex flex-col gap-4">
-        {navLinks.map((link) => (
+    <div class="container">
+      <nav class="flex flex-col items-center gap-8">
+        {navLinks.map((link, index) => (
           <a
             href={link.href}
-            class={`text-lg font-semibold py-2 transition-colors duration-200 ${
+            class:list={[
+              'mobile-nav-link text-4xl md:text-5xl font-black uppercase tracking-tight transition-all duration-300',
               currentPath === link.href
                 ? 'text-power-red'
-                : 'text-text-muted hover:text-impact-white'
-            }`}
+                : 'text-impact-white hover:text-power-red'
+            ]}
+            style={`--index: ${index}`}
           >
             {link.label}
           </a>
         ))}
-        <a href="/contact" class="btn btn-primary mt-4 text-center">
-          Let's Talk
+        <a
+          href="/contact"
+          class="mobile-nav-link mt-8 btn btn-primary text-lg py-4 px-12"
+          style="--index: 7"
+        >
+          <span>Let's Talk</span>
         </a>
-      </div>
+      </nav>
     </div>
   </div>
 </header>
 
+<style>
+  /* Navigation link hover effect */
+  .nav-link:hover .nav-link-line {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Mobile menu open state */
+  .mobile-menu.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-menu.open .mobile-nav-link {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-nav-link {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.4s ease, transform 0.4s ease, color 0.3s ease;
+    transition-delay: calc(var(--index) * 0.05s);
+  }
+
+  /* Menu icon animation */
+  .menu-icon.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .menu-icon.open span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  .menu-icon.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Header scroll state */
+  #header.scrolled .header-bg {
+    background-color: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(12px);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+
+  #header.scrolled nav {
+    height: 5rem;
+  }
+</style>
+
 <script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const header = document.getElementById('header');
   const menuButton = document.getElementById('mobile-menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
-  const menuIconOpen = document.getElementById('menu-icon-open');
-  const menuIconClose = document.getElementById('menu-icon-close');
+  const menuIcon = menuButton?.querySelector('.menu-icon');
 
+  // Scroll behavior
+  let lastScroll = 0;
+
+  ScrollTrigger.create({
+    start: 'top -100',
+    onUpdate: (self) => {
+      if (self.scroll() > 100) {
+        header?.classList.add('scrolled');
+      } else {
+        header?.classList.remove('scrolled');
+      }
+
+      // Hide/show header on scroll direction
+      const currentScroll = self.scroll();
+      if (currentScroll > lastScroll && currentScroll > 500) {
+        gsap.to(header, { y: -100, duration: 0.3, ease: 'power2.out' });
+      } else {
+        gsap.to(header, { y: 0, duration: 0.3, ease: 'power2.out' });
+      }
+      lastScroll = currentScroll;
+    },
+  });
+
+  // Mobile menu toggle
   menuButton?.addEventListener('click', () => {
-    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
-    menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
-    mobileMenu?.classList.toggle('hidden');
-    menuIconOpen?.classList.toggle('hidden');
-    menuIconClose?.classList.toggle('hidden');
+    const isOpen = mobileMenu?.classList.contains('open');
+
+    if (isOpen) {
+      mobileMenu?.classList.remove('open');
+      menuIcon?.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+
+      // Stop lenis when menu is open
+      if ((window as any).lenis) {
+        (window as any).lenis.start();
+      }
+    } else {
+      mobileMenu?.classList.add('open');
+      menuIcon?.classList.add('open');
+      menuButton.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+
+      // Stop lenis when menu is open
+      if ((window as any).lenis) {
+        (window as any).lenis.stop();
+      }
+    }
+  });
+
+  // Close menu on link click
+  document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.remove('open');
+      menuIcon?.classList.remove('open');
+      document.body.style.overflow = '';
+
+      if ((window as any).lenis) {
+        (window as any).lenis.start();
+      }
+    });
+  });
+
+  // Close menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu?.classList.contains('open')) {
+      mobileMenu?.classList.remove('open');
+      menuIcon?.classList.remove('open');
+      document.body.style.overflow = '';
+
+      if ((window as any).lenis) {
+        (window as any).lenis.start();
+      }
+    }
   });
 </script>

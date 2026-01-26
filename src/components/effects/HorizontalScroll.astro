@@ -1,0 +1,71 @@
+---
+// Horizontal scroll section that pins and scrolls horizontally
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class:list={['horizontal-scroll-container', className]}>
+  <div class="horizontal-scroll-wrapper">
+    <div class="horizontal-scroll-content">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style>
+  .horizontal-scroll-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .horizontal-scroll-wrapper {
+    overflow: hidden;
+  }
+
+  .horizontal-scroll-content {
+    display: flex;
+    flex-wrap: nowrap;
+    will-change: transform;
+  }
+
+  .horizontal-scroll-content > :global(*) {
+    flex-shrink: 0;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.querySelectorAll('.horizontal-scroll-container').forEach((container) => {
+    const wrapper = container.querySelector('.horizontal-scroll-wrapper');
+    const content = container.querySelector('.horizontal-scroll-content');
+
+    if (!content || !wrapper) return;
+
+    // Calculate how far to scroll
+    const scrollWidth = content.scrollWidth - window.innerWidth;
+
+    // Set container height to control scroll distance
+    gsap.set(container, { height: content.scrollWidth });
+
+    gsap.to(content, {
+      x: -scrollWidth,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: container,
+        start: 'top top',
+        end: () => `+=${scrollWidth}`,
+        scrub: 1,
+        pin: wrapper,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+  });
+</script>
