@@ -9,11 +9,11 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { href: 'https://linkedin.com/company/kutthru', label: 'LinkedIn' },
-  { href: 'https://facebook.com/kutthru', label: 'Facebook' },
-  { href: 'https://instagram.com/kutthru', label: 'Instagram' },
-  { href: 'https://youtube.com/@kutthru', label: 'YouTube' },
-  { href: 'https://tiktok.com/@kutthru', label: 'TikTok' },
+  { href: 'https://linkedin.com/company/kutthru', label: 'Li' },
+  { href: 'https://facebook.com/kutthru', label: 'Fb' },
+  { href: 'https://instagram.com/kutthru', label: 'Ig' },
+  { href: 'https://youtube.com/@kutthru', label: 'Yt' },
+  { href: 'https://tiktok.com/@kutthru', label: 'Tk' },
 ];
 
 const currentPath = Astro.url.pathname;
@@ -32,119 +32,124 @@ const currentPath = Astro.url.pathname;
       </a>
 
       <!-- Right Side: CTA + Menu Button -->
-      <div class="flex items-center gap-6 relative z-[60]">
-        <!-- CTA Button - Always visible -->
-        <a href="/contact" class="btn btn-primary text-sm py-3 px-8 hidden sm:inline-flex">
+      <div class="flex items-center gap-4 lg:gap-6 relative z-[60]">
+        <!-- CTA Button -->
+        <a href="/contact" class="btn btn-primary text-sm py-3 px-6 lg:px-8 hidden sm:inline-flex">
           <span>Let's Talk</span>
         </a>
 
-        <!-- Menu Button - Always visible -->
+        <!-- Menu Button -->
         <button
           id="menu-button"
-          class="menu-button relative w-14 h-14 flex items-center justify-center group"
+          class="menu-button relative w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center group"
           aria-label="Toggle menu"
           aria-expanded="false"
         >
-          <!-- Circular background -->
           <div class="absolute inset-0 rounded-full border border-white/20 group-hover:border-power-red transition-colors duration-300"></div>
-          <div class="absolute inset-0 rounded-full bg-power-red scale-0 group-hover:scale-100 transition-transform duration-500 ease-out"></div>
-
-          <!-- Menu icon -->
-          <div class="menu-icon relative w-6 h-4 z-10">
-            <span class="menu-line absolute left-0 top-0 w-full h-0.5 bg-impact-white transition-all duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]"></span>
-            <span class="menu-line absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-impact-white transition-all duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]"></span>
-            <span class="menu-line absolute left-0 bottom-0 w-full h-0.5 bg-impact-white transition-all duration-500 ease-[cubic-bezier(0.77,0,0.175,1)]"></span>
+          <div class="menu-btn-fill absolute inset-0 rounded-full bg-power-red scale-0 transition-transform duration-500 ease-out"></div>
+          <div class="menu-icon relative w-5 h-3 z-10">
+            <span class="menu-line absolute left-0 top-0 w-full h-0.5 bg-impact-white transition-all duration-400"></span>
+            <span class="menu-line absolute left-0 bottom-0 w-full h-0.5 bg-impact-white transition-all duration-400"></span>
           </div>
-
-          <!-- Menu text -->
-          <span class="menu-text absolute -left-16 text-xs font-bold uppercase tracking-widest text-text-muted opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden lg:block">Menu</span>
         </button>
       </div>
     </nav>
   </div>
+</header>
 
-  <!-- Mega Menu Overlay -->
-  <div id="mega-menu" class="mega-menu fixed inset-0 z-50 pointer-events-none">
-    <!-- Background panels that slide in -->
-    <div class="mega-bg-1 absolute inset-0 bg-steel-black transform -translate-x-full"></div>
-    <div class="mega-bg-2 absolute inset-0 bg-charcoal transform -translate-x-full"></div>
+<!-- Mega Menu - Separate from header for proper z-indexing -->
+<div id="mega-menu" class="mega-menu fixed inset-0 z-[100] invisible">
+  <!-- Solid Background -->
+  <div class="mega-bg absolute inset-0 bg-steel-black opacity-0 transition-opacity duration-500"></div>
 
-    <!-- Content -->
-    <div class="mega-content absolute inset-0 opacity-0 flex">
-      <!-- Main Navigation - Left Side -->
-      <div class="w-full lg:w-2/3 h-full flex flex-col justify-center px-8 lg:px-24 py-32">
-        <nav class="space-y-2 lg:space-y-4">
-          {navLinks.map((link, index) => (
-            <a
-              href={link.href}
-              class:list={[
-                'mega-nav-link group flex items-baseline gap-4 lg:gap-8',
-                currentPath === link.href ? 'is-active' : ''
-              ]}
-              style={`--index: ${index}`}
-            >
-              <span class="nav-number text-xs lg:text-sm font-mono text-power-red opacity-50 group-hover:opacity-100 transition-opacity duration-300">{link.number}</span>
-              <span class="nav-label relative overflow-hidden">
-                <span class="nav-text block text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-black uppercase tracking-tight transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover:translate-y-[-100%]">
-                  {link.label}
-                </span>
-                <span class="nav-text-hover absolute top-full left-0 text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-black uppercase tracking-tight text-power-red transition-transform duration-500 ease-[cubic-bezier(0.77,0,0.175,1)] group-hover:translate-y-[-100%]">
-                  {link.label}
-                </span>
-              </span>
-              <!-- Animated arrow -->
-              <svg class="nav-arrow w-8 h-8 lg:w-12 lg:h-12 text-power-red opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-          ))}
-        </nav>
+  <!-- Animated reveal curtain -->
+  <div class="mega-curtain absolute inset-0 bg-power-red origin-top scale-y-0"></div>
+
+  <!-- Content Container -->
+  <div class="mega-content relative z-10 h-full flex flex-col opacity-0">
+    <!-- Header area with close button -->
+    <div class="container flex items-center justify-between h-24 flex-shrink-0">
+      <a href="/" class="text-2xl font-black tracking-tighter">
+        KUT<span class="text-power-red mx-1">|</span>THRŪ
+      </a>
+      <button
+        id="menu-close"
+        class="w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center rounded-full border border-white/20 hover:border-power-red hover:bg-power-red transition-all duration-300 group"
+        aria-label="Close menu"
+      >
+        <svg class="w-5 h-5 text-impact-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="flex-1 container flex flex-col lg:flex-row gap-8 lg:gap-16 py-8 lg:py-12 overflow-auto">
+      <!-- Navigation Links -->
+      <nav class="flex-1 flex flex-col justify-center">
+        {navLinks.map((link, index) => (
+          <a
+            href={link.href}
+            class:list={[
+              'mega-link group flex items-center gap-4 py-3 lg:py-4 border-b border-white/5 first:border-t',
+              currentPath === link.href ? 'is-active' : ''
+            ]}
+            style={`--index: ${index}`}
+          >
+            <span class="text-xs font-mono text-power-red/60 group-hover:text-power-red transition-colors w-6">{link.number}</span>
+            <span class="nav-text text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold uppercase tracking-tight text-impact-white group-hover:text-power-red transition-colors duration-300">
+              {link.label}
+            </span>
+            <svg class="w-5 h-5 lg:w-6 lg:h-6 ml-auto text-power-red opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        ))}
 
         <!-- Mobile CTA -->
-        <div class="mega-cta mt-12 sm:hidden">
-          <a href="/contact" class="btn btn-primary text-lg py-4 px-10">
+        <div class="mt-8 sm:hidden">
+          <a href="/contact" class="btn btn-primary w-full justify-center py-4">
             <span>Let's Talk</span>
           </a>
         </div>
-      </div>
+      </nav>
 
-      <!-- Side Panel - Right Side (Desktop only) -->
-      <div class="mega-side hidden lg:flex w-1/3 h-full flex-col justify-between py-32 px-12 border-l border-white/5">
-        <!-- Top: Tagline -->
-        <div class="mega-side-item" style="--delay: 0.5s">
-          <p class="text-2xl xl:text-3xl font-bold leading-tight">
+      <!-- Side Info (Desktop) -->
+      <div class="hidden lg:flex flex-col justify-between w-72 xl:w-80 pl-16 border-l border-white/10">
+        <!-- Tagline -->
+        <div class="mega-side-item">
+          <p class="text-xl xl:text-2xl font-bold leading-snug">
             Clean Marketing<br />
             <span class="text-text-muted">for Dirty Jobs.</span>
           </p>
         </div>
 
-        <!-- Middle: Contact Info -->
-        <div class="space-y-8">
-          <div class="mega-side-item" style="--delay: 0.6s">
-            <span class="block text-xs font-bold uppercase tracking-widest text-text-subtle mb-3">Email</span>
-            <a href="mailto:info@kutthru.com" class="text-xl hover:text-power-red transition-colors duration-300">
+        <!-- Contact -->
+        <div class="space-y-6 mega-side-item">
+          <div>
+            <span class="block text-xs font-bold uppercase tracking-widest text-text-subtle mb-2">Email</span>
+            <a href="mailto:info@kutthru.com" class="text-lg hover:text-power-red transition-colors">
               info@kutthru.com
             </a>
           </div>
-          <div class="mega-side-item" style="--delay: 0.7s">
-            <span class="block text-xs font-bold uppercase tracking-widest text-text-subtle mb-3">Phone</span>
-            <a href="tel:307-228-0352" class="text-xl hover:text-power-red transition-colors duration-300">
+          <div>
+            <span class="block text-xs font-bold uppercase tracking-widest text-text-subtle mb-2">Phone</span>
+            <a href="tel:307-228-0352" class="text-lg hover:text-power-red transition-colors">
               307-228-0352
             </a>
           </div>
         </div>
 
-        <!-- Bottom: Social Links -->
-        <div class="mega-side-item" style="--delay: 0.8s">
-          <span class="block text-xs font-bold uppercase tracking-widest text-text-subtle mb-6">Follow Us</span>
-          <div class="flex flex-wrap gap-3">
-            {socialLinks.map((social, i) => (
+        <!-- Social -->
+        <div class="mega-side-item">
+          <span class="block text-xs font-bold uppercase tracking-widest text-text-subtle mb-4">Follow</span>
+          <div class="flex gap-4">
+            {socialLinks.map((social) => (
               <a
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="social-link text-sm font-semibold uppercase tracking-wider text-text-muted hover:text-power-red transition-colors duration-300"
-                style={`--social-delay: ${0.8 + i * 0.05}s`}
+                class="text-sm font-bold text-text-muted hover:text-power-red transition-colors"
               >
                 {social.label}
               </a>
@@ -154,127 +159,113 @@ const currentPath = Astro.url.pathname;
       </div>
     </div>
 
-    <!-- Decorative Elements -->
-    <div class="mega-decor absolute bottom-8 left-8 lg:left-24 text-[15vw] font-black text-white/[0.02] leading-none pointer-events-none select-none opacity-0">
-      KUT|THRŪ
+    <!-- Bottom Bar -->
+    <div class="container py-6 border-t border-white/5 flex-shrink-0">
+      <div class="flex items-center justify-between text-sm text-text-subtle">
+        <span>&copy; {new Date().getFullYear()} KUT | THRŪ Media</span>
+        <span class="hidden sm:block">Gillette, Wyoming</span>
+      </div>
     </div>
   </div>
-</header>
+</div>
 
 <style>
-  /* Menu button open state */
+  /* Menu button states */
+  .menu-button:hover .menu-btn-fill {
+    transform: scale(1);
+  }
+
   .menu-button.open .menu-line:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
+    transform: translateY(5px) rotate(45deg);
   }
 
   .menu-button.open .menu-line:nth-child(2) {
-    opacity: 0;
-    transform: scaleX(0);
+    transform: translateY(-5px) rotate(-45deg);
   }
 
-  .menu-button.open .menu-line:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-  }
-
-  .menu-button.open .menu-text {
-    opacity: 0 !important;
-  }
-
-  /* Mega menu states */
+  /* Mega menu visibility */
   .mega-menu.open {
-    pointer-events: auto;
+    visibility: visible;
   }
 
-  .mega-menu.open .mega-bg-1 {
-    transform: translateX(0);
-    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  .mega-menu.open .mega-bg {
+    opacity: 1;
   }
 
-  .mega-menu.open .mega-bg-2 {
-    transform: translateX(0);
-    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1) 0.1s;
+  .mega-menu.open .mega-curtain {
+    animation: curtainReveal 0.6s cubic-bezier(0.77, 0, 0.175, 1) forwards;
   }
 
   .mega-menu.open .mega-content {
     opacity: 1;
-    transition: opacity 0.5s ease 0.4s;
+    transition: opacity 0.4s ease 0.3s;
   }
 
-  .mega-menu.open .mega-decor {
-    opacity: 1;
-    transition: opacity 1s ease 0.6s;
-  }
-
-  /* Close animations */
-  .mega-menu:not(.open) .mega-bg-1 {
-    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1) 0.2s;
-  }
-
-  .mega-menu:not(.open) .mega-bg-2 {
-    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1) 0.1s;
-  }
-
-  .mega-menu:not(.open) .mega-content {
-    transition: opacity 0.3s ease;
+  /* Curtain animation */
+  @keyframes curtainReveal {
+    0% {
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+    50% {
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+    50.1% {
+      transform-origin: bottom;
+    }
+    100% {
+      transform: scaleY(0);
+      transform-origin: bottom;
+    }
   }
 
   /* Nav link animations */
-  .mega-nav-link {
+  .mega-link {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(20px);
   }
 
-  .mega-menu.open .mega-nav-link {
+  .mega-menu.open .mega-link {
     opacity: 1;
     transform: translateY(0);
-    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-    transition-delay: calc(0.3s + var(--index) * 0.08s);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    transition-delay: calc(0.35s + var(--index) * 0.06s);
   }
 
-  .mega-menu:not(.open) .mega-nav-link {
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    transition-delay: calc(var(--index) * 0.02s);
-  }
-
-  /* Active link state */
-  .mega-nav-link.is-active .nav-text {
+  /* Active state */
+  .mega-link.is-active .nav-text {
     color: var(--color-power-red);
   }
 
-  /* Side panel animations */
+  /* Side items */
   .mega-side-item {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(20px);
   }
 
   .mega-menu.open .mega-side-item {
     opacity: 1;
     transform: translateX(0);
-    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-    transition-delay: var(--delay, 0.5s);
+    transition: opacity 0.5s ease 0.5s, transform 0.5s ease 0.5s;
   }
 
-  /* Social link stagger */
-  .social-link {
+  /* Close animation */
+  .mega-menu.closing .mega-bg {
     opacity: 0;
+    transition: opacity 0.4s ease 0.2s;
   }
 
-  .mega-menu.open .social-link {
-    opacity: 1;
-    transition: opacity 0.4s ease;
-    transition-delay: var(--social-delay, 0.8s);
-  }
-
-  /* CTA animation */
-  .mega-cta {
+  .mega-menu.closing .mega-content {
     opacity: 0;
-    transform: translateY(20px);
+    transition: opacity 0.2s ease;
   }
 
-  .mega-menu.open .mega-cta {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.5s ease 0.7s, transform 0.5s ease 0.7s;
+  .mega-menu.closing .mega-link,
+  .mega-menu.closing .mega-side-item {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
 
   /* Header scroll state */
@@ -288,7 +279,11 @@ const currentPath = Astro.url.pathname;
     height: 5rem;
   }
 
-  /* Hide header when menu is open */
+  /* Hide header when menu open */
+  #header.menu-open {
+    pointer-events: none;
+  }
+
   #header.menu-open .header-bg {
     opacity: 0;
   }
@@ -302,16 +297,17 @@ const currentPath = Astro.url.pathname;
 
   const header = document.getElementById('header');
   const menuButton = document.getElementById('menu-button');
+  const menuClose = document.getElementById('menu-close');
   const megaMenu = document.getElementById('mega-menu');
 
-  // Scroll behavior
   let lastScroll = 0;
   let menuOpen = false;
 
+  // Scroll behavior
   ScrollTrigger.create({
     start: 'top -100',
     onUpdate: (self) => {
-      if (menuOpen) return; // Don't hide header when menu is open
+      if (menuOpen) return;
 
       if (self.scroll() > 100) {
         header?.classList.add('scrolled');
@@ -319,7 +315,6 @@ const currentPath = Astro.url.pathname;
         header?.classList.remove('scrolled');
       }
 
-      // Hide/show header on scroll direction
       const currentScroll = self.scroll();
       if (currentScroll > lastScroll && currentScroll > 500) {
         gsap.to(header, { y: -100, duration: 0.3, ease: 'power2.out' });
@@ -330,111 +325,94 @@ const currentPath = Astro.url.pathname;
     },
   });
 
-  // Menu toggle
-  menuButton?.addEventListener('click', () => {
-    menuOpen = !menuOpen;
+  function openMenu() {
+    menuOpen = true;
+    megaMenu?.classList.remove('closing');
+    megaMenu?.classList.add('open');
+    menuButton?.classList.add('open');
+    header?.classList.add('menu-open');
+    document.body.style.overflow = 'hidden';
 
-    if (menuOpen) {
-      megaMenu?.classList.add('open');
-      menuButton.classList.add('open');
-      header?.classList.add('menu-open');
-      menuButton.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
+    gsap.to(header, { y: 0, duration: 0.3, ease: 'power2.out' });
 
-      // Ensure header is visible
-      gsap.to(header, { y: 0, duration: 0.3, ease: 'power2.out' });
+    if ((window as any).lenis) {
+      (window as any).lenis.stop();
+    }
+  }
 
-      // Stop lenis
-      if ((window as any).lenis) {
-        (window as any).lenis.stop();
-      }
-    } else {
-      megaMenu?.classList.remove('open');
-      menuButton.classList.remove('open');
+  function closeMenu() {
+    menuOpen = false;
+    megaMenu?.classList.add('closing');
+    menuButton?.classList.remove('open');
+
+    setTimeout(() => {
+      megaMenu?.classList.remove('open', 'closing');
       header?.classList.remove('menu-open');
-      menuButton.setAttribute('aria-expanded', 'false');
       document.body.style.overflow = '';
 
-      // Resume lenis
       if ((window as any).lenis) {
         (window as any).lenis.start();
       }
+    }, 400);
+  }
+
+  // Event listeners
+  menuButton?.addEventListener('click', () => {
+    if (menuOpen) {
+      closeMenu();
+    } else {
+      openMenu();
     }
   });
 
-  // Close menu on link click
-  document.querySelectorAll('.mega-nav-link, .mega-cta a').forEach((link) => {
-    link.addEventListener('click', () => {
-      menuOpen = false;
-      megaMenu?.classList.remove('open');
-      menuButton?.classList.remove('open');
-      header?.classList.remove('menu-open');
-      document.body.style.overflow = '';
+  menuClose?.addEventListener('click', closeMenu);
 
-      if ((window as any).lenis) {
-        (window as any).lenis.start();
-      }
-    });
+  // Close on link click
+  document.querySelectorAll('.mega-link, .mega-menu .btn').forEach((link) => {
+    link.addEventListener('click', closeMenu);
   });
 
-  // Close menu on escape key
+  // Close on escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && menuOpen) {
-      menuOpen = false;
-      megaMenu?.classList.remove('open');
-      menuButton?.classList.remove('open');
-      header?.classList.remove('menu-open');
-      document.body.style.overflow = '';
-
-      if ((window as any).lenis) {
-        (window as any).lenis.start();
-      }
+      closeMenu();
     }
   });
 
-  // Magnetic effect on menu button
-  const menuButtonWrap = menuButton;
-  if (menuButtonWrap) {
-    menuButtonWrap.addEventListener('mousemove', (e: MouseEvent) => {
-      const rect = menuButtonWrap.getBoundingClientRect();
+  // Magnetic effect on buttons
+  [menuButton, menuClose].forEach((btn) => {
+    if (!btn) return;
+
+    btn.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = btn.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
 
-      gsap.to(menuButtonWrap, {
-        x: x * 0.3,
-        y: y * 0.3,
+      gsap.to(btn, {
+        x: x * 0.25,
+        y: y * 0.25,
         duration: 0.3,
         ease: 'power2.out',
       });
     });
 
-    menuButtonWrap.addEventListener('mouseleave', () => {
-      gsap.to(menuButtonWrap, {
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, {
         x: 0,
         y: 0,
         duration: 0.5,
-        ease: 'elastic.out(1, 0.3)',
+        ease: 'elastic.out(1, 0.4)',
       });
     });
-  }
+  });
 
-  // Hover effect on nav links - image preview could go here
-  document.querySelectorAll('.mega-nav-link').forEach((link) => {
+  // Hover effect on nav links
+  document.querySelectorAll('.mega-link').forEach((link) => {
     link.addEventListener('mouseenter', () => {
-      // Add any hover effects here
-      gsap.to(link, {
-        x: 20,
-        duration: 0.3,
-        ease: 'power2.out',
-      });
+      gsap.to(link, { x: 10, duration: 0.3, ease: 'power2.out' });
     });
-
     link.addEventListener('mouseleave', () => {
-      gsap.to(link, {
-        x: 0,
-        duration: 0.3,
-        ease: 'power2.out',
-      });
+      gsap.to(link, { x: 0, duration: 0.3, ease: 'power2.out' });
     });
   });
 </script>
