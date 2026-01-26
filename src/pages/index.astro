@@ -50,21 +50,13 @@ const industries = ['Oil & Gas', 'Construction', 'Mining', 'Heavy Industrial'];
   <main class="flex-1">
     <!-- Hero Section - Full Screen with Video Background -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <!-- Video Background -->
-      <div class="absolute inset-0">
-        <video
-          class="w-full h-full object-cover"
-          autoplay
-          muted
-          loop
-          playsinline
-          poster="https://images.pexels.com/videos/5945711/pexels-photo-5945711.jpeg?auto=compress&cs=tinysrgb&w=1920"
-        >
-          <source src="https://videos.pexels.com/video-files/5945711/5945711-hd_1920_1080_30fps.mp4" type="video/mp4" />
-        </video>
+      <!-- Background -->
+      <div class="absolute inset-0 bg-charcoal">
+        <!-- Industrial texture overlay -->
+        <div class="absolute inset-0 opacity-20" style="background-image: url('https://images.pexels.com/photos/2760243/pexels-photo-2760243.jpeg?auto=compress&cs=tinysrgb&w=1920'); background-size: cover; background-position: center;"></div>
         <!-- Gradient Overlays -->
-        <div class="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-charcoal/80 via-transparent to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-charcoal via-charcoal/80 to-charcoal"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/60 to-transparent"></div>
       </div>
 
       <!-- Hero Content -->
@@ -232,18 +224,10 @@ const industries = ['Oil & Gas', 'Construction', 'Mining', 'Heavy Industrial'];
 
     <!-- Video Showcase Section -->
     <section class="relative min-h-screen flex items-center overflow-hidden">
-      <!-- Video Background -->
-      <div class="absolute inset-0">
-        <video
-          class="w-full h-full object-cover"
-          autoplay
-          muted
-          loop
-          playsinline
-        >
-          <source src="https://videos.pexels.com/video-files/5532761/5532761-hd_1920_1080_25fps.mp4" type="video/mp4" />
-        </video>
-        <div class="absolute inset-0 bg-charcoal/80"></div>
+      <!-- Background -->
+      <div class="absolute inset-0 bg-gray-900">
+        <div class="absolute inset-0 opacity-30" style="background-image: url('https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=1920'); background-size: cover; background-position: center;"></div>
+        <div class="absolute inset-0 bg-charcoal/70"></div>
       </div>
 
       <div class="container relative z-10 py-32">
@@ -351,20 +335,3 @@ const industries = ['Oil & Gas', 'Construction', 'Mining', 'Heavy Industrial'];
   <Footer />
 </Layout>
 
-<style>
-  /* Hero specific animations */
-  .headline-hero span {
-    opacity: 0;
-    transform: translateY(100px);
-  }
-
-  :global(.animated) .headline-hero span {
-    opacity: 1;
-    transform: translateY(0);
-    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .headline-hero span:nth-child(2) {
-    transition-delay: 0.15s;
-  }
-</style>
