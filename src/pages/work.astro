@@ -108,9 +108,9 @@ const galleryImages = [
     {caseStudies.map((study, index) => (
       <section class="section bg-charcoal border-b border-white/5">
         <div class="container">
-          <div class={`grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
+          <div class={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 lg:items-center ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
             <!-- Content -->
-            <div class={index % 2 === 1 ? 'lg:col-start-2' : ''} data-animate="fade-up">
+            <div class={`order-2 lg:order-1 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`} data-animate="fade-up">
               <span class="eyebrow block mb-4">Case Study {String(index + 1).padStart(2, '0')}</span>
               <h2 class="headline-xl mb-4">{study.client}</h2>
               {study.tagline && (
@@ -130,15 +130,22 @@ const galleryImages = [
               </div>
 
               {study.testimonial && (
-                <blockquote class="border-l-2 border-power-red pl-6 py-2">
+                <blockquote class="border-l-2 border-power-red pl-6 py-2 mb-10">
                   <p class="text-xl italic text-muted">{study.testimonial}</p>
                 </blockquote>
               )}
+
+              <MagneticButton href={`/work/${study.slug}`} variant="ghost">
+                <span>View Case Study</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </MagneticButton>
             </div>
 
             <!-- Image -->
-            <div class={index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''} data-animate="fade-up">
-              <div class="relative group" data-cursor="view">
+            <div class={`order-1 lg:order-2 ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`} data-animate="fade-up">
+              <a href={`/work/${study.slug}`} class="block relative group" data-cursor="view">
                 <ParallaxImage
                   src={study.image}
                   alt={`${study.client} project`}
@@ -151,7 +158,7 @@ const galleryImages = [
                     View Project
                   </span>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>

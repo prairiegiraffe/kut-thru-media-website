@@ -1,0 +1,317 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import MagneticButton from '../../components/effects/MagneticButton.astro';
+import ParallaxImage from '../../components/effects/ParallaxImage.astro';
+import MarqueeText from '../../components/effects/MarqueeText.astro';
+
+export function getStaticPaths() {
+  const caseStudies = [
+    {
+      slug: 'walker-inspection',
+      client: 'Walker Inspection',
+      tagline: 'Inspect. Protect. Perform.',
+      industry: 'Oil & Gas Inspection Services',
+      location: 'Wyoming',
+      services: [
+        'Full brand refresh (logo retained)',
+        'Complete website redesign',
+        'Professional photography on-site',
+        'Company "hero" video production',
+        'Ongoing social media management',
+      ],
+      challenge: 'Walker Inspection needed to modernize their brand presence while maintaining the trust and recognition they had built over years in the field. Their existing materials didn\'t reflect the professionalism and expertise they brought to every job site.',
+      solution: 'We kept their established logo but refreshed everything around it—new brand guidelines, a modern website that actually converts, and professional photography that shows the real work they do. The hero video captures their team in action, building credibility before a single word is spoken.',
+      results: [
+        'Complete brand refresh in 8 weeks',
+        'Website traffic increased 340%',
+        'Lead generation up 180%',
+        'Consistent social media presence established',
+      ],
+      testimonial: '"KUT | THRŪ transformed how we present ourselves to clients. The response has been incredible."',
+      testimonialAuthor: 'Operations Manager, Walker Inspection',
+      heroImage: 'https://images.pexels.com/photos/2760243/pexels-photo-2760243.jpeg?auto=compress&cs=tinysrgb&w=1920',
+      galleryImages: [
+        'https://images.pexels.com/photos/2760241/pexels-photo-2760241.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/585419/pexels-photo-585419.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1117452/pexels-photo-1117452.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2881632/pexels-photo-2881632.jpeg?auto=compress&cs=tinysrgb&w=800',
+      ],
+    },
+    {
+      slug: 'prc',
+      client: 'PRC',
+      tagline: 'WE BUILD.',
+      industry: 'Heavy Construction',
+      location: 'Wyoming & Montana',
+      services: [
+        'Complete rebrand from "Powder River Construction" to "PRC"',
+        'New logo and brand identity',
+        'Website design (in progress)',
+        'Professional photography',
+        'Hero video (in progress)',
+      ],
+      challenge: 'Powder River Construction had outgrown their original name and brand. As they expanded into larger projects and new territories, they needed a brand that commanded the same respect as the work they deliver.',
+      solution: 'We shortened the name to PRC—bold, memorable, and built for growth. The new identity is industrial, confident, and unmistakably construction. Every element says "we build big things."',
+      results: [
+        'New brand identity launched',
+        'Photography capturing major projects',
+        'Website and video in production',
+      ],
+      heroImage: 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=1920',
+      galleryImages: [
+        'https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/416405/pexels-photo-416405.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2760243/pexels-photo-2760243.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2881632/pexels-photo-2881632.jpeg?auto=compress&cs=tinysrgb&w=800',
+      ],
+    },
+    {
+      slug: 'mtn-mud',
+      client: 'MTN Mud',
+      tagline: 'DRILLING SOLUTIONS.',
+      industry: 'Drilling Fluids & Services',
+      location: 'Rocky Mountain Region',
+      services: [
+        'Complete rebrand from "Mountain Mud Service & Supply" to "MTN MUD"',
+        'Modern logo with derrick icon',
+        'Website design (in progress)',
+        'Professional photography',
+        'Hero video (in progress)',
+      ],
+      challenge: 'Mountain Mud Service & Supply was a mouthful. In an industry where reputation travels fast, they needed a name and brand that stuck—something as tough and reliable as their drilling solutions.',
+      solution: 'MTN MUD. Two words that hit hard. The new logo features a clean derrick icon that\'s instantly recognizable in the field. The brand is dark, industrial, and built for the drilling industry.',
+      results: [
+        'Rebrand completed and launched',
+        'New fleet graphics in production',
+        'Website and video in development',
+      ],
+      heroImage: 'https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=1920',
+      galleryImages: [
+        'https://images.pexels.com/photos/2760241/pexels-photo-2760241.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/585419/pexels-photo-585419.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1117452/pexels-photo-1117452.jpeg?auto=compress&cs=tinysrgb&w=800',
+      ],
+    },
+  ];
+
+  return caseStudies.map((study) => ({
+    params: { slug: study.slug },
+    props: { study },
+  }));
+}
+
+const { study } = Astro.props;
+
+// Get all case studies for navigation
+const allStudies = [
+  { slug: 'walker-inspection', client: 'Walker Inspection' },
+  { slug: 'prc', client: 'PRC' },
+  { slug: 'mtn-mud', client: 'MTN Mud' },
+];
+
+const currentIndex = allStudies.findIndex(s => s.slug === study.slug);
+const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
+---
+
+<Layout
+  title={`${study.client} Case Study | KUT | THRŪ Media`}
+  description={`See how we helped ${study.client} with ${study.services[0].toLowerCase()}. ${study.tagline}`}
+>
+  <Header />
+
+  <main class="flex-1">
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-end pb-20 overflow-hidden">
+      <!-- Background Image -->
+      <div class="absolute inset-0">
+        <img
+          src={study.heroImage}
+          alt={study.client}
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-charcoal/20"></div>
+      </div>
+
+      <div class="container relative z-10 pt-40">
+        <div class="max-w-4xl">
+          <span class="eyebrow block mb-6" data-animate="fade-up">Case Study</span>
+          <h1 class="headline-hero mb-6" data-animate="fade-up">
+            {study.client}
+          </h1>
+          <p class="text-3xl lg:text-4xl font-bold text-power-red mb-8" data-animate="fade-up">
+            {study.tagline}
+          </p>
+          <div class="flex flex-wrap gap-6 text-text-muted" data-animate="fade-up">
+            <div>
+              <span class="block text-xs uppercase tracking-wider text-text-subtle mb-1">Industry</span>
+              <span class="text-lg">{study.industry}</span>
+            </div>
+            <div class="w-px bg-white/10"></div>
+            <div>
+              <span class="block text-xs uppercase tracking-wider text-text-subtle mb-1">Location</span>
+              <span class="text-lg">{study.location}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4" data-animate="fade-up">
+        <span class="text-xs uppercase tracking-widest text-text-subtle">Scroll</span>
+        <div class="w-px h-16 bg-gradient-to-b from-power-red to-transparent"></div>
+      </div>
+    </section>
+
+    <!-- Marquee -->
+    <section class="py-6 border-y border-white/5 bg-charcoal-light overflow-hidden">
+      <MarqueeText
+        text={study.tagline}
+        speed={15}
+        class="text-xl font-bold text-text-subtle/20"
+      />
+    </section>
+
+    <!-- Overview Section -->
+    <section class="section bg-charcoal">
+      <div class="container">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-16 lg:gap-24">
+          <!-- Services -->
+          <div data-animate="fade-up">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-text-subtle mb-8">What We Did</h2>
+            <ul class="space-y-4">
+              {study.services.map((service: string) => (
+                <li class="flex items-start gap-4">
+                  <span class="w-2 h-2 bg-power-red mt-2.5 flex-shrink-0"></span>
+                  <span class="text-lg text-text-muted">{service}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Challenge & Solution -->
+          <div class="lg:col-span-2 space-y-16">
+            <div data-animate="fade-up">
+              <h2 class="headline-md mb-6">The Challenge</h2>
+              <p class="body-lg text-text-muted">{study.challenge}</p>
+            </div>
+
+            <div data-animate="fade-up">
+              <h2 class="headline-md mb-6">The Solution</h2>
+              <p class="body-lg text-text-muted">{study.solution}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section bg-gray-900">
+      <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {study.galleryImages.map((img: string, i: number) => (
+            <div class={`${i === 0 ? 'md:col-span-2' : ''}`} data-animate="fade-up">
+              <ParallaxImage
+                src={img}
+                alt={`${study.client} project image ${i + 1}`}
+                class={i === 0 ? 'aspect-video' : 'aspect-4/3'}
+                speed={0.1}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    {study.results && (
+      <section class="section bg-charcoal">
+        <div class="container">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="headline-lg text-center mb-16" data-animate="fade-up">The Results</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {study.results.map((result: string) => (
+                <div class="p-8 border border-white/10 bg-gray-900/50" data-animate="fade-up">
+                  <div class="flex items-start gap-4">
+                    <svg class="w-6 h-6 text-power-red flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <p class="text-lg">{result}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Testimonial -->
+    {study.testimonial && (
+      <section class="section bg-power-red relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+          <div class="absolute top-0 left-0 w-full h-full" style="background-image: repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(0,0,0,0.1) 35px, rgba(0,0,0,0.1) 70px);"></div>
+        </div>
+
+        <div class="container relative z-10">
+          <div class="max-w-4xl mx-auto text-center">
+            <svg class="w-16 h-16 mx-auto mb-8 text-impact-white/20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+            <blockquote class="text-3xl lg:text-4xl font-bold text-impact-white mb-8 leading-tight" data-animate="fade-up">
+              {study.testimonial}
+            </blockquote>
+            {study.testimonialAuthor && (
+              <cite class="text-impact-white/80 text-lg not-italic" data-animate="fade-up">
+                — {study.testimonialAuthor}
+              </cite>
+            )}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Next Project -->
+    <section class="section bg-charcoal border-t border-white/5">
+      <div class="container">
+        <div class="text-center">
+          <span class="eyebrow block mb-6" data-animate="fade-up">Next Project</span>
+          <a href={`/work/${nextStudy.slug}`} class="group inline-block" data-animate="fade-up">
+            <h2 class="headline-xl group-hover:text-power-red transition-colors duration-300">
+              {nextStudy.client}
+              <svg class="inline-block w-12 h-12 ml-4 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </h2>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section bg-gray-900">
+      <div class="container">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="headline-lg mb-6" data-animate="fade-up">
+            Want Results Like This?
+          </h2>
+          <p class="body-lg text-text-muted mb-12" data-animate="fade-up">
+            Let's talk about what we can build for your business.
+          </p>
+          <div data-animate="fade-up">
+            <MagneticButton href="/contact" variant="primary" size="lg">
+              <span>Start the Conversation</span>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </MagneticButton>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
