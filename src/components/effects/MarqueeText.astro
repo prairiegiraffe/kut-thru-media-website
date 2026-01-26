@@ -95,8 +95,9 @@ const items = Array(repeat).fill(text);
 
     if (inner) {
       // Calculate duration based on content width and desired speed
+      // Lower speed value = slower scroll (higher duration)
       const width = inner.offsetWidth;
-      const duration = width / (speed * 10);
+      const duration = width / speed;
       marquee.style.setProperty('--duration', `${duration}s`);
     }
   });
