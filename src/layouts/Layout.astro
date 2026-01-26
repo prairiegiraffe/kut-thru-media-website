@@ -64,29 +64,37 @@ const {
 
       gsap.registerPlugin(ScrollTrigger);
 
-      // Hide loading screen
+      // Mark elements for animation (they start visible, this hides them)
+      const animatedElements = document.querySelectorAll('[data-animate]');
+      animatedElements.forEach((el) => el.classList.add('will-animate'));
+
+      // Hide loading screen and start animations
       window.addEventListener('load', () => {
         const loadingScreen = document.getElementById('loading-screen');
 
         gsap.to(loadingScreen, {
           opacity: 0,
           duration: 0.6,
-          delay: 0.5,
+          delay: 0.3,
           ease: 'power2.out',
           onComplete: () => {
             loadingScreen?.classList.add('hidden');
           }
         });
 
-        // Initialize scroll animations
-        document.querySelectorAll('[data-animate]').forEach((el) => {
-          ScrollTrigger.create({
-            trigger: el,
-            start: 'top 85%',
-            onEnter: () => el.classList.add('animated'),
-            once: true,
+        // Initialize scroll animations after a brief delay
+        setTimeout(() => {
+          animatedElements.forEach((el) => {
+            ScrollTrigger.create({
+              trigger: el,
+              start: 'top 90%',
+              onEnter: () => el.classList.add('animated'),
+              once: true,
+            });
           });
-        });
+          // Refresh to catch elements already in view
+          ScrollTrigger.refresh();
+        }, 100);
       });
 
       // Refresh ScrollTrigger on resize

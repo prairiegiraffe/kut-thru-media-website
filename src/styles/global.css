@@ -436,102 +436,70 @@ html.lenis, html.lenis body {
 }
 
 /* =====================================================
-   Scroll Animations - GSAP Ready with CSS Fallback
+   Scroll Animations - Content visible by default
    ===================================================== */
 
+/*
+ * Elements are visible by default for accessibility.
+ * JS will add .will-animate class, then .animated when in view.
+ */
+
 /* Fade up on scroll */
-[data-animate="fade-up"] {
+[data-animate="fade-up"].will-animate {
   opacity: 0;
-  transform: translateY(40px);
-  animation: fadeUpFallback 0.8s ease-out 1s forwards;
+  transform: translateY(30px);
 }
 
 [data-animate="fade-up"].animated {
   opacity: 1;
   transform: translateY(0);
-  transition: all 0.8s var(--ease-out-expo);
-  animation: none;
-}
-
-@keyframes fadeUpFallback {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 /* Fade in */
-[data-animate="fade-in"] {
+[data-animate="fade-in"].will-animate {
   opacity: 0;
-  animation: fadeInFallback 0.8s ease-out 1s forwards;
 }
 
 [data-animate="fade-in"].animated {
   opacity: 1;
-  transition: opacity 0.8s var(--ease-out-expo);
-  animation: none;
-}
-
-@keyframes fadeInFallback {
-  to {
-    opacity: 1;
-  }
+  transition: opacity 0.6s ease-out;
 }
 
 /* Scale up */
-[data-animate="scale-up"] {
+[data-animate="scale-up"].will-animate {
   opacity: 0;
   transform: scale(0.95);
-  animation: scaleUpFallback 0.8s ease-out 1s forwards;
 }
 
 [data-animate="scale-up"].animated {
   opacity: 1;
   transform: scale(1);
-  transition: all 0.8s var(--ease-out-expo);
-  animation: none;
-}
-
-@keyframes scaleUpFallback {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 /* Slide from left */
-[data-animate="slide-left"] {
+[data-animate="slide-left"].will-animate {
   opacity: 0;
-  transform: translateX(-60px);
-  animation: slideLeftFallback 0.8s ease-out 1s forwards;
+  transform: translateX(-40px);
 }
 
 [data-animate="slide-left"].animated {
   opacity: 1;
   transform: translateX(0);
-  transition: all 0.8s var(--ease-out-expo);
-  animation: none;
-}
-
-@keyframes slideLeftFallback {
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 /* Slide from right */
-[data-animate="slide-right"] {
+[data-animate="slide-right"].will-animate {
   opacity: 0;
-  transform: translateX(60px);
-  animation: slideRightFallback 0.8s ease-out 1s forwards;
+  transform: translateX(40px);
 }
 
 [data-animate="slide-right"].animated {
   opacity: 1;
   transform: translateX(0);
-  transition: all 0.8s var(--ease-out-expo);
-  animation: none;
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 @keyframes slideRightFallback {
