@@ -102,9 +102,9 @@ const galleryImages = [
         <div class="container">
           <div class={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 lg:items-center ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
             <!-- Content -->
-            <div class={`order-2 lg:order-1 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`} data-animate="fade-up">
+            <div class={`order-2 lg:order-1 overflow-hidden ${index % 2 === 1 ? 'lg:col-start-2' : ''}`} data-animate="fade-up">
               <span class="eyebrow block mb-4">Case Study {String(index + 1).padStart(2, '0')}</span>
-              <h2 class="headline-xl mb-4">{study.client}</h2>
+              <h2 class="headline-xl mb-4 wrap-break-word">{study.client}</h2>
               {study.tagline && (
                 <p class="text-2xl font-bold text-power-red mb-8">{study.tagline}</p>
               )}
