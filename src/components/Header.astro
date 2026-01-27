@@ -300,33 +300,25 @@ const currentPath = Astro.url.pathname;
   const menuClose = document.getElementById('menu-close');
   const megaMenu = document.getElementById('mega-menu');
 
-  let lastScroll = 0;
   let menuOpen = false;
 
-  // Ensure header starts in correct position (no transform)
-  gsap.set(header, { clearProps: 'all' });
+  // Simple scroll behavior - just add background when scrolled, no hiding
+  let lastScrollY = 0;
 
-  // Scroll behavior
-  ScrollTrigger.create({
-    start: 'top -100',
-    onUpdate: (self) => {
-      if (menuOpen) return;
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
 
-      if (self.scroll() > 100) {
-        header?.classList.add('scrolled');
-      } else {
-        header?.classList.remove('scrolled');
-      }
+    if (currentScrollY > 100) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
+    }
 
-      const currentScroll = self.scroll();
-      if (currentScroll > lastScroll && currentScroll > 500) {
-        gsap.to(header, { y: -100, duration: 0.3, ease: 'power2.out' });
-      } else {
-        gsap.to(header, { y: 0, duration: 0.3, ease: 'power2.out' });
-      }
-      lastScroll = currentScroll;
-    },
-  });
+    lastScrollY = currentScrollY;
+  };
+
+  // Use passive listener for better mobile performance
+  window.addEventListener('scroll', handleScroll, { passive: true });
 
   function openMenu() {
     menuOpen = true;
@@ -335,8 +327,6 @@ const currentPath = Astro.url.pathname;
     menuButton?.classList.add('open');
     header?.classList.add('menu-open');
     document.body.style.overflow = 'hidden';
-
-    gsap.to(header, { y: 0, duration: 0.3, ease: 'power2.out' });
 
     if ((window as any).lenis) {
       (window as any).lenis.stop();
