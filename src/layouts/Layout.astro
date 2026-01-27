@@ -64,11 +64,12 @@ const {
 
       gsap.registerPlugin(ScrollTrigger);
 
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
       // Mark elements for animation (they start visible, this hides them)
       const animatedElements = document.querySelectorAll('[data-animate]');
-      animatedElements.forEach((el) => el.classList.add('will-animate'));
 
-      // Hide loading screen and start animations
+      // Hide loading screen
       window.addEventListener('load', () => {
         const loadingScreen = document.getElementById('loading-screen');
 
@@ -82,29 +83,37 @@ const {
           }
         });
 
-        // Initialize scroll animations after a brief delay
-        setTimeout(() => {
-          animatedElements.forEach((el) => {
-            ScrollTrigger.create({
-              trigger: el,
-              start: 'top 90%',
-              onEnter: () => el.classList.add('animated'),
-              once: true,
+        if (isTouchDevice) {
+          // On mobile: just show elements immediately, no scroll-triggered animations
+          animatedElements.forEach((el) => el.classList.add('animated'));
+        } else {
+          // On desktop: use ScrollTrigger for scroll-based animations
+          animatedElements.forEach((el) => el.classList.add('will-animate'));
+
+          setTimeout(() => {
+            animatedElements.forEach((el) => {
+              ScrollTrigger.create({
+                trigger: el,
+                start: 'top 90%',
+                onEnter: () => el.classList.add('animated'),
+                once: true,
+              });
             });
-          });
-          // Refresh to catch elements already in view
-          ScrollTrigger.refresh();
-        }, 100);
+            ScrollTrigger.refresh();
+          }, 100);
+        }
       });
 
-      // Refresh ScrollTrigger on resize
-      let resizeTimer: ReturnType<typeof setTimeout>;
-      window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          ScrollTrigger.refresh();
-        }, 250);
-      });
+      // Refresh ScrollTrigger on resize (desktop only)
+      if (!isTouchDevice) {
+        let resizeTimer: ReturnType<typeof setTimeout>;
+        window.addEventListener('resize', () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => {
+            ScrollTrigger.refresh();
+          }, 250);
+        });
+      }
     </script>
   </body>
 </html>
