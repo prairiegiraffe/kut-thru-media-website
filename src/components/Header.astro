@@ -303,6 +303,9 @@ const currentPath = Astro.url.pathname;
   let lastScroll = 0;
   let menuOpen = false;
 
+  // Ensure header starts in correct position (no transform)
+  gsap.set(header, { clearProps: 'all' });
+
   // Scroll behavior
   ScrollTrigger.create({
     start: 'top -100',
