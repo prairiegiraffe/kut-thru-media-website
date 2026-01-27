@@ -231,7 +231,7 @@ html.lenis, html.lenis body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  border-radius: 0;
+  border-radius: 4px;
   transition: all 0.4s var(--ease-out-expo);
   cursor: none;
   text-decoration: none;
