@@ -51,6 +51,15 @@ const {
     will-change: transform;
     transform: scale(1.2);
   }
+
+  /* Disable parallax effects on mobile for better performance */
+  @media (max-width: 768px) {
+    .parallax-image {
+      height: 100%;
+      transform: none;
+      will-change: auto;
+    }
+  }
 </style>
 
 <script>
@@ -59,47 +68,53 @@ const {
 
   gsap.registerPlugin(ScrollTrigger);
 
+  const isMobile = window.innerWidth <= 768;
+
   document.querySelectorAll('.parallax-image-wrap').forEach((wrap) => {
     const mask = wrap.querySelector('.parallax-reveal-mask');
     const inner = wrap.querySelector('.parallax-image-inner');
-    const image = wrap.querySelector('.parallax-image');
+    const image = wrap.querySelector('.parallax-image') as HTMLElement;
     const speed = parseFloat(wrap.getAttribute('data-speed') || '0.3');
 
-    // Reveal animation
+    // Reveal animation (keep on all devices but simpler on mobile)
     if (mask) {
       gsap.to(mask, {
         scaleX: 0,
-        duration: 1.2,
+        duration: isMobile ? 0.8 : 1.2,
         ease: 'power4.inOut',
         scrollTrigger: {
           trigger: wrap,
-          start: 'top 80%',
+          start: 'top 85%',
           toggleActions: 'play none none none',
         },
       });
 
-      gsap.from(inner, {
-        scale: 1.4,
-        duration: 1.5,
-        ease: 'power4.out',
+      if (!isMobile) {
+        gsap.from(inner, {
+          scale: 1.4,
+          duration: 1.5,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: wrap,
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          },
+        });
+      }
+    }
+
+    // Parallax effect - desktop only
+    if (!isMobile) {
+      gsap.to(image, {
+        yPercent: -30 * speed,
+        ease: 'none',
         scrollTrigger: {
           trigger: wrap,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
         },
       });
     }
-
-    // Parallax effect
-    gsap.to(image, {
-      yPercent: -30 * speed,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: wrap,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
   });
 </script>

@@ -88,89 +88,94 @@
 </style>
 
 <script>
-  import gsap from 'gsap';
+  // Skip all cursor logic on touch devices
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-  const cursor = document.getElementById('cursor');
-  const cursorDot = cursor?.querySelector('.cursor-dot') as HTMLElement;
-  const cursorOutline = cursor?.querySelector('.cursor-outline') as HTMLElement;
-  const cursorText = cursor?.querySelector('.cursor-text') as HTMLElement;
+  if (!isTouchDevice) {
+    import('gsap').then(({ default: gsap }) => {
+      const cursor = document.getElementById('cursor');
+      const cursorDot = cursor?.querySelector('.cursor-dot') as HTMLElement;
+      const cursorOutline = cursor?.querySelector('.cursor-outline') as HTMLElement;
+      const cursorText = cursor?.querySelector('.cursor-text') as HTMLElement;
 
-  let mouseX = 0;
-  let mouseY = 0;
-  let dotX = 0;
-  let dotY = 0;
-  let outlineX = 0;
-  let outlineY = 0;
+      let mouseX = 0;
+      let mouseY = 0;
+      let dotX = 0;
+      let dotY = 0;
+      let outlineX = 0;
+      let outlineY = 0;
 
-  // Track mouse position
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
+      // Track mouse position
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
 
-  // Animate cursor
-  function animate() {
-    // Smooth follow for dot
-    dotX += (mouseX - dotX) * 0.2;
-    dotY += (mouseY - dotY) * 0.2;
+      // Animate cursor
+      function animate() {
+        // Smooth follow for dot
+        dotX += (mouseX - dotX) * 0.2;
+        dotY += (mouseY - dotY) * 0.2;
 
-    // Even smoother follow for outline
-    outlineX += (mouseX - outlineX) * 0.1;
-    outlineY += (mouseY - outlineY) * 0.1;
+        // Even smoother follow for outline
+        outlineX += (mouseX - outlineX) * 0.1;
+        outlineY += (mouseY - outlineY) * 0.1;
 
-    if (cursorDot) {
-      cursorDot.style.left = `${dotX}px`;
-      cursorDot.style.top = `${dotY}px`;
-    }
+        if (cursorDot) {
+          cursorDot.style.left = `${dotX}px`;
+          cursorDot.style.top = `${dotY}px`;
+        }
 
-    if (cursorOutline) {
-      cursorOutline.style.left = `${outlineX}px`;
-      cursorOutline.style.top = `${outlineY}px`;
-    }
+        if (cursorOutline) {
+          cursorOutline.style.left = `${outlineX}px`;
+          cursorOutline.style.top = `${outlineY}px`;
+        }
 
-    if (cursorText) {
-      cursorText.style.left = `${outlineX}px`;
-      cursorText.style.top = `${outlineY}px`;
-    }
+        if (cursorText) {
+          cursorText.style.left = `${outlineX}px`;
+          cursorText.style.top = `${outlineY}px`;
+        }
 
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-
-  // Hover effects on interactive elements
-  const interactiveElements = document.querySelectorAll('a, button, [data-cursor]');
-
-  interactiveElements.forEach((el) => {
-    el.addEventListener('mouseenter', () => {
-      cursor?.classList.add('hover');
-
-      const cursorType = el.getAttribute('data-cursor');
-      if (cursorType === 'view') {
-        cursor?.classList.add('hover-view');
+        requestAnimationFrame(animate);
       }
+
+      animate();
+
+      // Hover effects on interactive elements
+      const interactiveElements = document.querySelectorAll('a, button, [data-cursor]');
+
+      interactiveElements.forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+          cursor?.classList.add('hover');
+
+          const cursorType = el.getAttribute('data-cursor');
+          if (cursorType === 'view') {
+            cursor?.classList.add('hover-view');
+          }
+        });
+
+        el.addEventListener('mouseleave', () => {
+          cursor?.classList.remove('hover', 'hover-view');
+        });
+      });
+
+      // Click effect
+      document.addEventListener('mousedown', () => {
+        cursor?.classList.add('clicked');
+      });
+
+      document.addEventListener('mouseup', () => {
+        cursor?.classList.remove('clicked');
+      });
+
+      // Hide cursor when leaving window
+      document.addEventListener('mouseleave', () => {
+        gsap.to(cursor, { opacity: 0, duration: 0.3 });
+      });
+
+      document.addEventListener('mouseenter', () => {
+        gsap.to(cursor, { opacity: 1, duration: 0.3 });
+      });
     });
-
-    el.addEventListener('mouseleave', () => {
-      cursor?.classList.remove('hover', 'hover-view');
-    });
-  });
-
-  // Click effect
-  document.addEventListener('mousedown', () => {
-    cursor?.classList.add('clicked');
-  });
-
-  document.addEventListener('mouseup', () => {
-    cursor?.classList.remove('clicked');
-  });
-
-  // Hide cursor when leaving window
-  document.addEventListener('mouseleave', () => {
-    gsap.to(cursor, { opacity: 0, duration: 0.3 });
-  });
-
-  document.addEventListener('mouseenter', () => {
-    gsap.to(cursor, { opacity: 1, duration: 0.3 });
-  });
+  }
 </script>

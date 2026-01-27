@@ -9,26 +9,30 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // Initialize Lenis
-  const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    orientation: 'vertical',
-    gestureOrientation: 'vertical',
-    smoothWheel: true,
-    wheelMultiplier: 1,
-    touchMultiplier: 2,
-  });
+  // Only enable smooth scroll on desktop (no touch devices)
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-  // Connect Lenis to GSAP ScrollTrigger
-  lenis.on('scroll', ScrollTrigger.update);
+  if (!isTouchDevice) {
+    // Initialize Lenis only on desktop
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+    });
 
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-  });
+    // Connect Lenis to GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
 
-  gsap.ticker.lagSmoothing(0);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
 
-  // Make lenis globally available
-  (window as any).lenis = lenis;
+    gsap.ticker.lagSmoothing(0);
+
+    // Make lenis globally available
+    (window as any).lenis = lenis;
+  }
 </script>
