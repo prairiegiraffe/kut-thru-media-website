@@ -26,9 +26,11 @@ const currentPath = Astro.url.pathname;
     <nav class="flex items-center justify-between h-24">
       <!-- Logo -->
       <a href="/" class="logo-link relative z-[60] group" data-cursor>
-        <span class="text-2xl font-black tracking-tighter">
-          <span class="inline-block transition-transform duration-300 group-hover:-translate-y-1">K</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[25ms]">U</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[50ms]">T</span><span class="text-power-red mx-1 inline-block transition-transform duration-300 group-hover:scale-110">|</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[75ms]">T</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[100ms]">H</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[125ms]">R</span><span class="inline-block transition-transform duration-300 group-hover:-translate-y-1 delay-[150ms]">Ū</span>
-        </span>
+        <img
+          src="/assets/images/Logos/Full Logo White.png"
+          alt="KUT | THRŪ Media"
+          class="h-10 lg:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
+        />
       </a>
 
       <!-- Right Side: CTA + Menu Button -->
@@ -69,8 +71,12 @@ const currentPath = Astro.url.pathname;
   <div class="mega-content relative z-10 h-full flex flex-col opacity-0">
     <!-- Header area with close button -->
     <div class="container flex items-center justify-between h-24 flex-shrink-0">
-      <a href="/" class="text-2xl font-black tracking-tighter">
-        KUT<span class="text-power-red mx-1">|</span>THRŪ
+      <a href="/" class="block">
+        <img
+          src="/assets/images/Logos/Full Logo White.png"
+          alt="KUT | THRŪ Media"
+          class="h-10 lg:h-12 w-auto"
+        />
       </a>
       <button
         id="menu-close"
