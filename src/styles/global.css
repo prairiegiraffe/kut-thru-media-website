@@ -239,6 +239,11 @@ html.lenis, html.lenis body {
   overflow: hidden;
 }
 
+/* Ensure hidden class works with btn */
+.btn.hidden {
+  display: none;
+}
+
 .btn-primary {
   background-color: var(--color-power-red);
   color: var(--color-impact-white);
