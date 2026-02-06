@@ -8,28 +8,39 @@ import SectionHeadline from '../components/ui/SectionHeadline.astro';
 const steps = [
   {
     number: '01',
-    title: 'Marketing Workshop',
-    description: 'We sit down with your team and dig into everything—your customers, your competition, your goals, your challenges. This is where we learn your business inside and out.',
+    title: 'Align',
+    description: 'We sit down with your team and dig into everything—your customers, your competition, your goals, your challenges.',
+    bullets: ['Marketing Workshop', 'Marketing Blueprint', 'Logo / Rebrand / Branding'],
   },
   {
     number: '02',
-    title: 'Marketing Blueprint',
-    description: 'Based on the workshop, we deliver a comprehensive Marketing Blueprint. This is your roadmap—target demographics, messaging, channels, and a clear strategy to move forward.',
+    title: 'Capture',
+    description: 'We go on-site, get in the field, and capture the real work. This is where we shoot the content that tells your story.',
+    bullets: ['Professional Photography', 'Video Production', 'Social Media Content Capture'],
   },
   {
     number: '03',
-    title: 'Pricing Options',
-    description: 'We present pricing options based on the Blueprint\'s recommendations. You choose what fits your budget and goals. No surprises.',
+    title: 'Build',
+    description: 'With the content captured, we get to work building out your brand presence across all platforms.',
+    bullets: ['Editing & Post-Production', 'Social Platform Builds', 'Website Development'],
   },
   {
     number: '04',
-    title: 'Agreement & Payment',
-    description: 'Sign the agreement, process payment, and we\'re officially partners. Time to get to work.',
+    title: 'Approve',
+    description: 'Your eyes get on everything before it goes out to the public. We don\'t launch without your sign-off.',
+    bullets: ['Client Review', 'Revisions & Refinements', 'Final Sign-Off'],
   },
   {
     number: '05',
-    title: 'Execution',
-    description: 'We build, we shoot, we create, we launch. Regular check-ins keep you in the loop. We don\'t disappear—we communicate.',
+    title: 'Deploy',
+    description: 'Set the launch date and push everything live. Websites, social media channels, billboards—all of it.',
+    bullets: ['Set Launch Date', 'Channel Launches', 'Go Live'],
+  },
+  {
+    number: '06',
+    title: 'Optimize',
+    description: 'Track what\'s working and what\'s not. Analytics, engagement, commenting—we keep improving.',
+    bullets: ['Analytics Tracking', 'Engagement Monitoring', 'Continuous Improvement'],
   },
 ];
 
@@ -53,7 +64,7 @@ const funnelStages = [
 ---
 
 <Layout
-  title="Our Process | KUT | THRŪ Media"
+  title="Our Proven Process | KUT | THRŪ Media"
   description="We diagnose before we prescribe. Learn how our Marketing Workshop and Blueprint process delivers real results for your business."
 >
   <Header />
@@ -63,7 +74,7 @@ const funnelStages = [
     <section class="section bg-gradient-to-b from-gray-900 to-charcoal">
       <div class="container">
         <div class="max-w-3xl">
-          <h1 class="headline-xl mb-6">Our Process</h1>
+          <h1 class="headline-xl mb-6">Our Proven Process</h1>
           <p class="body-lg text-muted">
             Diagnose before you prescribe.
           </p>
@@ -86,17 +97,34 @@ const funnelStages = [
     <!-- Process Steps -->
     <section class="section bg-gray-900">
       <div class="container">
-        <div class="max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {steps.map((step, index) => (
-            <div class={`flex gap-8 ${index !== steps.length - 1 ? 'mb-12 pb-12 border-b border-white/10' : ''}`}>
-              <div class="flex-shrink-0">
-                <div class="w-20 h-20 bg-power-red flex items-center justify-center">
-                  <span class="text-3xl font-black text-impact-white">{step.number}</span>
-                </div>
+            <div class="bg-charcoal border border-white/10 p-8 relative">
+              <!-- Step Number -->
+              <div class="absolute -top-4 -left-4 w-12 h-12 bg-power-red flex items-center justify-center">
+                <span class="text-xl font-black text-impact-white">{step.number}</span>
               </div>
-              <div class="pt-2">
+              <!-- Arrow to next step -->
+              {index < steps.length - 1 && index !== 2 && (
+                <div class="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
+                  <svg class="w-8 h-8 text-power-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
+              )}
+              <div class="pt-4">
                 <h3 class="text-2xl font-bold mb-4">{step.title}</h3>
-                <p class="body-md text-muted">{step.description}</p>
+                <p class="body-md text-muted mb-6">{step.description}</p>
+                <ul class="space-y-2">
+                  {step.bullets.map((bullet) => (
+                    <li class="flex items-center gap-2">
+                      <svg class="w-4 h-4 text-power-red flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span class="text-sm text-muted">{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           ))}
