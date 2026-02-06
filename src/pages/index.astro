@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import MarqueeText from '../components/effects/MarqueeText.astro';
 import TypeWriter from '../components/effects/TypeWriter.astro';
 import ParallaxImage from '../components/effects/ParallaxImage.astro';
 import MagneticButton from '../components/effects/MagneticButton.astro';
@@ -83,39 +82,6 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
             />
           </p>
 
-          <!-- Tagline -->
-          <p class="text-2xl md:text-3xl text-impact-white font-medium italic mb-8" data-animate="fade-up">
-            "Clean marketing for dirty jobs."
-          </p>
-
-          <!-- Stats Bar -->
-          <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12 py-6 border-y border-white/10" data-animate="stagger">
-            <div class="text-center">
-              <div class="text-3xl lg:text-4xl font-black text-power-red mb-1">
-                <CountUp value={10} suffix="M+" />
-              </div>
-              <div class="text-xs uppercase tracking-wider text-muted">Total Client Views</div>
-            </div>
-            <div class="text-center">
-              <div class="text-3xl lg:text-4xl font-black text-power-red mb-1">
-                X+
-              </div>
-              <div class="text-xs uppercase tracking-wider text-muted">Total Client Engagement</div>
-            </div>
-            <div class="text-center">
-              <div class="text-3xl lg:text-4xl font-black text-power-red mb-1">
-                X+
-              </div>
-              <div class="text-xs uppercase tracking-wider text-muted">Total Client Posts</div>
-            </div>
-            <div class="text-center">
-              <div class="text-3xl lg:text-4xl font-black text-power-red mb-1">
-                <CountUp value={0} suffix="" />
-              </div>
-              <div class="text-xs uppercase tracking-wider text-muted">BS Tolerated</div>
-            </div>
-          </div>
-
           <div class="flex flex-wrap gap-6" data-animate="fade-up">
             <MagneticButton href="/contact" variant="primary" size="lg">
               <span>Let's Talk</span>
@@ -134,13 +100,43 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
       </div>
     </section>
 
-    <!-- Marquee Section -->
-    <section class="py-8 border-y border-white/5 bg-charcoal-light overflow-hidden">
-      <MarqueeText
-        text="CLEAN MARKETING FOR DIRTY JOBS"
-        speed={15}
-        class="headline-md text-text-subtle/30 hover:text-text-subtle/50 transition-colors"
-      />
+    <!-- Tagline & Stats Section -->
+    <section class="py-16 lg:py-24 bg-charcoal-light border-y border-white/5">
+      <div class="container">
+        <div class="max-w-5xl mx-auto text-center mb-12" data-animate="fade-up">
+          <p class="text-4xl md:text-5xl lg:text-6xl text-impact-white font-bold italic">
+            "Clean marketing for dirty jobs."
+          </p>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto" data-animate="stagger">
+          <div class="text-center">
+            <div class="text-4xl lg:text-5xl font-black text-power-red mb-2">
+              <CountUp value={10} suffix="M+" />
+            </div>
+            <div class="text-sm uppercase tracking-wider text-muted">Total Client Views</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl lg:text-5xl font-black text-power-red mb-2">
+              X+
+            </div>
+            <div class="text-sm uppercase tracking-wider text-muted">Total Client Engagement</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl lg:text-5xl font-black text-power-red mb-2">
+              X+
+            </div>
+            <div class="text-sm uppercase tracking-wider text-muted">Total Client Posts</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl lg:text-5xl font-black text-power-red mb-2">
+              <CountUp value={0} suffix="" />
+            </div>
+            <div class="text-sm uppercase tracking-wider text-muted">BS Tolerated</div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Intro Section - Split Layout -->
