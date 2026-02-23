@@ -15,6 +15,7 @@ export function getStaticPaths() {
       industry: 'Oil & Gas Inspection Services',
       location: 'Wyoming, North Dakota, Texas, Oklahoma, New Mexico',
       heroVideo: 'https://www.youtube.com/embed/sb9JkX0JuLY',
+      logo: '/assets/images/work/walker/logo-primary.png',
       services: [
         'Complete website design',
         'Professional photography',
@@ -53,6 +54,10 @@ export function getStaticPaths() {
       tagline: 'WE BUILD.™',
       industry: 'Heavy Construction',
       location: 'Wyoming & Montana',
+      logo: '/assets/images/work/prc/logo-new.png',
+      oldLogo: '/assets/images/work/prc/logo-old.jpeg',
+      oldName: 'Powder River Construction',
+      brandBookPages: Array.from({ length: 9 }, (_, i) => `/assets/images/work/prc/brandbook-pages/page-${String(i + 1).padStart(2, '0')}.png`),
       services: [
         'Complete rebrand from "Powder River Construction" to "PRC"',
         'Company tagline: WE BUILD.™ (trademark pending)',
@@ -89,6 +94,10 @@ export function getStaticPaths() {
       industry: 'Drilling Fluids & Services',
       location: 'Rocky Mountain Region',
       heroVideo: 'https://www.youtube.com/embed/5J2rCuJqqtQ',
+      logo: '/assets/images/work/mtn-mud/logo-new.png',
+      oldLogo: '/assets/images/work/mtn-mud/logo-old.webp',
+      oldName: 'Mountain Mud Service & Supply',
+      brandBookPages: Array.from({ length: 9 }, (_, i) => `/assets/images/work/mtn-mud/brandbook-pages/page-${String(i + 1).padStart(2, '0')}.png`),
       services: [
         'Complete rebrand from "Mountain Mud Service & Supply" to "MTN MUD"',
         'Created tagline: Service Based Drilling Fluids',
@@ -131,6 +140,8 @@ export function getStaticPaths() {
       industry: 'Wireline Services',
       location: 'Rocky Mountain Region',
       heroVideo: 'https://www.youtube.com/embed/I5wQVq_7LrA',
+      logo: '/assets/images/work/wood-wireline/logo-white.png',
+      brandBookPages: Array.from({ length: 10 }, (_, i) => `/assets/images/work/wood-wireline/brandbook-pages/page-${String(i + 1).padStart(2, '0')}.png`),
       services: [
         'Existing logo optimization',
         'Brand book development',
@@ -298,6 +309,102 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
       </div>
     </section>
 
+    <!-- Brand Identity Section -->
+    {study.logo && (
+      <section class="section bg-gray-900">
+        <div class="container">
+          <div class="max-w-5xl mx-auto">
+            <span class="eyebrow block mb-6 text-center" data-animate="fade-up">Brand Identity</span>
+
+            {study.oldLogo ? (
+              <!-- Old vs New rebrand comparison -->
+              <div>
+                <h2 class="headline-lg text-center mb-16" data-animate="fade-up">
+                  The Rebrand
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 items-center">
+                  <!-- Old Logo -->
+                  <div class="text-center" data-animate="fade-up">
+                    <div class="bg-white/10 rounded-lg p-8 lg:p-12 flex items-center justify-center min-h-[200px]">
+                      <img
+                        src={study.oldLogo}
+                        alt={`${study.oldName || study.client} old logo`}
+                        class="max-h-32 lg:max-h-40 w-auto object-contain"
+                      />
+                    </div>
+                    <p class="text-text-subtle text-sm uppercase tracking-wider mt-4">Before</p>
+                  </div>
+
+                  <!-- Arrow -->
+                  <div class="hidden md:flex items-center justify-center" data-animate="fade-up">
+                    <svg class="w-12 h-12 text-power-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </div>
+                  <div class="flex md:hidden items-center justify-center" data-animate="fade-up">
+                    <svg class="w-12 h-12 text-power-red rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </div>
+
+                  <!-- New Logo -->
+                  <div class="text-center" data-animate="fade-up">
+                    <div class="bg-white/10 rounded-lg p-8 lg:p-12 flex items-center justify-center min-h-[200px]">
+                      <img
+                        src={study.logo}
+                        alt={`${study.client} new logo`}
+                        class="max-h-32 lg:max-h-40 w-auto object-contain"
+                      />
+                    </div>
+                    <p class="text-power-red text-sm uppercase tracking-wider font-bold mt-4">After</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <!-- Single logo display (Walker, no rebrand) -->
+              <div class="text-center" data-animate="fade-up">
+                <div class="inline-block bg-white/10 rounded-lg p-10 lg:p-16">
+                  <img
+                    src={study.logo}
+                    alt={`${study.client} logo`}
+                    class="max-h-24 lg:max-h-32 w-auto object-contain"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Brand Book Section -->
+    {study.brandBookPages && study.brandBookPages.length > 0 && (
+      <section class="section bg-charcoal overflow-hidden">
+        <div class="container mb-12">
+          <div class="text-center" data-animate="fade-up">
+            <span class="eyebrow block mb-6">Brand Book</span>
+            <h2 class="headline-lg">The Brand System</h2>
+          </div>
+        </div>
+
+        <!-- Horizontal scrolling brand book pages -->
+        <div class="brandbook-scroll" data-animate="fade-in">
+          <div class="brandbook-track">
+            {study.brandBookPages.map((page: string, i: number) => (
+              <div class="brandbook-page">
+                <img
+                  src={page}
+                  alt={`${study.client} brand book page ${i + 1}`}
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
     <!-- Gallery Section -->
     <section class="section bg-gray-900">
       <div class="container">
@@ -406,3 +513,47 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
 
   <Footer />
 </Layout>
+
+<style>
+  .brandbook-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  }
+
+  .brandbook-scroll::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .brandbook-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .brandbook-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+  }
+
+  .brandbook-track {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0 max(1.5rem, calc((100vw - 1280px) / 2));
+    width: max-content;
+  }
+
+  .brandbook-page {
+    width: 500px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    .brandbook-page {
+      width: 320px;
+    }
+  }
+</style>
