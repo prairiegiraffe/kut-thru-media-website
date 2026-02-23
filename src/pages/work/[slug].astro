@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import MagneticButton from '../../components/effects/MagneticButton.astro';
 import ParallaxImage from '../../components/effects/ParallaxImage.astro';
 import MarqueeText from '../../components/effects/MarqueeText.astro';
+import { getContent } from '../../lib/content';
 
 export function getStaticPaths() {
   const caseStudies = [
@@ -184,6 +185,11 @@ export function getStaticPaths() {
 
 const { study } = Astro.props;
 
+// Content overrides for this case study page
+const c = getContent(`work-${study.slug}`);
+study.heroImage = c('hero-image', study.heroImage);
+study.galleryImages = study.galleryImages.map((img: string, i: number) => c(`gallery-${i + 1}`, img));
+
 // Get all case studies for navigation
 const allStudies = [
   { slug: 'walker-inspection', client: 'Walker Inspection' },
@@ -206,7 +212,7 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-end pb-20 overflow-hidden">
       <!-- Background Image -->
-      <div class="absolute inset-0">
+      <div class="absolute inset-0" data-content-key="hero-image" data-content-type="image">
         <img
           src={study.heroImage}
           alt={study.client}
@@ -410,7 +416,7 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
       <div class="container">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           {study.galleryImages.map((img: string, i: number) => (
-            <div class={`${i === 0 ? 'md:col-span-2' : ''}`} data-animate="fade-up">
+            <div class={`${i === 0 ? 'md:col-span-2' : ''}`} data-animate="fade-up" data-content-key={`gallery-${i + 1}`} data-content-type="image">
               <ParallaxImage
                 src={img}
                 alt={`${study.client} project image ${i + 1}`}
