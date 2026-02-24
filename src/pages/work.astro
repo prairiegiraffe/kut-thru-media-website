@@ -110,7 +110,7 @@ const galleryImages = galleryDefaults.map((def, i) => c(`gallery-${i + 1}`, def)
     <section class="relative min-h-[70vh] flex items-end pb-20 overflow-hidden">
       <!-- Background -->
       <div class="absolute inset-0 bg-charcoal">
-        <div class="absolute inset-0 opacity-30" data-content-key="hero-bg" data-content-type="bg-image" style={`background-image: url('${c('hero-bg', 'https://images.pexels.com/photos/2760243/pexels-photo-2760243.jpeg?auto=compress&cs=tinysrgb&w=1920')}'); background-size: cover; background-position: center;`}></div>
+        <div class="absolute inset-0 opacity-30" data-content="hero-bg" data-content-type="bg-image" style={`background-image: url('${c('hero-bg', 'https://images.pexels.com/photos/2760243/pexels-photo-2760243.jpeg?auto=compress&cs=tinysrgb&w=1920')}'); background-size: cover; background-position: center;`}></div>
         <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/70 to-charcoal/30"></div>
       </div>
 
@@ -175,7 +175,7 @@ const galleryImages = galleryDefaults.map((def, i) => c(`gallery-${i + 1}`, def)
 
             <!-- Image -->
             <div class={`order-1 lg:order-2 ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`} data-animate="fade-up">
-              <a href={`/work/${study.slug}`} class="block relative group" data-cursor="view" data-content-key={`${study.slug}-image`} data-content-type="image">
+              <a href={`/work/${study.slug}`} class="block relative group" data-cursor="view" data-content={`${study.slug}-image`} data-content-type="image">
                 <ParallaxImage
                   src={study.image}
                   alt={`${study.client} project`}
@@ -216,7 +216,7 @@ const galleryImages = galleryDefaults.map((def, i) => c(`gallery-${i + 1}`, def)
       <div class="gallery-scroll" data-animate="fade-in">
         <div class="gallery-track">
           {[...galleryImages, ...galleryImages].map((img, i) => (
-            <div class="gallery-item" data-cursor="view" data-content-key={i < galleryImages.length ? `gallery-${i + 1}` : undefined} data-content-type={i < galleryImages.length ? 'image' : undefined}>
+            <div class="gallery-item" data-cursor="view" data-content={i < galleryImages.length ? `gallery-${i + 1}` : undefined} data-content-type={i < galleryImages.length ? 'image' : undefined}>
               <img src={img} alt={`Gallery image ${(i % galleryImages.length) + 1}`} class="w-full h-full object-cover" loading="lazy" />
             </div>
           ))}
@@ -228,7 +228,7 @@ const galleryImages = galleryDefaults.map((def, i) => c(`gallery-${i + 1}`, def)
     <section class="relative min-h-screen flex items-center overflow-hidden">
       <!-- Background -->
       <div class="absolute inset-0 bg-gray-900">
-        <div class="absolute inset-0 opacity-40" data-content-key="video-bg" data-content-type="bg-image" style={`background-image: url('${c('video-bg', 'https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=1920')}'); background-size: cover; background-position: center;`}></div>
+        <div class="absolute inset-0 opacity-40" data-content="video-bg" data-content-type="bg-image" style={`background-image: url('${c('video-bg', 'https://images.pexels.com/photos/1108101/pexels-photo-1108101.jpeg?auto=compress&cs=tinysrgb&w=1920')}'); background-size: cover; background-position: center;`}></div>
         <div class="absolute inset-0 bg-charcoal/80"></div>
       </div>
 

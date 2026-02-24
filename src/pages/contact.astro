@@ -72,7 +72,12 @@ const socialLinks = [
             <h2 class="headline-md mb-4">Send Us a Message</h2>
             <p class="text-muted mb-12">Fill out the form and we'll get back to you within 24 hours.</p>
 
-            <form class="space-y-8">
+            <div id="form-success" class="hidden mb-8 p-8 border border-green-500/20 bg-green-500/5">
+              <h3 class="text-2xl font-bold mb-2 text-green-400">Message Sent!</h3>
+              <p class="text-muted">Thanks for reaching out. We'll get back to you within 24 hours.</p>
+            </div>
+
+            <form class="space-y-8" id="contact-form">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="form-group">
                   <label for="name" class="form-label">
@@ -289,3 +294,75 @@ const socialLinks = [
     padding-right: 2rem;
   }
 </style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const successDiv = document.getElementById('form-success') as HTMLDivElement;
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+      const btnText = submitBtn.querySelector('span');
+      const originalText = btnText?.textContent || 'Send Message';
+
+      submitBtn.disabled = true;
+      if (btnText) btnText.textContent = 'Sending...';
+
+      try {
+        const formData = new FormData(form);
+        const helpSelect = form.querySelector('#help') as HTMLSelectElement;
+        const helpLabel = helpSelect?.selectedOptions[0]?.textContent || '';
+
+        const payload = {
+          name: formData.get('name'),
+          email: formData.get('email'),
+          phone: formData.get('phone') || undefined,
+          company: formData.get('company') || undefined,
+          help_type: helpLabel !== 'Select one...' ? helpLabel : undefined,
+          message: formData.get('message'),
+          page_url: window.location.href,
+        };
+
+        // Submit to local API (Kut-Thru D1)
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        // Also forward to DevTools Platform CRM (best-effort, don't block on failure)
+        fetch('https://devtools-platform.kellee.workers.dev/api/projects/proj_em8foyyu/submissions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: payload.name,
+            email: payload.email,
+            phone: payload.phone,
+            company: payload.company,
+            subject: payload.help_type,
+            message: payload.message,
+            form_type: 'contact',
+            custom_fields: payload.help_type ? { help_type: payload.help_type } : undefined,
+            page_url: payload.page_url,
+          }),
+        }).catch(() => {}); // Silent — devtools is supplementary
+
+        const data = await response.json() as { success: boolean; error?: string };
+
+        if (data.success) {
+          form.classList.add('hidden');
+          successDiv?.classList.remove('hidden');
+        } else {
+          alert(data.error || 'Something went wrong. Please try again.');
+        }
+      } catch {
+        alert('Something went wrong. Please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        if (btnText) btnText.textContent = originalText;
+      }
+    });
+  }
+</script>
