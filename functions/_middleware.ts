@@ -16,7 +16,7 @@
 // CONFIGURATION
 // ============================================================
 const DEVTOOLS_PROJECT_KEY = 'proj_em8foyyu';
-const DEVTOOLS_PLATFORM_URL = 'https://devtools-platform.kellee.workers.dev';
+const DEVTOOLS_PLATFORM_URL = 'https://devtools.prairiegiraffe.com';
 const CACHE_TTL_SECONDS = 300; // 5 minutes
 
 // ============================================================
