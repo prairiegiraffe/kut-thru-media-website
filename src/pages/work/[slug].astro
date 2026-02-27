@@ -7,6 +7,8 @@ import ParallaxImage from '../../components/effects/ParallaxImage.astro';
 import MarqueeText from '../../components/effects/MarqueeText.astro';
 import { getContent } from '../../lib/content';
 
+export const prerender = true;
+
 export function getStaticPaths() {
   const caseStudies = [
     {
