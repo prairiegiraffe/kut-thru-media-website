@@ -2,7 +2,7 @@
 // Full-screen page transition overlay
 ---
 
-<div id="page-transition" class="page-transition">
+<div id="page-transition" class="page-transition active">
   <div class="transition-layer transition-layer-1"></div>
   <div class="transition-layer transition-layer-2"></div>
   <div class="transition-layer transition-layer-3"></div>
@@ -26,8 +26,8 @@
   .transition-layer {
     position: absolute;
     inset: 0;
-    transform: scaleY(0);
-    transform-origin: bottom;
+    transform: scaleY(1);
+    transform-origin: top;
   }
 
   .transition-layer-1 {
@@ -51,7 +51,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 4;
-    opacity: 0;
+    opacity: 1;
   }
 
   .page-transition.active {
@@ -70,9 +70,7 @@
   function pageEnter() {
     const tl = gsap.timeline();
 
-    tl.set(layers, { scaleY: 1, transformOrigin: 'top' })
-      .set(logo, { opacity: 1 })
-      .to(logo, {
+    tl.to(logo, {
         opacity: 0,
         duration: 0.3,
         delay: 0.2,
@@ -86,7 +84,10 @@
           ease: 'power4.inOut',
         },
         '-=0.2'
-      );
+      )
+      .call(() => {
+        pageTransition?.classList.remove('active');
+      });
 
     return tl;
   }
@@ -116,9 +117,9 @@
     return tl;
   }
 
-  // Initialize page enter animation
+  // Initialize page enter animation — layers start at scaleY(1) via CSS
+  // so the screen is covered from first paint (no flash)
   window.addEventListener('load', () => {
-    gsap.set(layers, { scaleY: 1 });
     pageEnter();
   });
 

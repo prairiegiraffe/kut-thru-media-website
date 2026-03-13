@@ -1,0 +1,34 @@
+# Cloudflare Workers/Pages Configuration
+# This file configures D1 database, R2 storage, and environment bindings
+
+name = "kut-thru-website"
+# account_id set via CLOUDFLARE_ACCOUNT_ID env var (Pages doesn't support it in config)
+# account_id = "8863165c91205bf43cd93c16208a4fa3"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "./dist"
+
+# D1 Database Binding
+# Create with: wrangler d1 create kut-thru-submissions
+# Then update the database_id below
+[[d1_databases]]
+binding = "DB"
+database_name = "kut-thru-submissions"
+database_id = "001ad8c0-d135-4dfa-9c94-5cdd48ff9b2a"
+
+# R2 Storage Binding
+# Create with: wrangler r2 bucket create kut-thru-files
+[[r2_buckets]]
+binding = "STORAGE"
+bucket_name = "kut-thru-files"
+
+# Environment Variables (set these in Cloudflare Dashboard > Settings > Environment Variables)
+# AWS_ACCESS_KEY_ID - Your AWS access key for SES
+# AWS_SECRET_ACCESS_KEY - Your AWS secret key for SES
+# AWS_REGION - AWS region for SES (e.g., us-east-1)
+# JWT_SECRET - Random 32+ character string for signing tokens
+# SITE_URL - https://kutthru.com
+# NOTIFICATION_EMAILS - Comma-separated list of emails to notify
+# TENANT_ID - kut_thru
+# FROM_EMAIL - noreply@kutthru.com
+
+# For local development, create a .dev.vars file with these variables

@@ -143,7 +143,7 @@ export function getStaticPaths() {
       industry: 'Wireline Services',
       location: 'Rocky Mountain Region',
       heroVideo: 'https://www.youtube.com/embed/I5wQVq_7LrA',
-      logo: '/assets/images/work/wood-wireline/logo-white.png',
+      logo: '/assets/images/work/wood-wireline/logo-black.png',
       brandBookPages: Array.from({ length: 10 }, (_, i) => `/assets/images/work/wood-wireline/brandbook-pages/page-${String(i + 1).padStart(2, '0')}.png`),
       services: [
         'Existing logo optimization',
@@ -338,7 +338,7 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
                 <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 items-center">
                   <!-- Old Logo -->
                   <div class="text-center" data-animate="fade-up">
-                    <div class="bg-white/10 rounded-lg p-8 lg:p-12 flex items-center justify-center min-h-[200px]" data-content="old-logo" data-content-type="image">
+                    <div class="bg-white rounded-xl p-8 lg:p-12 flex items-center justify-center min-h-[200px]" data-content="old-logo" data-content-type="image">
                       <img
                         src={study.oldLogo}
                         alt={`${study.oldName || study.client} old logo`}
@@ -362,7 +362,7 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
 
                   <!-- New Logo -->
                   <div class="text-center" data-animate="fade-up">
-                    <div class="bg-white/10 rounded-lg p-8 lg:p-12 flex items-center justify-center min-h-[200px]" data-content="logo" data-content-type="image">
+                    <div class="bg-white rounded-xl p-8 lg:p-12 flex items-center justify-center min-h-[200px]" data-content="logo" data-content-type="image">
                       <img
                         src={study.logo}
                         alt={`${study.client} new logo`}
@@ -376,7 +376,7 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
             ) : (
               <!-- Single logo display (Walker, no rebrand) -->
               <div class="text-center" data-animate="fade-up">
-                <div class="inline-block bg-white/10 rounded-lg p-10 lg:p-16" data-content="logo" data-content-type="image">
+                <div class="inline-block bg-white rounded-xl p-10 lg:p-16" data-content="logo" data-content-type="image">
                   <img
                     src={study.logo}
                     alt={`${study.client} logo`}
