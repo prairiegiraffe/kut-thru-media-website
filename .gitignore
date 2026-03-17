@@ -16,9 +16,23 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.dev.vars
 
 # macOS-specific files
 .DS_Store
 
 # jetbrains setting folder
 .idea/
+
+# Devtools platform files (not part of website)
+db/
+scripts/
+src/lib/auth.ts
+src/lib/email.ts
+src/lib/types.ts
+src/pages/admin/
+src/pages/api/
+src/precision-editor.html
+src/assets/images/Logos/work-assets/
+src/assets/images/Logos/KTM Website Pics Notes.md
+CleanShot*

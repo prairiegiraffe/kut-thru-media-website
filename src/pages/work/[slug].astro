@@ -225,7 +225,7 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
           alt={study.client}
           class="w-full h-full object-cover"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-charcoal/20"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/70 to-charcoal/50"></div>
       </div>
 
       <div class="container relative z-10 pt-40">
@@ -348,14 +348,9 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
                     <p class="text-text-subtle text-sm uppercase tracking-wider mt-4">Before</p>
                   </div>
 
-                  <!-- Arrow -->
+                  <!-- Arrow (desktop only) -->
                   <div class="hidden md:flex items-center justify-center" data-animate="fade-up">
                     <svg class="w-12 h-12 text-power-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </div>
-                  <div class="flex md:hidden items-center justify-center" data-animate="fade-up">
-                    <svg class="w-12 h-12 text-power-red rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
                   </div>
@@ -392,23 +387,21 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
 
     <!-- Brand Book Section -->
     {study.brandBookPages && study.brandBookPages.length > 0 && (
-      <section class="section bg-charcoal overflow-hidden">
-        <div class="container mb-12">
-          <div class="text-center" data-animate="fade-up">
+      <section class="section bg-charcoal">
+        <div class="container">
+          <div class="text-center mb-12" data-animate="fade-up">
             <span class="eyebrow block mb-6">Brand Book</span>
             <h2 class="headline-lg">The Brand System</h2>
           </div>
-        </div>
 
-        <!-- Horizontal scrolling brand book pages -->
-        <div class="brandbook-scroll" data-animate="fade-in">
-          <div class="brandbook-track">
+          <!-- Grid layout brand book pages -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-animate="stagger">
             {study.brandBookPages.map((page: string, i: number) => (
-              <div class="brandbook-page" data-content={`brandbook-${i + 1}`} data-content-type="image">
+              <div class="overflow-hidden rounded-lg shadow-lg" data-content={`brandbook-${i + 1}`} data-content-type="image">
                 <img
                   src={page}
                   alt={`${study.client} brand book page ${i + 1}`}
-                  class="w-full h-full object-cover"
+                  class="w-full h-auto object-cover"
                   loading="lazy"
                 />
               </div>
@@ -528,45 +521,4 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
 </Layout>
 
 <style>
-  .brandbook-scroll {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
-  }
-
-  .brandbook-scroll::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  .brandbook-scroll::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .brandbook-scroll::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
-  }
-
-  .brandbook-track {
-    display: flex;
-    gap: 1.5rem;
-    padding: 0 max(1.5rem, calc((100vw - 1280px) / 2));
-    width: max-content;
-  }
-
-  .brandbook-page {
-    width: 500px;
-    flex-shrink: 0;
-    overflow: hidden;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-  }
-
-  @media (max-width: 768px) {
-    .brandbook-page {
-      width: 320px;
-    }
-  }
 </style>
