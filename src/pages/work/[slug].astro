@@ -43,6 +43,7 @@ export function getStaticPaths() {
       ],
       testimonial: '"Okay, I will admit it. This social media stuff really does work."',
       testimonialAuthor: 'Operations Manager, Walker Inspection',
+      websiteVideo: '/assets/images/work/walker/gallery/Walker Inspection.mp4',
       heroImage: '/assets/images/work/walker/1772430251735-hh7gaz.jpg',
       galleryImages: [
         '/assets/images/work/walker/gallery/1772432230754-u93xln.jpg',
@@ -85,6 +86,7 @@ export function getStaticPaths() {
         '5-platform social media buildout',
         'Significant increase in job applications',
       ],
+      websiteVideo: '/assets/images/work/prc/brandbook-pages/PRC.mp4',
       heroImage: '/assets/images/work/prc/1772517118536-msnsip.jpg',
       galleryImages: [
         '/assets/images/work/prc/gallery/1772517209054-mrpxkt.png',
@@ -134,6 +136,7 @@ export function getStaticPaths() {
         'Email signatures and business cards rolled out',
         'Sales deck redesign completed',
       ],
+      websiteVideo: '/assets/images/work/mtn-mud/MTN MUD.mp4',
       heroImage: '/assets/images/work/mtn-mud/brandbook-pages/1772517515674-avry4b.png',
       galleryImages: [
         '/assets/images/work/mtn-mud/gallery/1772518038174-myjkx3.jpg',
@@ -178,6 +181,7 @@ export function getStaticPaths() {
         'Event booth designed',
         'Cards, signatures, and sales decks created',
       ],
+      websiteVideo: '/assets/images/work/wood-wireline/Wood Wireline.mp4',
       heroImage: '/assets/images/work/wood-wireline/1772518649195-ph2wba.png',
       galleryImages: [
         '/assets/images/work/wood-wireline/gallery/1772518816657-b30zi0.png',
@@ -417,6 +421,31 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
                 />
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Website Redesign Video Section -->
+    {study.websiteVideo && (
+      <section class="section bg-charcoal-light">
+        <div class="container">
+          <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12" data-animate="fade-up">
+              <span class="eyebrow block mb-6">Website Redesign</span>
+              <h2 class="headline-lg">The New Digital Presence</h2>
+            </div>
+            <div class="rounded-xl overflow-hidden shadow-2xl" data-animate="fade-up">
+              <video
+                autoplay
+                muted
+                loop
+                playsinline
+                class="w-full h-auto"
+              >
+                <source src={study.websiteVideo} type="video/mp4" />
+              </video>
+            </div>
           </div>
         </div>
       </section>
