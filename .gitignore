@@ -36,3 +36,6 @@ src/precision-editor.html
 src/assets/images/Logos/work-assets/
 src/assets/images/Logos/KTM Website Pics Notes.md
 CleanShot*
+
+# Large video files (hosted on R2)
+*.mp4
