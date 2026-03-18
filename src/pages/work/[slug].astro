@@ -59,6 +59,7 @@ export function getStaticPaths() {
       slug: 'prc',
       client: 'PRC',
       tagline: 'WE BUILD.™',
+      heroMirror: true,
       industry: 'Heavy Construction',
       location: 'Wyoming & Montana',
       logo: '/assets/images/work/prc/logo-new.png',
@@ -238,7 +239,7 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
         <img
           src={study.heroImage}
           alt={study.client}
-          class="w-full h-full object-cover"
+          class={`w-full h-full object-cover ${study.heroMirror ? '-scale-x-100' : ''}`}
         />
         <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/70 to-charcoal/50"></div>
       </div>
