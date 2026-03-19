@@ -439,7 +439,7 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
               <h2 class="headline-lg">The New Digital Presence</h2>
             </div>
             {/* Desktop: autoplay inline video */}
-            <div class="video-desktop rounded-xl overflow-hidden shadow-2xl hidden md:block" data-animate="fade-up">
+            <div class="rounded-xl overflow-hidden shadow-2xl hidden md:block" data-animate="fade-up">
               <video
                 src={study.websiteVideo}
                 autoplay
@@ -452,11 +452,12 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
               />
             </div>
 
-            {/* Mobile: thumbnail with play button that opens native player */}
-            <div class="video-mobile md:hidden" data-animate="fade-up">
-              <a
-                href={study.websiteVideo}
-                class="block rounded-xl overflow-hidden shadow-2xl relative aspect-video bg-gray-900"
+            {/* Mobile: thumbnail that opens video lightbox */}
+            <div class="md:hidden" data-animate="fade-up">
+              <button
+                type="button"
+                class="video-lightbox-trigger block w-full rounded-xl overflow-hidden shadow-2xl relative aspect-video bg-gray-900 border-0 p-0 cursor-pointer"
+                data-video-src={study.websiteVideo}
               >
                 <img
                   src={study.heroImage}
@@ -471,7 +472,7 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
                   </div>
                 </div>
                 <span class="absolute bottom-4 left-0 right-0 text-center text-sm text-white/70">Tap to play video</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -585,14 +586,98 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
   </main>
 
   <Footer />
+
+  <!-- Video Lightbox Modal -->
+  <div id="video-lightbox" class="video-lightbox">
+    <button id="video-lightbox-close" class="video-lightbox-close" aria-label="Close video">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <div class="video-lightbox-content">
+      <video id="video-lightbox-player" controls playsinline preload="none" class="video-lightbox-video"></video>
+    </div>
+  </div>
 </Layout>
 
 <style>
+  .video-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.95);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-lightbox.active {
+    display: flex;
+  }
+
+  .video-lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  .video-lightbox-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .video-lightbox-video {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+  }
 </style>
 
 <script>
-  // Desktop only: autoplay videos when scrolled into view
-  function initAutoplayVideos() {
+  function initVideos() {
+    const lightbox = document.getElementById('video-lightbox');
+    const player = document.getElementById('video-lightbox-player') as HTMLVideoElement | null;
+    const closeBtn = document.getElementById('video-lightbox-close');
+
+    if (!lightbox || !player || !closeBtn) return;
+
+    // Mobile: open lightbox on thumbnail tap
+    document.querySelectorAll('.video-lightbox-trigger').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const src = btn.getAttribute('data-video-src');
+        if (!src) return;
+        player.src = src;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    // Close lightbox
+    closeBtn.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+      player.pause();
+      player.src = '';
+      document.body.style.overflow = '';
+    });
+
+    // Close on backdrop click
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || (e.target as Element)?.classList?.contains('video-lightbox-content')) {
+        closeBtn.click();
+      }
+    });
+
+    // Desktop: autoplay inline videos on scroll
     document.querySelectorAll('video[data-autoplay-video]').forEach((video) => {
       const v = video as HTMLVideoElement;
       const observer = new IntersectionObserver(
@@ -611,6 +696,6 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
     });
   }
 
-  initAutoplayVideos();
-  document.addEventListener('astro:page-load', initAutoplayVideos);
+  initVideos();
+  document.addEventListener('astro:page-load', initVideos);
 </script>
