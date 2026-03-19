@@ -103,6 +103,7 @@ export function getStaticPaths() {
       client: 'MTN Mud',
       tagline: 'Service Based Drilling Fluids.',
       heroMirror: true,
+      galleryTopImages: [1],
       industry: 'Drilling Fluids & Services',
       location: 'Rocky Mountain Region',
       heroVideo: 'https://www.youtube.com/embed/5J2rCuJqqtQ',
@@ -461,7 +462,7 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
               <ParallaxImage
                 src={img}
                 alt={`${study.client} project image ${i + 1}`}
-                class={i === 0 ? 'aspect-video' : 'aspect-4/3'}
+                class={`${i === 0 ? 'aspect-video' : 'aspect-4/3'} ${study.galleryTopImages?.includes(i) ? '[&_.parallax-image]:object-top' : ''}`}
                 speed={0.1}
               />
             </div>
