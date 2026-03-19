@@ -356,11 +356,11 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
                 <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 items-center">
                   <!-- Old Logo -->
                   <div class="text-center" data-animate="fade-up">
-                    <div class="bg-white rounded-xl p-8 lg:p-12 flex items-center justify-center min-h-[200px]" data-content="old-logo" data-content-type="image">
+                    <div class="bg-white rounded-xl p-8 lg:p-12 flex items-center justify-center h-[200px] lg:h-[250px]" data-content="old-logo" data-content-type="image">
                       <img
                         src={study.oldLogo}
                         alt={`${study.oldName || study.client} old logo`}
-                        class="max-h-32 lg:max-h-40 w-auto object-contain"
+                        class="max-h-28 lg:max-h-36 w-auto object-contain"
                       />
                     </div>
                     <p class="text-text-subtle text-sm uppercase tracking-wider mt-4">Before</p>
@@ -375,11 +375,11 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
 
                   <!-- New Logo -->
                   <div class="text-center" data-animate="fade-up">
-                    <div class="bg-white rounded-xl p-8 lg:p-12 flex items-center justify-center min-h-[200px]" data-content="logo" data-content-type="image">
+                    <div class="bg-white rounded-xl p-8 lg:p-12 flex items-center justify-center h-[200px] lg:h-[250px]" data-content="logo" data-content-type="image">
                       <img
                         src={study.logo}
                         alt={`${study.client} new logo`}
-                        class="max-h-32 lg:max-h-40 w-auto object-contain"
+                        class="max-h-28 lg:max-h-36 w-auto object-contain"
                       />
                     </div>
                     <p class="text-power-red text-sm uppercase tracking-wider font-bold mt-4">After</p>
