@@ -380,27 +380,37 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
 
   .logo-carousel-track {
     display: flex;
-    gap: 1rem;
+    gap: 1.25rem;
     width: max-content;
+    animation: logo-scroll 30s linear infinite;
     will-change: transform;
+  }
+
+  .logo-carousel.is-dragging .logo-carousel-track {
+    animation-play-state: paused;
   }
 
   .logo-card {
     flex-shrink: 0;
-    width: 160px;
-    height: 80px;
+    width: 180px;
+    height: 120px;
     border-radius: 0.75rem;
-    padding: 1rem;
+    padding: 1.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .logo-card img {
-    max-height: 48px;
+    max-height: 80px;
     width: auto;
     object-fit: contain;
     pointer-events: none;
+  }
+
+  @keyframes logo-scroll {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
   }
 </style>
 
@@ -410,58 +420,18 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
     const track = document.querySelector('.logo-carousel-track') as HTMLElement | null;
     if (!carousel || !track) return;
 
-    const halfWidth = track.scrollWidth / 2;
-    let pos = 0;
-    let velocity = -0.5; // auto-scroll speed (negative = scroll left)
-    let dragging = false;
-    let startX = 0;
-    let lastX = 0;
-    let lastTime = 0;
-    let resumeTimer: ReturnType<typeof setTimeout>;
+    let resumeTimer: ReturnType<typeof setTimeout> | undefined;
 
-    function wrap() {
-      if (pos <= -halfWidth) pos += halfWidth;
-      if (pos > 0) pos -= halfWidth;
-    }
-
-    function animate() {
-      if (!dragging) {
-        // Ease velocity back to auto-scroll speed
-        velocity += (-0.5 - velocity) * 0.02;
-        pos += velocity;
-      }
-      wrap();
-      track.style.transform = `translate3d(${pos}px, 0, 0)`;
-      requestAnimationFrame(animate);
-    }
-
-    carousel.addEventListener('touchstart', (e) => {
-      dragging = true;
-      startX = e.touches[0].clientX;
-      lastX = startX;
-      lastTime = Date.now();
-      velocity = 0;
+    carousel.addEventListener('touchstart', () => {
+      carousel.classList.add('is-dragging');
       clearTimeout(resumeTimer);
     }, { passive: true });
 
-    carousel.addEventListener('touchmove', (e) => {
-      if (!dragging) return;
-      const x = e.touches[0].clientX;
-      const now = Date.now();
-      const dt = now - lastTime || 1;
-      velocity = (x - lastX) / dt * 16; // normalize to ~per frame
-      pos += x - lastX;
-      lastX = x;
-      lastTime = now;
-      wrap();
-    }, { passive: true });
-
     carousel.addEventListener('touchend', () => {
-      dragging = false;
-      // Velocity carries momentum, then eases back to auto-scroll
+      resumeTimer = setTimeout(() => {
+        carousel.classList.remove('is-dragging');
+      }, 2000);
     });
-
-    animate();
   }
 
   initLogoCarousel();
