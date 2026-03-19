@@ -375,6 +375,16 @@ html.lenis, html.lenis body {
   padding: var(--spacing-section-sm) 0;
 }
 
+@media (max-width: 767px) {
+  .section {
+    padding: 5rem 0;
+  }
+
+  .section-sm {
+    padding: 3rem 0;
+  }
+}
+
 .container {
   max-width: var(--container-max);
   margin: 0 auto;

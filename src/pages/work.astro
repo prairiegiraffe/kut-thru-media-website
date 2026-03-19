@@ -109,7 +109,7 @@ const galleryImages = galleryDefaults.map((def, i) => c(`gallery-${i + 1}`, def)
 
   <main class="flex-1">
     <!-- Hero Section -->
-    <section class="relative min-h-[70vh] flex items-end pb-20 overflow-hidden">
+    <section class="relative min-h-[50vh] md:min-h-[70vh] flex items-end pb-12 md:pb-20 overflow-hidden">
       <!-- Background -->
       <div class="absolute inset-0 bg-charcoal">
         <div class="absolute inset-0 opacity-50" data-content="hero-bg" data-content-type="bg-image" style={`background-image: url('${c('hero-bg', '/assets/images/work/BackgroundOnly.jpg')}'); background-size: cover; background-position: center;`}></div>
@@ -227,14 +227,14 @@ const galleryImages = galleryDefaults.map((def, i) => c(`gallery-${i + 1}`, def)
     </section>
 
     <!-- Video Section -->
-    <section class="relative min-h-screen flex items-center overflow-hidden">
+    <section class="relative min-h-[60vh] md:min-h-screen flex items-center overflow-hidden">
       <!-- Background -->
       <div class="absolute inset-0 bg-gray-900">
         <div class="absolute inset-0 opacity-40" data-content="video-bg" data-content-type="bg-image" style={`background-image: url('${c('video-bg', '/assets/images/work/BackgroundOnly.jpg')}'); background-size: cover; background-position: center;`}></div>
         <div class="absolute inset-0 bg-charcoal/80"></div>
       </div>
 
-      <div class="container relative z-10 py-32">
+      <div class="container relative z-10 py-16 md:py-32">
         <div class="max-w-4xl mx-auto text-center">
           <span class="eyebrow block mb-6" data-animate="fade-up">Video Production</span>
           <h2 class="headline-xl mb-8" data-animate="fade-up">
@@ -261,7 +261,7 @@ const galleryImages = galleryDefaults.map((def, i) => c(`gallery-${i + 1}`, def)
     </section>
 
     <!-- CTA Section -->
-    <section class="relative py-32 lg:py-48 overflow-hidden">
+    <section class="relative py-16 md:py-32 lg:py-48 overflow-hidden">
       <div class="absolute inset-0 bg-power-red"></div>
       <div class="absolute inset-0 opacity-10">
         <div class="absolute top-0 left-0 w-full h-full" style="background-image: repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(0,0,0,0.1) 35px, rgba(0,0,0,0.1) 70px);"></div>
