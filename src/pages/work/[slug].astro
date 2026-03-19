@@ -440,16 +440,16 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
             </div>
             <div class="video-container rounded-xl overflow-hidden shadow-2xl relative" data-animate="fade-up">
               <video
+                src={study.websiteVideo}
                 autoplay
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-auto block"
                 data-autoplay-video
-              >
-                <source src={study.websiteVideo} type="video/mp4" />
-              </video>
+              />
               <button class="video-play-btn" aria-label="Play video" style="display:none;">
                 <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
                   <circle cx="40" cy="40" r="38" stroke="white" stroke-width="2" fill="rgba(10,10,10,0.6)"/>
@@ -610,16 +610,29 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
       if (!btn) return;
 
       if (isMobile) {
-        // Mobile: don't autoplay, just show play button
+        // Mobile: don't autoplay, show play button
         v.removeAttribute('autoplay');
         v.pause();
+        v.preload = 'metadata';
         btn.style.display = 'flex';
 
         btn.addEventListener('click', () => {
+          // Ensure muted and try to load + play
           v.muted = true;
-          v.play().then(() => {
-            btn.style.display = 'none';
-          });
+          v.load();
+          const playPromise = v.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                btn.style.display = 'none';
+              })
+              .catch(() => {
+                // If inline play fails, show native controls so user can use them
+                v.controls = true;
+                v.muted = true;
+                btn.style.display = 'none';
+              });
+          }
         });
       } else {
         // Desktop: autoplay on scroll into view
