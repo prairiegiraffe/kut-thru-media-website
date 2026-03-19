@@ -13,8 +13,12 @@ import Button from '../components/ui/Button.astro';
 
   <main class="flex-1 pt-20">
     <!-- Hero Section -->
-    <section class="section bg-gradient-to-b from-gray-900 to-charcoal min-h-[60vh] flex items-center">
-      <div class="container">
+    <section class="section relative overflow-hidden min-h-[60vh] flex items-center">
+      <div class="absolute inset-0 bg-charcoal">
+        <div class="absolute inset-0 opacity-40" style="background-image: url('/assets/images/podcast/102A7420.jpg'); background-size: cover; background-position: center;"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-charcoal/30"></div>
+      </div>
+      <div class="container relative z-10">
         <div class="max-w-3xl mx-auto text-center">
           <span class="eyebrow block mb-6">Coming Soon</span>
           <img
