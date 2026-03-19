@@ -318,8 +318,8 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
           </div>
         </div>
 
-        <!-- Client Logos: Mobile auto-scrolling carousel -->
-        <div class="md:hidden logo-carousel mb-16 overflow-hidden" data-animate="fade-up">
+        <!-- Client Logos: Mobile auto-scrolling + swipeable carousel -->
+        <div class="md:hidden logo-carousel mb-16" data-animate="fade-up">
           <div class="logo-carousel-track">
             <a href="/work/walker-inspection" class="logo-card bg-white"><img src="/assets/images/work/walker/logo-primary.png" alt="Walker Inspection" /></a>
             <a href="/work/prc" class="logo-card bg-white"><img src="/assets/images/work/prc/logo-new.png" alt="PRC" /></a>
@@ -373,21 +373,16 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
 
 <style>
   .logo-carousel {
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
   }
 
   .logo-carousel-track {
     display: flex;
     gap: 1rem;
-    animation: logo-scroll 25s linear infinite;
     width: max-content;
-    touch-action: pan-x;
-  }
-
-  .logo-carousel:hover .logo-carousel-track,
-  .logo-carousel:active .logo-carousel-track {
-    animation-play-state: paused;
+    will-change: transform;
   }
 
   .logo-card {
@@ -405,11 +400,62 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
     max-height: 48px;
     width: auto;
     object-fit: contain;
-  }
-
-  @keyframes logo-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-50% - 0.5rem)); }
+    pointer-events: none;
   }
 </style>
+
+<script>
+  function initLogoCarousel() {
+    const carousel = document.querySelector('.logo-carousel') as HTMLElement | null;
+    const track = document.querySelector('.logo-carousel-track') as HTMLElement | null;
+    if (!carousel || !track) return;
+
+    let pos = 0;
+    const halfWidth = track.scrollWidth / 2;
+    const speed = 0.5; // px per frame
+    let dragging = false;
+    let startX = 0;
+    let startPos = 0;
+    let animId: number;
+    let resumeTimer: ReturnType<typeof setTimeout>;
+
+    function animate() {
+      if (!dragging) {
+        pos -= speed;
+        if (pos <= -halfWidth) pos += halfWidth;
+        if (pos > 0) pos -= halfWidth;
+      }
+      track.style.transform = `translateX(${pos}px)`;
+      animId = requestAnimationFrame(animate);
+    }
+
+    // Touch events
+    carousel.addEventListener('touchstart', (e) => {
+      dragging = true;
+      startX = e.touches[0].clientX;
+      startPos = pos;
+      clearTimeout(resumeTimer);
+    }, { passive: true });
+
+    carousel.addEventListener('touchmove', (e) => {
+      if (!dragging) return;
+      const dx = e.touches[0].clientX - startX;
+      pos = startPos + dx;
+      // Wrap around
+      if (pos <= -halfWidth) pos += halfWidth;
+      if (pos > 0) pos -= halfWidth;
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', () => {
+      dragging = false;
+      // Resume auto-scroll after 2s
+      resumeTimer = setTimeout(() => { dragging = false; }, 2000);
+    });
+
+    animate();
+  }
+
+  initLogoCarousel();
+  document.addEventListener('astro:page-load', initLogoCarousel);
+</script>
 
