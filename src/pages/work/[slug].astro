@@ -595,7 +595,9 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
       </svg>
     </button>
     <div class="video-lightbox-content">
-      <video id="video-lightbox-player" controls playsinline preload="none" class="video-lightbox-video"></video>
+      <video id="video-lightbox-player" controls playsinline webkit-playsinline preload="auto" class="video-lightbox-video">
+        <source id="video-lightbox-source" src="" type="video/mp4" />
+      </video>
     </div>
   </div>
 </Layout>
@@ -651,12 +653,19 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
 
     if (!lightbox || !player || !closeBtn) return;
 
+    const source = document.getElementById('video-lightbox-source') as HTMLSourceElement | null;
+
     // Mobile: open lightbox on thumbnail tap
     document.querySelectorAll('.video-lightbox-trigger').forEach((btn) => {
       btn.addEventListener('click', () => {
         const src = btn.getAttribute('data-video-src');
         if (!src) return;
+
+        // Set both src on video and source element, then load
+        if (source) source.src = src;
         player.src = src;
+        player.load();
+
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
       });
@@ -666,7 +675,9 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
     closeBtn.addEventListener('click', () => {
       lightbox.classList.remove('active');
       player.pause();
-      player.src = '';
+      player.removeAttribute('src');
+      if (source) source.removeAttribute('src');
+      player.load(); // reset
       document.body.style.overflow = '';
     });
 
