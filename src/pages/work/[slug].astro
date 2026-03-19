@@ -438,24 +438,40 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
               <span class="eyebrow block mb-6">Website Redesign</span>
               <h2 class="headline-lg">The New Digital Presence</h2>
             </div>
-            <div class="video-container rounded-xl overflow-hidden shadow-2xl relative" data-animate="fade-up">
+            {/* Desktop: autoplay inline video */}
+            <div class="video-desktop rounded-xl overflow-hidden shadow-2xl hidden md:block" data-animate="fade-up">
               <video
                 src={study.websiteVideo}
                 autoplay
                 muted
                 loop
                 playsinline
-                webkit-playsinline
                 preload="metadata"
                 class="w-full h-auto block"
                 data-autoplay-video
               />
-              <button class="video-play-btn" aria-label="Play video" style="display:none;">
-                <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-                  <circle cx="40" cy="40" r="38" stroke="white" stroke-width="2" fill="rgba(10,10,10,0.6)"/>
-                  <polygon points="33,24 33,56 58,40" fill="white"/>
-                </svg>
-              </button>
+            </div>
+
+            {/* Mobile: thumbnail with play button that opens native player */}
+            <div class="video-mobile md:hidden" data-animate="fade-up">
+              <a
+                href={study.websiteVideo}
+                class="block rounded-xl overflow-hidden shadow-2xl relative aspect-video bg-gray-900"
+              >
+                <img
+                  src={study.heroImage}
+                  alt={`${study.client} website redesign video`}
+                  class="w-full h-full object-cover opacity-60"
+                />
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-20 h-20 rounded-full border-2 border-white bg-charcoal/60 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <polygon points="5,3 19,12 5,21" />
+                    </svg>
+                  </div>
+                </div>
+                <span class="absolute bottom-4 left-0 right-0 text-center text-sm text-white/70">Tap to play video</span>
+              </a>
             </div>
           </div>
         </div>
@@ -572,86 +588,26 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
 </Layout>
 
 <style>
-  .video-container {
-    position: relative;
-  }
-
-  .video-play-btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 10;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .video-play-btn:hover {
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-
-  /* On mobile, show play button by default */
-  @media (max-width: 768px) {
-    .video-play-btn {
-      display: flex !important;
-    }
-  }
 </style>
 
 <script>
+  // Desktop only: autoplay videos when scrolled into view
   function initAutoplayVideos() {
-    const isMobile = window.innerWidth <= 768;
-
     document.querySelectorAll('video[data-autoplay-video]').forEach((video) => {
       const v = video as HTMLVideoElement;
-      const btn = v.parentElement?.querySelector('.video-play-btn') as HTMLButtonElement | null;
-      if (!btn) return;
-
-      if (isMobile) {
-        // Mobile: don't autoplay, show play button
-        v.removeAttribute('autoplay');
-        v.pause();
-        v.preload = 'metadata';
-        btn.style.display = 'flex';
-
-        btn.addEventListener('click', () => {
-          // Ensure muted and try to load + play
-          v.muted = true;
-          v.load();
-          const playPromise = v.play();
-          if (playPromise !== undefined) {
-            playPromise
-              .then(() => {
-                btn.style.display = 'none';
-              })
-              .catch(() => {
-                // If inline play fails, show native controls so user can use them
-                v.controls = true;
-                v.muted = true;
-                btn.style.display = 'none';
-              });
-          }
-        });
-      } else {
-        // Desktop: autoplay on scroll into view
-        btn.style.display = 'none';
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                v.muted = true;
-                v.play().catch(() => {});
-                observer.unobserve(v);
-              }
-            });
-          },
-          { threshold: 0.25 }
-        );
-        observer.observe(v);
-      }
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              v.muted = true;
+              v.play().catch(() => {});
+              observer.unobserve(v);
+            }
+          });
+        },
+        { threshold: 0.25 }
+      );
+      observer.observe(v);
     });
   }
 
