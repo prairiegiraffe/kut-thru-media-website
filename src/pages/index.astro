@@ -410,46 +410,55 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
     const track = document.querySelector('.logo-carousel-track') as HTMLElement | null;
     if (!carousel || !track) return;
 
-    let pos = 0;
     const halfWidth = track.scrollWidth / 2;
-    const speed = 0.5; // px per frame
+    let pos = 0;
+    let velocity = -0.5; // auto-scroll speed (negative = scroll left)
     let dragging = false;
     let startX = 0;
-    let startPos = 0;
-    let animId: number;
+    let lastX = 0;
+    let lastTime = 0;
     let resumeTimer: ReturnType<typeof setTimeout>;
+
+    function wrap() {
+      if (pos <= -halfWidth) pos += halfWidth;
+      if (pos > 0) pos -= halfWidth;
+    }
 
     function animate() {
       if (!dragging) {
-        pos -= speed;
-        if (pos <= -halfWidth) pos += halfWidth;
-        if (pos > 0) pos -= halfWidth;
+        // Ease velocity back to auto-scroll speed
+        velocity += (-0.5 - velocity) * 0.02;
+        pos += velocity;
       }
-      track.style.transform = `translateX(${pos}px)`;
-      animId = requestAnimationFrame(animate);
+      wrap();
+      track.style.transform = `translate3d(${pos}px, 0, 0)`;
+      requestAnimationFrame(animate);
     }
 
-    // Touch events
     carousel.addEventListener('touchstart', (e) => {
       dragging = true;
       startX = e.touches[0].clientX;
-      startPos = pos;
+      lastX = startX;
+      lastTime = Date.now();
+      velocity = 0;
       clearTimeout(resumeTimer);
     }, { passive: true });
 
     carousel.addEventListener('touchmove', (e) => {
       if (!dragging) return;
-      const dx = e.touches[0].clientX - startX;
-      pos = startPos + dx;
-      // Wrap around
-      if (pos <= -halfWidth) pos += halfWidth;
-      if (pos > 0) pos -= halfWidth;
+      const x = e.touches[0].clientX;
+      const now = Date.now();
+      const dt = now - lastTime || 1;
+      velocity = (x - lastX) / dt * 16; // normalize to ~per frame
+      pos += x - lastX;
+      lastX = x;
+      lastTime = now;
+      wrap();
     }, { passive: true });
 
     carousel.addEventListener('touchend', () => {
       dragging = false;
-      // Resume auto-scroll after 2s
-      resumeTimer = setTimeout(() => { dragging = false; }, 2000);
+      // Velocity carries momentum, then eases back to auto-scroll
     });
 
     animate();
