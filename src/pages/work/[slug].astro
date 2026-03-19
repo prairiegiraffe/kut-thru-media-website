@@ -451,9 +451,9 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
                 <source src={study.websiteVideo} type="video/mp4" />
               </video>
               <button class="video-play-btn" aria-label="Play video" style="display:none;">
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-                  <circle cx="32" cy="32" r="31" stroke="white" stroke-width="2" fill="rgba(0,0,0,0.5)"/>
-                  <polygon points="26,20 26,44 46,32" fill="white"/>
+                <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                  <circle cx="40" cy="40" r="38" stroke="white" stroke-width="2" fill="rgba(10,10,10,0.6)"/>
+                  <polygon points="33,24 33,56 58,40" fill="white"/>
                 </svg>
               </button>
             </div>
@@ -585,77 +585,63 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
     border: none;
     cursor: pointer;
     z-index: 10;
-    opacity: 0.9;
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
   .video-play-btn:hover {
-    opacity: 1;
     transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  /* On mobile, show play button by default */
+  @media (max-width: 768px) {
+    .video-play-btn {
+      display: flex !important;
+    }
   }
 </style>
 
 <script>
   function initAutoplayVideos() {
+    const isMobile = window.innerWidth <= 768;
+
     document.querySelectorAll('video[data-autoplay-video]').forEach((video) => {
-      const btn = video.parentElement?.querySelector('.video-play-btn') as HTMLButtonElement | null;
+      const v = video as HTMLVideoElement;
+      const btn = v.parentElement?.querySelector('.video-play-btn') as HTMLButtonElement | null;
       if (!btn) return;
 
-      // Try to play when video enters viewport
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const v = entry.target as HTMLVideoElement;
-              v.muted = true; // ensure muted (required for autoplay)
-              const playPromise = v.play();
-              if (playPromise !== undefined) {
-                playPromise
-                  .then(() => {
-                    // Autoplay worked, hide button
-                    btn.style.display = 'none';
-                  })
-                  .catch(() => {
-                    // Autoplay blocked, show play button
-                    btn.style.display = 'block';
-                  });
-              }
-            }
-          });
-        },
-        { threshold: 0.25 }
-      );
-      observer.observe(video);
+      if (isMobile) {
+        // Mobile: don't autoplay, just show play button
+        v.removeAttribute('autoplay');
+        v.pause();
+        btn.style.display = 'flex';
 
-      // Also try playing on load/canplay
-      video.addEventListener('canplay', () => {
-        const v = video as HTMLVideoElement;
-        if (v.paused) {
+        btn.addEventListener('click', () => {
           v.muted = true;
-          const p = v.play();
-          if (p !== undefined) {
-            p.then(() => { btn.style.display = 'none'; })
-             .catch(() => { btn.style.display = 'block'; });
-          }
-        }
-      }, { once: true });
-
-      // Click handler for manual play
-      btn.addEventListener('click', () => {
-        const v = video as HTMLVideoElement;
-        v.muted = true;
-        v.play().then(() => {
-          btn.style.display = 'none';
-        }).catch(() => {
-          // Last resort: open in new tab
-          const source = v.querySelector('source');
-          if (source?.src) window.open(source.src, '_blank');
+          v.play().then(() => {
+            btn.style.display = 'none';
+          });
         });
-      });
+      } else {
+        // Desktop: autoplay on scroll into view
+        btn.style.display = 'none';
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                v.muted = true;
+                v.play().catch(() => {});
+                observer.unobserve(v);
+              }
+            });
+          },
+          { threshold: 0.25 }
+        );
+        observer.observe(v);
+      }
     });
   }
 
-  // Run on initial load and after Astro page transitions
   initAutoplayVideos();
   document.addEventListener('astro:page-load', initAutoplayVideos);
 </script>
