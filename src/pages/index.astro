@@ -318,21 +318,21 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
           </div>
         </div>
 
-        <!-- Client Logos: Mobile auto-scrolling + swipeable carousel -->
+        <!-- Client Logos: Mobile auto-scrolling carousel (no interaction, just ambiance) -->
         <div class="md:hidden logo-carousel mb-16" data-animate="fade-up">
           <div class="logo-carousel-track">
-            <a href="/work/walker-inspection" class="logo-card bg-white"><img src="/assets/images/work/walker/logo-primary.png" alt="Walker Inspection" /></a>
-            <a href="/work/prc" class="logo-card bg-white"><img src="/assets/images/work/prc/logo-new.png" alt="PRC" /></a>
-            <a href="/work/mtn-mud" class="logo-card bg-white"><img src="/assets/images/work/mtn-mud/logo-new.png" alt="MTN Mud" /></a>
-            <a href="/work/wood-wireline" class="logo-card bg-white"><img src="/assets/images/work/wood-wireline/logo-black.png" alt="Wood Wireline" /></a>
+            <div class="logo-card bg-white"><img src="/assets/images/work/walker/logo-primary.png" alt="Walker Inspection" /></div>
+            <div class="logo-card bg-white"><img src="/assets/images/work/prc/logo-new.png" alt="PRC" /></div>
+            <div class="logo-card bg-white"><img src="/assets/images/work/mtn-mud/logo-new.png" alt="MTN Mud" /></div>
+            <div class="logo-card bg-white"><img src="/assets/images/work/wood-wireline/logo-black.png" alt="Wood Wireline" /></div>
             <div class="logo-card bg-gray-700"><img src="/assets/images/WYO Services.png" alt="WYO Services" /></div>
             <div class="logo-card bg-gray-700"><img src="/assets/images/Emit.png" alt="EMIT" /></div>
             <div class="logo-card bg-gray-700"><img src="/assets/images/Cordero Mine.png" alt="Cordero Mine" /></div>
             <!-- Duplicate for seamless loop -->
-            <a href="/work/walker-inspection" class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/work/walker/logo-primary.png" alt="" /></a>
-            <a href="/work/prc" class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/work/prc/logo-new.png" alt="" /></a>
-            <a href="/work/mtn-mud" class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/work/mtn-mud/logo-new.png" alt="" /></a>
-            <a href="/work/wood-wireline" class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/work/wood-wireline/logo-black.png" alt="" /></a>
+            <div class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/work/walker/logo-primary.png" alt="" /></div>
+            <div class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/work/prc/logo-new.png" alt="" /></div>
+            <div class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/work/mtn-mud/logo-new.png" alt="" /></div>
+            <div class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/work/wood-wireline/logo-black.png" alt="" /></div>
             <div class="logo-card bg-gray-700" aria-hidden="true"><img src="/assets/images/WYO Services.png" alt="" /></div>
             <div class="logo-card bg-gray-700" aria-hidden="true"><img src="/assets/images/Emit.png" alt="" /></div>
             <div class="logo-card bg-gray-700" aria-hidden="true"><img src="/assets/images/Cordero Mine.png" alt="" /></div>
@@ -386,10 +386,6 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
     will-change: transform;
   }
 
-  .logo-carousel.is-dragging .logo-carousel-track {
-    animation-play-state: paused;
-  }
-
   .logo-card {
     flex-shrink: 0;
     width: 180px;
@@ -414,27 +410,4 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
   }
 </style>
 
-<script>
-  function initLogoCarousel() {
-    const carousel = document.querySelector('.logo-carousel') as HTMLElement | null;
-    const track = document.querySelector('.logo-carousel-track') as HTMLElement | null;
-    if (!carousel || !track) return;
-
-    let resumeTimer: ReturnType<typeof setTimeout> | undefined;
-
-    carousel.addEventListener('touchstart', () => {
-      carousel.classList.add('is-dragging');
-      clearTimeout(resumeTimer);
-    }, { passive: true });
-
-    carousel.addEventListener('touchend', () => {
-      resumeTimer = setTimeout(() => {
-        carousel.classList.remove('is-dragging');
-      }, 2000);
-    });
-  }
-
-  initLogoCarousel();
-  document.addEventListener('astro:page-load', initLogoCarousel);
-</script>
 
