@@ -52,12 +52,12 @@ import Button from '../components/ui/Button.astro';
           <!-- Email Signup Form -->
           <div class="card max-w-md mx-auto">
             <h3 class="text-xl font-bold mb-6">Get Notified When We Launch</h3>
-            <form class="space-y-4">
+            <form class="space-y-4" id="podcast-form">
               <div>
-                <label for="email" class="sr-only">Email address</label>
+                <label for="podcast-email" class="sr-only">Email address</label>
                 <input
                   type="email"
-                  id="email"
+                  id="podcast-email"
                   name="email"
                   placeholder="Enter your email"
                   required
@@ -68,7 +68,10 @@ import Button from '../components/ui/Button.astro';
                 Notify Me
               </Button>
             </form>
-            <p class="text-sm text-text-subtle mt-4">
+            <p id="podcast-success" class="hidden text-sm text-green-400 mt-4 font-semibold">
+              You're on the list! We'll let you know when we launch.
+            </p>
+            <p id="podcast-privacy" class="text-sm text-text-subtle mt-4">
               We respect your privacy. Unsubscribe at any time.
             </p>
           </div>
@@ -124,3 +127,39 @@ import Button from '../components/ui/Button.astro';
 
   <Footer />
 </Layout>
+
+<script>
+  const form = document.getElementById('podcast-form');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn ? btn.textContent : 'Notify Me';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+
+      try {
+        const email = new FormData(form).get('email');
+
+        await fetch('https://devtools.prairiegiraffe.com/api/projects/proj_em8foyyu/submissions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            form_type: 'podcast-signup',
+            page_url: window.location.href,
+          }),
+        });
+
+        form.classList.add('hidden');
+        const privacy = document.getElementById('podcast-privacy');
+        if (privacy) privacy.classList.add('hidden');
+        const success = document.getElementById('podcast-success');
+        if (success) success.classList.remove('hidden');
+      } catch {
+        alert('Something went wrong. Please try again.');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = originalText; }
+      }
+    });
+  }
+</script>
