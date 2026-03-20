@@ -303,47 +303,27 @@ const socialLinks = [
         const helpSelect = form.querySelector('#help') as HTMLSelectElement;
         const helpLabel = helpSelect?.selectedOptions[0]?.textContent || '';
 
-        const payload = {
-          name: formData.get('name'),
-          email: formData.get('email'),
-          phone: formData.get('phone') || undefined,
-          company: formData.get('company') || undefined,
-          help_type: helpLabel !== 'Select one...' ? helpLabel : undefined,
-          message: formData.get('message'),
-          page_url: window.location.href,
-        };
-
-        // Submit to local API (Kut-Thru D1)
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-
-        // Also forward to DevTools Platform CRM (best-effort, don't block on failure)
-        fetch('https://devtools.prairiegiraffe.com/api/projects/proj_em8foyyu/submissions', {
+        const response = await fetch('https://devtools.prairiegiraffe.com/api/projects/proj_em8foyyu/submissions', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            name: payload.name,
-            email: payload.email,
-            phone: payload.phone,
-            company: payload.company,
-            subject: payload.help_type,
-            message: payload.message,
+            name: formData.get('name'),
+            email: formData.get('email'),
+            phone: formData.get('phone') || undefined,
+            company: formData.get('company') || undefined,
+            subject: helpLabel !== 'Select one...' ? helpLabel : undefined,
+            message: formData.get('message'),
             form_type: 'contact',
-            custom_fields: payload.help_type ? { help_type: payload.help_type } : undefined,
-            page_url: payload.page_url,
+            custom_fields: helpLabel !== 'Select one...' ? { help_type: helpLabel } : undefined,
+            page_url: window.location.href,
           }),
-        }).catch(() => {}); // Silent — devtools is supplementary
+        });
 
-        const data = await response.json() as { success: boolean; error?: string };
-
-        if (data.success) {
+        if (response.ok) {
           form.classList.add('hidden');
           successDiv?.classList.remove('hidden');
         } else {
-          alert(data.error || 'Something went wrong. Please try again.');
+          alert('Something went wrong. Please try again.');
         }
       } catch {
         alert('Something went wrong. Please try again.');
