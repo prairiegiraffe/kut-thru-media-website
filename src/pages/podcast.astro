@@ -146,6 +146,7 @@ import Button from '../components/ui/Button.astro';
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            name: 'Podcast Subscriber',
             email: email,
             form_type: 'podcast-signup',
             page_url: window.location.href,
