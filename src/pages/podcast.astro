@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Button from '../components/ui/Button.astro';
 ---
 
 <Layout
@@ -50,32 +49,13 @@ import Button from '../components/ui/Button.astro';
           <p class="text-2xl font-bold text-power-red mb-12">Stay tuned.</p>
 
           <!-- Email Signup Form -->
-          <div class="card max-w-md mx-auto">
-            <div class="relative z-1">
-            <h3 class="text-xl font-bold mb-6">Get Notified When We Launch</h3>
-            <form class="space-y-4" id="podcast-form">
-              <div>
-                <label for="podcast-email" class="sr-only">Email address</label>
-                <input
-                  type="email"
-                  id="podcast-email"
-                  name="email"
-                  placeholder="Enter your email"
-                  required
-                  class="w-full px-4 py-3 bg-gray-900 border border-white/20 text-impact-white placeholder-text-subtle focus:border-power-red focus:outline-none transition-colors"
-                />
-              </div>
-              <Button type="submit" variant="primary" class="w-full">
-                Notify Me
-              </Button>
-            </form>
-            <p id="podcast-success" class="hidden text-sm text-green-400 mt-4 font-semibold">
-              You're on the list! We'll let you know when we launch.
-            </p>
-            <p id="podcast-privacy" class="text-sm text-text-subtle mt-4">
-              We respect your privacy. Unsubscribe at any time.
-            </p>
-            </div>
+          <div class="max-w-md mx-auto">
+            <div id="dt-form-podcast-wait-list"></div>
+            <script is:inline src="https://devtools.prairiegiraffe.com/form-embed.js?v=2"
+              data-project="proj_em8foyyu"
+              data-form="podcast-wait-list"
+              data-target="dt-form-podcast-wait-list"
+              defer></script>
           </div>
         </div>
       </div>
@@ -130,39 +110,3 @@ import Button from '../components/ui/Button.astro';
   <Footer />
 </Layout>
 
-<script>
-  const form = document.getElementById('podcast-form');
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = form.querySelector('button[type="submit"]');
-      const originalText = btn ? btn.textContent : 'Notify Me';
-      if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
-
-      try {
-        const email = new FormData(form).get('email');
-
-        await fetch('https://devtools.prairiegiraffe.com/api/projects/proj_em8foyyu/submissions', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: 'Podcast Subscriber',
-            email: email,
-            form_type: 'podcast-signup',
-            page_url: window.location.href,
-          }),
-        });
-
-        form.classList.add('hidden');
-        const privacy = document.getElementById('podcast-privacy');
-        if (privacy) privacy.classList.add('hidden');
-        const success = document.getElementById('podcast-success');
-        if (success) success.classList.remove('hidden');
-      } catch {
-        alert('Something went wrong. Please try again.');
-      } finally {
-        if (btn) { btn.disabled = false; btn.textContent = originalText; }
-      }
-    });
-  }
-</script>
