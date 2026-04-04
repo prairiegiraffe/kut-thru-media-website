@@ -1,0 +1,25 @@
+---
+export const prerender = true;
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Links | KUT | THRŪ Media">
+  <main class="min-h-screen">
+    <div id="link-hub"></div>
+    <script is:inline src="https://devtools.prairiegiraffe.com/link-hub-embed.js"
+      data-project="proj_em8foyyu"
+      data-target="#link-hub"
+      defer></script>
+  </main>
+</Layout>
+
+<style is:global>
+  /* Hide site chrome on links page */
+  .cursor,
+  .grain-overlay,
+  .scroll-progress,
+  #page-transition,
+  #loading-screen {
+    display: none !important;
+  }
+</style>
