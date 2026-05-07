@@ -118,27 +118,27 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
     <section class="py-12 lg:py-16 bg-power-red">
       <div class="container">
         <h2 class="text-center text-sm md:text-base uppercase tracking-[0.2em] font-bold text-impact-white/90 mb-8" data-animate="fade-up">Social Media</h2>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12 max-w-5xl mx-auto" data-animate="stagger">
-          <div class="text-center">
-            <div class="text-2xl md:text-3xl lg:text-4xl font-black text-impact-white mb-2">
+        <div class="flex flex-col md:flex-row md:flex-nowrap justify-center gap-4 lg:gap-6 mx-auto" data-animate="stagger">
+          <div class="text-center border-2 border-impact-white/30 rounded-lg bg-impact-white/10 backdrop-blur-sm px-4 py-6 lg:px-6 lg:py-8 md:flex-1 md:min-w-0">
+            <div class="stat-number font-black text-impact-white mb-2">
               <CountUp value={17263934} suffix="+" />
             </div>
             <div class="text-xs md:text-sm uppercase tracking-wider text-impact-white/80">Total Client Views</div>
           </div>
-          <div class="text-center">
-            <div class="text-2xl md:text-3xl lg:text-4xl font-black text-impact-white mb-2">
+          <div class="text-center border-2 border-impact-white/30 rounded-lg bg-impact-white/10 backdrop-blur-sm px-4 py-6 lg:px-6 lg:py-8 md:flex-1 md:min-w-0">
+            <div class="stat-number font-black text-impact-white mb-2">
               <CountUp value={495882} suffix="+" />
             </div>
             <div class="text-xs md:text-sm uppercase tracking-wider text-impact-white/80">Total Client Engagement</div>
           </div>
-          <div class="text-center">
-            <div class="text-2xl md:text-3xl lg:text-4xl font-black text-impact-white mb-2">
+          <div class="text-center border-2 border-impact-white/30 rounded-lg bg-impact-white/10 backdrop-blur-sm px-4 py-6 lg:px-6 lg:py-8 md:flex-1 md:min-w-0">
+            <div class="stat-number font-black text-impact-white mb-2">
               <CountUp value={5284} suffix="+" />
             </div>
             <div class="text-xs md:text-sm uppercase tracking-wider text-impact-white/80">Total Client Posts</div>
           </div>
-          <div class="text-center">
-            <div class="text-2xl md:text-3xl lg:text-4xl font-black text-impact-white mb-2">
+          <div class="text-center border-2 border-impact-white/30 rounded-lg bg-impact-white/10 backdrop-blur-sm px-4 py-6 lg:px-6 lg:py-8 md:flex-1 md:min-w-0">
+            <div class="stat-number font-black text-impact-white mb-2">
               <CountUp value={0} suffix="" />
             </div>
             <div class="text-xs md:text-sm uppercase tracking-wider text-impact-white/80">BS Tolerated</div>
@@ -378,6 +378,11 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
 </Layout>
 
 <style>
+  .stat-number {
+    font-size: clamp(1.25rem, 2.5vw, 2.25rem);
+    white-space: nowrap;
+  }
+
   .logo-carousel {
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
