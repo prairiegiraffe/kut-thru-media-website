@@ -23,8 +23,10 @@ const {
   data-suffix={suffix}
   data-prefix={prefix}
   data-duration={duration}
+  style="position: relative; display: inline-block;"
 >
-  {prefix}0{suffix}
+  <span aria-hidden="true" style="visibility: hidden;">{prefix}{value.toLocaleString()}{suffix}</span>
+  <span class="count-up-value" style="position: absolute; inset: 0; text-align: inherit;">{prefix}0{suffix}</span>
 </span>
 
 <script>
@@ -38,6 +40,7 @@ const {
     const suffix = el.getAttribute('data-suffix') || '';
     const prefix = el.getAttribute('data-prefix') || '';
     const duration = parseFloat(el.getAttribute('data-duration') || '2');
+    const display = el.querySelector('.count-up-value');
 
     const counter = { val: 0 };
 
@@ -51,7 +54,7 @@ const {
           duration: duration,
           ease: 'power2.out',
           onUpdate: () => {
-            el.textContent = prefix + Math.round(counter.val).toLocaleString() + suffix;
+            if (display) display.textContent = prefix + Math.round(counter.val).toLocaleString() + suffix;
           },
         });
       },

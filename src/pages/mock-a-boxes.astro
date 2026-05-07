@@ -1,0 +1,424 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import TypeWriter from '../components/effects/TypeWriter.astro';
+import ParallaxImage from '../components/effects/ParallaxImage.astro';
+import MagneticButton from '../components/effects/MagneticButton.astro';
+import CountUp from '../components/effects/CountUp.astro';
+import { getContent } from '../lib/content';
+
+const c = getContent('index');
+
+const services = [
+  {
+    title: 'Strategy',
+    description: 'Marketing plans that actually make sense',
+    number: '01'
+  },
+  {
+    title: 'Logo / Branding',
+    description: 'New identity, same grit',
+    number: '02'
+  },
+  {
+    title: 'Websites',
+    description: 'Fast, brutal, effective',
+    number: '03'
+  },
+  {
+    title: 'Photo',
+    description: 'Real work, captured right',
+    number: '04'
+  },
+  {
+    title: 'Video',
+    description: 'Stories that hit hard',
+    number: '05'
+  },
+  {
+    title: 'Social',
+    description: 'Content that kuts through',
+    number: '06'
+  },
+];
+
+const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
+---
+
+<Layout title="KUT | THRŪ Media | Clean Marketing for Dirty Jobs.">
+  <Header />
+
+  <main class="flex-1">
+    <!-- Hero Section - Full Screen with Video Background -->
+    <section class="relative overflow-hidden" style="padding-top: 120px; margin-bottom: 120px;">
+      <!-- Background -->
+      <div class="absolute inset-0 bg-charcoal">
+        <!-- Industrial texture overlay -->
+        <div class="absolute inset-0 opacity-20" data-content="hero-bg" data-content-type="bg-image" style={`background-image: url('${c('hero-bg', '/assets/images/work/BackgroundOnly.jpg')}'); background-size: cover; background-position: center;`}></div>
+        <!-- Gradient Overlays -->
+        <div class="absolute inset-0 bg-gradient-to-b from-charcoal via-charcoal/80 to-charcoal"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/60 to-transparent"></div>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="container relative z-10">
+        <div class="max-w-5xl">
+          <!-- Giant Headline -->
+          <h1 class="headline-hero mb-8">
+            <span class="block" data-animate="fade-up">Most Marketing</span>
+            <span class="block text-power-red text-glow" data-animate="fade-up">Sucks.</span>
+          </h1>
+
+          <p class="body-lg text-muted max-w-2xl mb-4" data-animate="fade-up">
+            But yours doesn't have to.
+          </p>
+
+          <p class="body-md text-text-subtle max-w-xl mb-8" data-animate="fade-up">
+            We build brands for
+            <TypeWriter
+              words={industries}
+              class="text-power-red font-semibold"
+              typingSpeed={80}
+              deletingSpeed={40}
+              pauseDuration={2000}
+            />
+          </p>
+
+          <div class="flex flex-wrap gap-6" data-animate="fade-up">
+            <MagneticButton href="/contact" variant="primary" size="lg">
+              <span>Let's Talk</span>
+            </MagneticButton>
+            <MagneticButton href="/work" variant="secondary" size="lg">
+              <span>See Our Work</span>
+            </MagneticButton>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator - hidden on mobile -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-4 hidden md:flex">
+        <span class="text-xs uppercase tracking-widest text-text-subtle">Scroll</span>
+        <div class="w-px h-16 bg-gradient-to-b from-power-red to-transparent"></div>
+      </div>
+    </section>
+
+    <!-- Tagline Bar -->
+    <section class="py-12 lg:py-16 bg-charcoal-light border-y border-white/5">
+      <div class="container">
+        <div class="text-center" data-animate="fade-up">
+          <p class="text-3xl md:text-4xl lg:text-5xl text-impact-white font-bold uppercase tracking-wide">
+            Clean Marketing for Dirty Jobs.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Bar - OPTION A: BOXES -->
+    <section class="py-12 lg:py-16 bg-power-red">
+      <div class="container">
+        <h2 class="text-center text-sm md:text-base uppercase tracking-[0.2em] font-bold text-impact-white/90 mb-8" data-animate="fade-up">Social Media</h2>
+        <div class="flex flex-col md:flex-row md:flex-nowrap justify-center gap-4 lg:gap-6 mx-auto" data-animate="stagger">
+          <div class="text-center border-2 border-impact-white/30 rounded-lg bg-impact-white/10 backdrop-blur-sm px-4 py-6 lg:px-6 lg:py-8 md:flex-1 md:min-w-0">
+            <div class="stat-number font-black text-impact-white mb-2">
+              <CountUp value={17263934} suffix="+" />
+            </div>
+            <div class="text-xs md:text-sm uppercase tracking-wider text-impact-white/80">Total Client Views</div>
+          </div>
+          <div class="text-center border-2 border-impact-white/30 rounded-lg bg-impact-white/10 backdrop-blur-sm px-4 py-6 lg:px-6 lg:py-8 md:flex-1 md:min-w-0">
+            <div class="stat-number font-black text-impact-white mb-2">
+              <CountUp value={495882} suffix="+" />
+            </div>
+            <div class="text-xs md:text-sm uppercase tracking-wider text-impact-white/80">Total Client Engagement</div>
+          </div>
+          <div class="text-center border-2 border-impact-white/30 rounded-lg bg-impact-white/10 backdrop-blur-sm px-4 py-6 lg:px-6 lg:py-8 md:flex-1 md:min-w-0">
+            <div class="stat-number font-black text-impact-white mb-2">
+              <CountUp value={5284} suffix="+" />
+            </div>
+            <div class="text-xs md:text-sm uppercase tracking-wider text-impact-white/80">Total Client Posts</div>
+          </div>
+          <div class="text-center border-2 border-impact-white/30 rounded-lg bg-impact-white/10 backdrop-blur-sm px-4 py-6 lg:px-6 lg:py-8 md:flex-1 md:min-w-0">
+            <div class="stat-number font-black text-impact-white mb-2">
+              <CountUp value={0} suffix="" />
+            </div>
+            <div class="text-xs md:text-sm uppercase tracking-wider text-impact-white/80">BS Tolerated</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Intro Section - Split Layout -->
+    <section class="section bg-charcoal relative">
+      <div class="container">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          <!-- Text Content -->
+          <div data-animate="slide-left">
+            <span class="eyebrow block mb-6">Who We Are</span>
+            <h2 class="headline-lg mb-8">
+              We're Not Your Average Marketing Agency
+            </h2>
+            <p class="body-lg text-muted mb-6">
+              Blue collar industries built this country with grit and grind. They don't do fluff—and neither do we.
+            </p>
+            <p class="body-md text-muted mb-10">
+              We take word-of-mouth, handshake-deal businesses and turn them into powerhouse names. No gimmicks. No wasted budget. Just real marketing that gets shit done.
+            </p>
+            <a href="/who-we-are" class="link-hover text-lg font-semibold uppercase tracking-wider">
+              Learn More About Us
+            </a>
+          </div>
+
+          <!-- Image -->
+          <div class="relative" data-animate="slide-right" data-content="intro-image" data-content-type="image">
+            <ParallaxImage
+              src={c('intro-image', '/assets/images/home/beau and camera.jpg')}
+              alt="Beau with camera on location"
+              class="aspect-[4/5] md:[&_.parallax-image]:pt-20"
+              speed={0.2}
+            />
+            <!-- Floating Stats -->
+            <div class="absolute -bottom-8 -left-8 bg-power-red p-8">
+              <div class="text-5xl font-black mb-2">
+                <CountUp value={30} suffix="+" />
+              </div>
+              <div class="text-sm uppercase tracking-wider">Years Experience</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Industries Section - Bold Statement -->
+    <section class="section bg-gray-900 relative overflow-hidden">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-5">
+        <div class="absolute top-0 left-0 w-full h-full" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,0.03) 35px, rgba(255,255,255,0.03) 70px);"></div>
+      </div>
+
+      <div class="container relative z-10">
+        <div class="max-w-5xl mx-auto text-center">
+          <h2 class="headline-xl mb-8" data-animate="fade-up">
+            If Your Employees Don't Wear Hard Hats,
+          </h2>
+          <h2 class="headline-xl text-stroke mb-12" data-animate="fade-up">
+            We Ain't For You.
+          </h2>
+          <p class="body-lg text-muted max-w-2xl mx-auto mb-12" data-animate="fade-up">
+            We work exclusively with construction, mining, heavy industrial and oil and gas companies with annual revenue of $10 million to $50 million.
+          </p>
+          <div data-animate="fade-up">
+            <MagneticButton href="/who-we-work-with" variant="secondary">
+              <span>See If We're A Fit</span>
+            </MagneticButton>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section - Numbered List -->
+    <section class="section bg-charcoal">
+      <div class="container">
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-12 mb-20">
+          <div class="lg:max-w-lg" data-animate="fade-up">
+            <span class="eyebrow block mb-6">What We Do</span>
+            <h2 class="headline-lg">
+              Built Around You.<br />
+              <span class="text-stroke">Powered By Us.</span>
+            </h2>
+          </div>
+          <p class="body-lg text-muted lg:max-w-md lg:pt-16" data-animate="fade-up">
+            Six core services. One focused goal: make your company impossible to ignore.
+          </p>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5" data-animate="stagger">
+          {services.map((service) => (
+            <div class="group bg-charcoal p-10 hover:bg-charcoal-light transition-colors duration-500">
+              <span class="text-7xl font-black text-white/5 group-hover:text-power-red/20 transition-colors duration-500">
+                {service.number}
+              </span>
+              <h3 class="text-2xl font-bold mt-4 mb-3 group-hover:text-power-red transition-colors">
+                {service.title}
+              </h3>
+              <p class="text-muted">{service.description}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="text-center mt-16" data-animate="fade-up">
+          <MagneticButton href="/what-we-do" variant="ghost">
+            <span>Explore All Services</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </MagneticButton>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video Showcase Section -->
+    <section class="relative min-h-screen flex items-center overflow-hidden">
+      <!-- Background -->
+      <div class="absolute inset-0 bg-gray-900">
+        <div class="absolute inset-0 opacity-30" data-content="showcase-bg" data-content-type="bg-image" style={`background-image: url('${c('showcase-bg', '/assets/images/work/BackgroundOnly.jpg')}'); background-size: cover; background-position: center;`}></div>
+        <div class="absolute inset-0 bg-charcoal/70"></div>
+      </div>
+
+      <div class="container relative z-10 py-16 md:py-32">
+        <div class="max-w-3xl mx-auto text-center">
+          <span class="eyebrow block mb-6" data-animate="fade-up">Our Work</span>
+          <h2 class="headline-xl mb-8" data-animate="fade-up">
+            Real Results.<br />
+            Real Businesses.
+          </h2>
+          <p class="body-lg text-muted mb-12" data-animate="fade-up">
+            From complete rebrands to ongoing marketing partnerships—see what we've built for companies like yours.
+          </p>
+          <div data-animate="fade-up">
+            <MagneticButton href="/work" variant="primary" size="lg">
+              <span>View Case Studies</span>
+            </MagneticButton>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="section bg-charcoal border-y border-white/5">
+      <div class="container">
+        <div class="text-center mb-16" data-animate="fade-up">
+          <span class="eyebrow block mb-6">Trusted By</span>
+          <h2 class="headline-md">
+            Companies Who Build, Power, and Fuel This Country
+          </h2>
+        </div>
+
+        <!-- Client Logos: Desktop wrapped grid -->
+        <div class="hidden md:flex flex-wrap justify-center items-center gap-8 lg:gap-12 mb-16" data-animate="stagger">
+          <a href="/work/walker-inspection" class="group bg-white rounded-xl p-6 lg:p-8 flex items-center justify-center h-24 lg:h-28 w-48 lg:w-56 hover:scale-105 transition-transform duration-300">
+            <img src="/assets/images/work/walker/logo-primary.png" alt="Walker Inspection" class="max-h-14 lg:max-h-16 w-auto object-contain" />
+          </a>
+          <a href="/work/prc" class="group bg-white rounded-xl p-6 lg:p-8 flex items-center justify-center h-24 lg:h-28 w-48 lg:w-56 hover:scale-105 transition-transform duration-300">
+            <img src="/assets/images/work/prc/logo-new.png" alt="PRC" class="max-h-14 lg:max-h-16 w-auto object-contain" />
+          </a>
+          <a href="/work/mtn-mud" class="group bg-white rounded-xl p-6 lg:p-8 flex items-center justify-center h-24 lg:h-28 w-48 lg:w-56 hover:scale-105 transition-transform duration-300">
+            <img src="/assets/images/work/mtn-mud/logo-new.png" alt="MTN Mud" class="max-h-14 lg:max-h-16 w-auto object-contain" />
+          </a>
+          <a href="/work/wood-wireline" class="group bg-white rounded-xl p-6 lg:p-8 flex items-center justify-center h-24 lg:h-28 w-48 lg:w-56 hover:scale-105 transition-transform duration-300">
+            <img src="/assets/images/work/wood-wireline/logo-black.png" alt="Wood Wireline" class="max-h-14 lg:max-h-16 w-auto object-contain" />
+          </a>
+          <div class="group bg-gray-700 rounded-xl p-6 lg:p-8 flex items-center justify-center h-24 lg:h-28 w-48 lg:w-56 hover:scale-105 transition-transform duration-300">
+            <img src="/assets/images/WYO Services.png" alt="WYO Services" class="max-h-14 lg:max-h-16 w-auto object-contain" />
+          </div>
+          <div class="group bg-gray-700 rounded-xl p-6 lg:p-8 flex items-center justify-center h-24 lg:h-28 w-48 lg:w-56 hover:scale-105 transition-transform duration-300">
+            <img src="/assets/images/Emit.png" alt="EMIT" class="max-h-14 lg:max-h-16 w-auto object-contain" />
+          </div>
+          <div class="group bg-gray-700 rounded-xl p-6 lg:p-8 flex items-center justify-center h-24 lg:h-28 w-48 lg:w-56 hover:scale-105 transition-transform duration-300">
+            <img src="/assets/images/Cordero Mine.png" alt="Cordero Mine" class="max-h-14 lg:max-h-16 w-auto object-contain" />
+          </div>
+          <div class="group bg-white rounded-xl p-6 lg:p-8 flex items-center justify-center h-24 lg:h-28 w-48 lg:w-56 hover:scale-105 transition-transform duration-300">
+            <img src="/assets/images/home/ethica-dark.png" alt="Ethica" class="max-h-14 lg:max-h-16 w-auto object-contain" />
+          </div>
+        </div>
+
+        <!-- Client Logos: Mobile auto-scrolling carousel (no interaction, just ambiance) -->
+        <div class="md:hidden logo-carousel mb-16" data-animate="fade-up">
+          <div class="logo-carousel-track">
+            <div class="logo-card bg-white"><img src="/assets/images/work/walker/logo-primary.png" alt="Walker Inspection" /></div>
+            <div class="logo-card bg-white"><img src="/assets/images/work/prc/logo-new.png" alt="PRC" /></div>
+            <div class="logo-card bg-white"><img src="/assets/images/work/mtn-mud/logo-new.png" alt="MTN Mud" /></div>
+            <div class="logo-card bg-white"><img src="/assets/images/work/wood-wireline/logo-black.png" alt="Wood Wireline" /></div>
+            <div class="logo-card bg-gray-700"><img src="/assets/images/WYO Services.png" alt="WYO Services" /></div>
+            <div class="logo-card bg-gray-700"><img src="/assets/images/Emit.png" alt="EMIT" /></div>
+            <div class="logo-card bg-gray-700"><img src="/assets/images/Cordero Mine.png" alt="Cordero Mine" /></div>
+            <div class="logo-card bg-white"><img src="/assets/images/home/ethica-dark.png" alt="Ethica" /></div>
+            <!-- Duplicate for seamless loop -->
+            <div class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/work/walker/logo-primary.png" alt="" /></div>
+            <div class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/work/prc/logo-new.png" alt="" /></div>
+            <div class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/work/mtn-mud/logo-new.png" alt="" /></div>
+            <div class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/work/wood-wireline/logo-black.png" alt="" /></div>
+            <div class="logo-card bg-gray-700" aria-hidden="true"><img src="/assets/images/WYO Services.png" alt="" /></div>
+            <div class="logo-card bg-gray-700" aria-hidden="true"><img src="/assets/images/Emit.png" alt="" /></div>
+            <div class="logo-card bg-gray-700" aria-hidden="true"><img src="/assets/images/Cordero Mine.png" alt="" /></div>
+            <div class="logo-card bg-white" aria-hidden="true"><img src="/assets/images/home/ethica-dark.png" alt="" /></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- CTA Section - Full Bleed -->
+    <section class="relative py-16 md:py-32 lg:py-48 overflow-hidden">
+      <!-- Background -->
+      <div class="absolute inset-0 bg-power-red"></div>
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-0 left-0 w-full h-full" style="background-image: repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(0,0,0,0.1) 35px, rgba(0,0,0,0.1) 70px);"></div>
+      </div>
+
+      <div class="container relative z-10">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="headline-xl text-impact-white mb-8" data-animate="fade-up">
+            Ready to KUT | THRŪ the Noise?
+          </h2>
+          <p class="body-lg text-impact-white/80 mb-12 max-w-2xl mx-auto" data-animate="fade-up">
+            Let's build a brand that commands attention. No BS. Just results.
+          </p>
+          <div data-animate="fade-up">
+            <MagneticButton href="/contact" variant="secondary" size="lg">
+              <span>Start the Conversation</span>
+            </MagneticButton>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .stat-number {
+    font-size: clamp(1.25rem, 2.5vw, 2.25rem);
+    white-space: nowrap;
+  }
+
+  .logo-carousel {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  }
+
+  .logo-carousel-track {
+    display: flex;
+    gap: 1.25rem;
+    width: max-content;
+    animation: logo-scroll 30s linear infinite;
+    will-change: transform;
+  }
+
+  .logo-card {
+    flex-shrink: 0;
+    width: 180px;
+    height: 120px;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-card img {
+    max-height: 80px;
+    width: auto;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  @keyframes logo-scroll {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+  }
+</style>
+
+
