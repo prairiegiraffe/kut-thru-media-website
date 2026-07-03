@@ -17,7 +17,7 @@ export function getStaticPaths() {
       tagline: 'YOU CALL. WE GO.',
       industry: 'Oil & Gas Inspection Services',
       location: 'Wyoming, Texas, Oklahoma, New Mexico',
-      awards: { count: 2, label: '2X Telly Award Winner' },
+      awards: { count: 2, label: '2X Award Winner' },
       heroVideo: 'https://www.youtube.com/embed/sb9JkX0JuLY',
       logo: '/assets/images/work/walker/logo-primary.png',
       services: [
@@ -71,7 +71,7 @@ export function getStaticPaths() {
       tagline: 'WE BUILD.™',
       industry: 'Heavy Construction',
       location: 'Wyoming & Montana',
-      awards: { count: 2, label: '2X Telly Award Winner' },
+      awards: { count: 2, label: '2X Award Winner' },
       awardVideos: [
         'https://www.youtube.com/embed/qkteq5_17x8',
         'https://www.youtube.com/embed/_TTH0VUnbns',
@@ -130,7 +130,7 @@ export function getStaticPaths() {
       galleryTopImages: [1],
       industry: 'Drilling Fluids & Services',
       location: 'Rocky Mountain Region',
-      awards: { count: 1, label: 'Telly Award Winner' },
+      awards: { count: 1, label: 'Award Winner' },
       heroVideo: 'https://www.youtube.com/embed/5J2rCuJqqtQ',
       logo: '/assets/images/work/mtn-mud/logo-new.png',
       oldLogo: '/assets/images/work/mtn-mud/logo-old.webp',
@@ -191,7 +191,7 @@ export function getStaticPaths() {
       galleryTopImages: [1],
       industry: 'Wireline Services',
       location: 'Rocky Mountain Region',
-      awards: { count: 1, label: 'Telly Award Winner' },
+      awards: { count: 1, label: 'Award Winner' },
       heroVideo: 'https://www.youtube.com/embed/I5wQVq_7LrA',
       logo: '/assets/images/work/wood-wireline/logo-black.png',
       brandBookPages: Array.from({ length: 10 }, (_, i) => `/assets/images/work/wood-wireline/brandbook-pages/page-${String(i + 1).padStart(2, '0')}.png`),
@@ -299,14 +299,6 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
           <p class="text-3xl lg:text-4xl font-bold text-power-red mb-8" data-animate="fade-up">
             {study.tagline}
           </p>
-          {study.awards && (
-            <div class="inline-flex items-center gap-2 mb-8 px-4 py-2 border border-power-red/40 bg-power-red/10 rounded-full" data-animate="fade-up">
-              <svg class="w-4 h-4 text-power-red flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 1l3.09 6.26L22 8.27l-5 4.87 1.18 6.88L12 16.77l-6.18 3.25L7 13.14 2 8.27l6.91-1.01L12 1z"/>
-              </svg>
-              <span class="text-xs md:text-sm font-bold uppercase tracking-widest text-impact-white">{study.awards.label}</span>
-            </div>
-          )}
           <div class="flex flex-wrap gap-6 text-text-muted" data-animate="fade-up">
             <div>
               <span class="block text-xs uppercase tracking-wider text-text-subtle mb-1">Industry</span>
@@ -342,6 +334,16 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
       <section class="section bg-gray-900">
         <div class="container">
           <div class="max-w-5xl mx-auto">
+            {study.awards && (
+              <div class="flex justify-center mb-8" data-animate="fade-up">
+                <div class="inline-flex items-center gap-2 px-4 py-2 border border-power-red/40 bg-power-red/10 rounded-full">
+                  <svg class="w-4 h-4 text-power-red flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M18 2H6v2H3v4a4 4 0 0 0 4 4h.35A6 6 0 0 0 11 15.91V18H8a1 1 0 0 0 0 2h8a1 1 0 0 0 0-2h-3v-2.09A6 6 0 0 0 16.65 14H17a4 4 0 0 0 4-4V4h-3V2zM6 10a2 2 0 0 1-2-2V6h2v4zm14-2a2 2 0 0 1-2 2V6h2v2z"/>
+                  </svg>
+                  <span class="text-xs md:text-sm font-bold uppercase tracking-widest text-impact-white">{study.awards.label}</span>
+                </div>
+              </div>
+            )}
             <div class="aspect-video">
               <iframe
                 src={study.heroVideo}
@@ -364,9 +366,9 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
           <div class="text-center mb-12" data-animate="fade-up">
             <div class="inline-flex items-center gap-2 mb-6 px-4 py-2 border border-power-red/40 bg-power-red/10 rounded-full">
               <svg class="w-4 h-4 text-power-red flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 1l3.09 6.26L22 8.27l-5 4.87 1.18 6.88L12 16.77l-6.18 3.25L7 13.14 2 8.27l6.91-1.01L12 1z"/>
+                <path d="M18 2H6v2H3v4a4 4 0 0 0 4 4h.35A6 6 0 0 0 11 15.91V18H8a1 1 0 0 0 0 2h8a1 1 0 0 0 0-2h-3v-2.09A6 6 0 0 0 16.65 14H17a4 4 0 0 0 4-4V4h-3V2zM6 10a2 2 0 0 1-2-2V6h2v4zm14-2a2 2 0 0 1-2 2V6h2v2z"/>
               </svg>
-              <span class="text-xs md:text-sm font-bold uppercase tracking-widest text-impact-white">Telly Award Winners</span>
+              <span class="text-xs md:text-sm font-bold uppercase tracking-widest text-impact-white">Award Winners</span>
             </div>
             <h2 class="headline-lg">Award-Winning Videos</h2>
           </div>
