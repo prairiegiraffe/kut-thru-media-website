@@ -39,3 +39,6 @@ CleanShot*
 
 # Large video files (hosted on R2)
 *.mp4
+
+# Cloudflare Wrangler local cache (local dev/build only)
+.wrangler/
