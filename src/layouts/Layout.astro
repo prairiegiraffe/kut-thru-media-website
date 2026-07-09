@@ -88,9 +88,19 @@ const {
       // Mark elements for animation (they start visible, this hides them)
       const animatedElements = document.querySelectorAll('[data-animate]');
 
-      // Hide loading screen
-      window.addEventListener('load', () => {
+      // Hide loading screen. Instantly kill any inline opacity GSAP may have
+      // set and add the .hidden class so the overlay can never stay up — this
+      // also covers back/forward (bfcache) restores where 'load' never refires.
+      const hideLoadingScreen = (instant = false) => {
         const loadingScreen = document.getElementById('loading-screen');
+        if (!loadingScreen) return;
+
+        if (instant) {
+          gsap.killTweensOf(loadingScreen);
+          gsap.set(loadingScreen, { clearProps: 'opacity' });
+          loadingScreen.classList.add('hidden');
+          return;
+        }
 
         gsap.to(loadingScreen, {
           opacity: 0,
@@ -101,6 +111,19 @@ const {
             loadingScreen?.classList.add('hidden');
           }
         });
+      };
+
+      // If the page is restored from the back/forward cache, the 'load' event
+      // does NOT fire again, so hide the overlay instantly on 'pageshow'.
+      window.addEventListener('pageshow', (event) => {
+        if (event.persisted) hideLoadingScreen(true);
+      });
+
+      // Safety net: never let the loading screen hang longer than 3s.
+      setTimeout(() => hideLoadingScreen(true), 3000);
+
+      window.addEventListener('load', () => {
+        hideLoadingScreen();
 
         if (isTouchDevice) {
           // On mobile: just show elements immediately, no scroll-triggered animations

@@ -117,11 +117,32 @@
     return tl;
   }
 
+  // Instantly clear the overlay with no animation — used for back/forward
+  // (bfcache) restores, where the covering overlay would otherwise stay up.
+  function clearTransition() {
+    if (!pageTransition) return;
+    gsap.killTweensOf(layers as any);
+    gsap.killTweensOf(logo as any);
+    gsap.set(layers as any, { scaleY: 0 });
+    gsap.set(logo as any, { opacity: 0 });
+    pageTransition.classList.remove('active');
+  }
+
   // Initialize page enter animation — layers start at scaleY(1) via CSS
   // so the screen is covered from first paint (no flash)
   window.addEventListener('load', () => {
     pageEnter();
   });
+
+  // When restored from the back/forward cache, 'load' does NOT fire again and
+  // the overlay is frozen covering the page (blocking clicks via pointer-events).
+  // Clear it instantly so the restored page is visible and interactive.
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) clearTransition();
+  });
+
+  // Safety net: never let the covering overlay stay active longer than 2s.
+  setTimeout(clearTransition, 2000);
 
   // Handle internal link clicks
   document.querySelectorAll('a[href^="/"]').forEach((link) => {
