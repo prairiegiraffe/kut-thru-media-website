@@ -72,7 +72,7 @@ export function getStaticPaths() {
       industry: 'Heavy Construction',
       location: 'Wyoming & Montana',
       awards: { count: 2, label: '2X Award Winner' },
-      heroVideo: 'https://www.youtube.com/embed/9oLFKfT3Ojs?rel=0&modestbranding=1&playsinline=1&color=white',
+      featuredVideo: 'https://www.youtube.com/embed/9oLFKfT3Ojs?rel=0&modestbranding=1&playsinline=1&color=white',
       awardVideos: [
         'https://www.youtube.com/embed/qkteq5_17x8',
         'https://www.youtube.com/embed/_TTH0VUnbns',
@@ -373,19 +373,33 @@ const nextStudy = allStudies[(currentIndex + 1) % allStudies.length];
             </div>
             <h2 class="headline-lg">Award-Winning Videos</h2>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {study.awardVideos.map((video: string, i: number) => (
-              <div class="aspect-video rounded-xl overflow-hidden shadow-2xl" data-animate="fade-up">
+          <div class="max-w-5xl mx-auto">
+            {study.featuredVideo && (
+              <div class="aspect-video rounded-xl overflow-hidden shadow-2xl mb-8" data-animate="fade-up">
                 <iframe
-                  src={video}
-                  title={`${study.client} award-winning video ${i + 1}`}
+                  src={study.featuredVideo}
+                  title={`${study.client} featured video`}
                   class="w-full h-full"
                   frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowfullscreen
                 ></iframe>
               </div>
-            ))}
+            )}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {study.awardVideos.map((video: string, i: number) => (
+                <div class="aspect-video rounded-xl overflow-hidden shadow-2xl" data-animate="fade-up">
+                  <iframe
+                    src={video}
+                    title={`${study.client} award-winning video ${i + 1}`}
+                    class="w-full h-full"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
