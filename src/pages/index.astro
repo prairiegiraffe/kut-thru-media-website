@@ -54,11 +54,20 @@ const industries = ['Construction', 'Mining', 'Heavy Industrial', 'Oil & Gas'];
     <section class="relative overflow-hidden" style="padding-top: 120px; margin-bottom: 120px;">
       <!-- Background -->
       <div class="absolute inset-0 bg-charcoal">
-        <!-- Industrial texture overlay -->
-        <div class="absolute inset-0 opacity-20" data-content="hero-bg" data-content-type="bg-image" style={`background-image: url('${c('hero-bg', '/assets/images/work/BackgroundOnly.jpg')}'); background-size: cover; background-position: center;`}></div>
-        <!-- Gradient Overlays -->
-        <div class="absolute inset-0 bg-gradient-to-b from-charcoal via-charcoal/80 to-charcoal"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/60 to-transparent"></div>
+        <!-- Looping background video (poster paints instantly, image fallback) -->
+        <video
+          class="absolute inset-0 w-full h-full object-cover"
+          src="/assets/videos/ktm-hero.mp4"
+          poster="/assets/videos/ktm-hero-poster.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+        ></video>
+        <!-- Gradient Overlays (keep headline readable over the video) -->
+        <div class="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-charcoal/90 via-charcoal/50 to-transparent"></div>
       </div>
 
       <!-- Hero Content -->
